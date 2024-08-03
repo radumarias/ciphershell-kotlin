@@ -3,7 +3,7 @@ import kotlin.system.exitProcess
 class Mount {
     companion object {
         init {
-            System.loadLibrary("rust_kotlin")
+            System.loadLibrary("java_bridge")
         }
     }
 

@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testImplementation(kotlin("rencfs-kotlin"))
+    testImplementation(kotlin("java_bridge"))
 }
 
 application {

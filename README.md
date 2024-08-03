@@ -2,7 +2,7 @@
 
 Kotlin GUI app for [rencfs](https://github.com/radumarias/rencfs).
 
-It uses the [java-bridge](https://github.com/radumarias/rencfs/java-bridge) to interact with Rust code.
+It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
 
 ## Structure
 

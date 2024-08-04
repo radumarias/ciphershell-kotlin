@@ -24,19 +24,26 @@ tasks.jar {
     from(sourceSets.main.get().output)
 }
 
-// Task to run 'make' in the java-bridge
-tasks.register<Exec>("runMake") {
+// Task to build java-bridge
+tasks.register<Exec>("buildRust") {
     group = "build"
-    description = "Run make in the java-bridge directory"
+    description = "Build java-bridge"
 
     workingDir = file("../../rencfs/java-bridge")
-    commandLine = listOf("make")
+    commandLine = listOf("cargo", "build", "--release")
 }
 
 // Retrieve the current user home
-val currentUserHome = System.getProperty("user.home")
+val currentUserHome: String? = System.getProperty("user.home")
 
 tasks.named<JavaExec>("run") {
     // Set program arguments
     args = listOf("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
+
+    dependsOn("buildRust")
+}
+
+// Make the build task depend on the buildRust task
+tasks.named("build") {
+    dependsOn("buildRust")
 }

@@ -26,7 +26,7 @@ kotlin {
 }
 
 // Retrieve the current user home
-val currentUserHome = System.getProperty("user.home")
+val currentUserHome: String? = System.getProperty("user.home")
 
 compose.desktop {
     application {
@@ -44,14 +44,21 @@ compose.desktop {
 
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
+
+        dependsOn("buildRust")
     }
 }
 
-// Task to run 'make' in the java-bridge
-tasks.register<Exec>("runMake") {
+// Task to build java-bridge
+tasks.register<Exec>("buildRust") {
     group = "build"
-    description = "Run make in the java-bridge directory"
+    description = "Build java-bridge"
 
     workingDir = file("../../rencfs/java-bridge")
-    commandLine = listOf("make")
+    commandLine = listOf("cargo", "build", "--release")
+}
+
+// Make the build task depend on the buildRust task
+tasks.named("build") {
+    dependsOn("buildRust")
 }

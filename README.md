@@ -42,4 +42,4 @@ You need to have [rencfs](https://github.com/radumarias/rencfs) at the same leve
 ./gradlew cli:run
 ```
 
-This will create the mount mount at `$currentUserHome/rencfs/mnt` and data dir `$currentUserHome/rencfs/data`. Feel free to chnage in [build.gradle.ks](cli/build.gradle.ks).
+This will create the mount mount at `$currentUserHome/rencfs/mnt` and data dir `$currentUserHome/rencfs/data`. Feel free to chnage in [build.gradle.ks](cli/build.gradle.kts).

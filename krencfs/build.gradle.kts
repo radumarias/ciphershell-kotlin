@@ -11,12 +11,12 @@ kotlin {
     sourceSets {
         val desktopMain by getting
         commonMain.dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
         }
 
         desktopMain.dependencies {
@@ -36,7 +36,7 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
 
             packageName = "rs.xor.rencfs.krencfs"
-            packageVersion = "1.0.1"
+            packageVersion = "1.0.0"
         }
 
         // Set JVM options
@@ -44,13 +44,11 @@ compose.desktop {
 
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
-
-        dependsOn("buildRust")
     }
 }
 
 // Task to build java-bridge
-tasks.register<Exec>("buildRust") {
+val buildRust by tasks.registering(Exec::class) {
     group = "build"
     description = "Build java-bridge"
 
@@ -60,5 +58,5 @@ tasks.register<Exec>("buildRust") {
 
 // Make the build task depend on the buildRust task
 tasks.named("build") {
-    dependsOn("buildRust")
+    dependsOn(buildRust)
 }

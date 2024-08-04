@@ -1,13 +1,15 @@
 # rencfs-kotlin
 
-## CLI app
-
 It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
+
+You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
+
+## CLI app
 
 ### Structure
 
-- [Main.kt](src/main/kotlin/Main.kt): Main file that uses the Rust code.
-- [Rust.kt](src/main/kotlin/Rust.kt): Namespace for all the exported Rust functions.
+- [Main.kt](cli/src/main/kotlin/Main.kt): Main file that uses the Rust code.
+- [Rust.kt](cli/src/main/kotlin/Rust.kt): Namespace for all the exported Rust functions.
 
 ### Exposed functions
 
@@ -30,16 +32,36 @@ It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-br
 
 ### Build
 
-You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
-
 ```bash
 ./gradlew cli:build
 ```
 
+This will also build `java-bridge` for the current OS target.
+
 ### Run
+
+It will use the current OS target image for `java-bridge`.
 
 ```bash
 ./gradlew cli:run
 ```
 
-This will create the mount mount at `$currentUserHome/rencfs/mnt` and data dir `$currentUserHome/rencfs/data`. Feel free to chnage in [build.gradle.ks](cli/build.gradle.kts).
+This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data dir `$currentUserHome/rencfs/data`. Feel free to change in [build.gradle.ks](cli/build.gradle.kts).
+
+## GUI app
+
+### Build
+
+```bash
+./gradlew krencfs:build
+```
+
+This will also build `java-bridge` for the current OS target.
+
+### Run
+
+It will use the current OS target image for `java-bridge`.
+
+```bash
+./gradlew krencfs:run
+```

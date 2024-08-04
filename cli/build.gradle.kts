@@ -3,8 +3,8 @@ plugins {
     application
 }
 
-group = "rencfs-kotlin"
-version = "1.0-SNAPSHOT"
+group = "krencfs-cli"
+version = "0.1.0"
 
 application {
     mainClass.set("MainKt")
@@ -19,7 +19,7 @@ tasks.test {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "MainKt" // Replace with your main class
+        attributes["Main-Class"] = "MainKt"
     }
     from(sourceSets.main.get().output)
 }

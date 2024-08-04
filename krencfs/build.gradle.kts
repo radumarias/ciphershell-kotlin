@@ -34,5 +34,20 @@ compose.desktop {
             packageName = "rs.xor.rencfs.krencfs"
             packageVersion = "1.0.1"
         }
+
+        // Set JVM options
+        jvmArgs("-Djava.library.path=../../rencfs/java-bridge/target/release/")
+
+        // Set program arguments
+        args("/tmp/rencfs", "/tmp/rencfs_data", "a")
     }
+}
+
+// Task to run 'make' in the java-bridge
+tasks.register<Exec>("runMake") {
+    group = "build"
+    description = "Run make in the java-bridge directory"
+
+    workingDir = file("../../rencfs/java-bridge")
+    commandLine = listOf("make")
 }

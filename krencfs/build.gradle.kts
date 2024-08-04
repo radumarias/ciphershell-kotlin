@@ -25,12 +25,16 @@ kotlin {
     }
 }
 
+// Retrieve the current user home
+val currentUserHome = System.getProperty("user.home")
+
 compose.desktop {
     application {
         mainClass = "rs.xor.rencfs.krencfs.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+
             packageName = "rs.xor.rencfs.krencfs"
             packageVersion = "1.0.1"
         }
@@ -39,7 +43,7 @@ compose.desktop {
         jvmArgs("-Djava.library.path=../../rencfs/java-bridge/target/release/")
 
         // Set program arguments
-        args("/tmp/rencfs", "/tmp/rencfs_data", "a")
+        args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
     }
 }
 

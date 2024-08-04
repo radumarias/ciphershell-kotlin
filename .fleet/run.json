@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "gradle",
+            "name": "krencfs",
+            "tasks": ["krencfs:run"],
+        },
+        {
+            "type": "gradle",
+            "name": "cli",
+            "tasks": ["cli:run"],
+        },
+        
+    ]
+}

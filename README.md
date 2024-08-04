@@ -1,19 +1,15 @@
 # rencfs-kotlin
 
-Kotlin GUI app for [rencfs](https://github.com/radumarias/rencfs).
-
-It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
-
 ## CLI app
 
-Located in [cli](cli).
+It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
 
 ### Structure
 
 - [Main.kt](src/main/kotlin/Main.kt): Main file that uses the Rust code.
 - [Rust.kt](src/main/kotlin/Rust.kt): Namespace for all the exported Rust functions.
 
-#### Exposed functions
+### Exposed functions
 
 - `fun hello(str: String): String;`: Test function that takes a string and returns it with some additional one.
 - `fun mount(mnt: String, dataDir: String, password: String, umountFirst: Bolean): Int;`: Mounts a filesystem at `mnt`
@@ -37,15 +33,13 @@ Located in [cli](cli).
 You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
 
 ```bash
-cd cli
-cd ../../rencfs/java-bridge
-make
-cd -
-kotlinc src/main/kotlin/Main.kt src/main/kotlin/Rust.kt -include-runtime -d build/libs/rencfs-kotlin.jar
+./gradlew cli:build
 ```
 
-## Run
+### Run
 
 ```bash
-java -Djava.library.path=../rencfs/java-bridge/target/release/ -jar build/libs/rencfs-kotlin.jar /home/gnome/rencfs /home/gnome/rencfs_data a
+./gradlew cli:run
 ```
+
+This will create the mount mount at `$currentUserHome/rencfs/mnt` and data dir `$currentUserHome/rencfs/data`. Feel free to chnage in [build.gradle.ks](cli/build.gradle.ks).

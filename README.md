@@ -6,7 +6,7 @@ It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-br
 
 You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
 
-## CLI app
+## CLI test app
 
 ### Structure
 

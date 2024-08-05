@@ -1,5 +1,7 @@
 # rencfs-kotlin
 
+GUI for [rencfs](https://github.com/radumarias/rencfs) in Koltin Multiplatform with Compose.
+
 It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
 
 You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.

@@ -15,7 +15,8 @@ kotlin {
                 implementation(deps.filekit.compose)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
@@ -47,8 +48,6 @@ compose.desktop {
 
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
-
-        dependsOn("buildRust")
     }
 }
 

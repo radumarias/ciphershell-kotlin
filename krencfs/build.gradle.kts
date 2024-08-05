@@ -9,16 +9,19 @@ plugins {
 kotlin {
     jvm("desktop")
     sourceSets {
-        val desktopMain by getting
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+        commonMain {
+            dependencies {
+                implementation(deps.filekit.core)
+                implementation(deps.filekit.compose)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+            }
         }
-
+        val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
@@ -44,6 +47,8 @@ compose.desktop {
 
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
+
+        dependsOn("buildRust")
     }
 }
 

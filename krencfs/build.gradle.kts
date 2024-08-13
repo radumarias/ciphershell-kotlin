@@ -4,6 +4,9 @@ plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.jetbrains.compose.framework)
     alias(deps.plugins.jetbrains.compose.interop)
+//    alias(deps.plugins.jetbrains.kotlin.parcelize)
+//    alias(deps.plugins.jetbrains.kotlin.serialization)
+    alias(deps.plugins.sqldelight)
 }
 
 kotlin {
@@ -11,8 +14,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(deps.filekit.core)
-                implementation(deps.filekit.compose)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -20,26 +21,36 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+
+                implementation(deps.sqldelight.runtime)
+                implementation(deps.sqldelight.coroutines.extensions)
+
+                implementation(deps.filekit.core)
+                implementation(deps.filekit.compose)
+
+                implementation(deps.coroutines) // Kotlin Coroutines
             }
         }
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(deps.sqldelight.driver.jvm)
         }
     }
 }
 
 // Retrieve the current user home
 val currentUserHome: String? = System.getProperty("user.home")
+val applicationPackageName = "rs.xor.rencfs.krencfs"
 
 compose.desktop {
     application {
-        mainClass = "rs.xor.rencfs.krencfs.MainKt"
+        mainClass = "${applicationPackageName}.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
 
-            packageName = "rs.xor.rencfs.krencfs"
+            packageName = applicationPackageName
             packageVersion = "1.0.0"
         }
 
@@ -49,6 +60,17 @@ compose.desktop {
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
     }
+}
+
+sqldelight {
+    databases {
+        create("KrenkfsDB") {
+            packageName.set(applicationPackageName)
+            generateAsync.set(true)
+            // todo: choose src folders
+        }
+    }
+    linkSqlite = true
 }
 
 // Task to build java-bridge

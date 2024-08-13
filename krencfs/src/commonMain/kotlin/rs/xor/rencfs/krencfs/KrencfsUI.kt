@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material3.*
@@ -15,12 +16,13 @@ import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import rs.xor.rencfs.krencfs.design.custom.AutoDismissibleSnackBar
+import rs.xor.rencfs.krencfs.data.domain.model.VaultDataModel
 
 @Composable
 fun NavigationPanel(
     modifier: Modifier = Modifier,
-    items: Map<String, VaultModel>,
-    itemClicked: (String, VaultModel) -> Unit,
+    items: Map<String, VaultDataModel>,
+    itemClicked: (String, VaultDataModel) -> Unit,
 ) {
     Surface(modifier = modifier) {
         Column(
@@ -30,7 +32,10 @@ fun NavigationPanel(
         ) {
 
             Spacer(modifier = Modifier.height(20.dp))
-            LazyColumn {
+            LazyColumn(
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                state = rememberLazyListState(),
+            ) {
                 itemsIndexed(
                     items = items.toList(),
                     key = { _, entry -> entry.first })
@@ -39,16 +44,13 @@ fun NavigationPanel(
                         modifier = Modifier
                             .wrapContentHeight()
                             .fillMaxWidth()
-                            .padding(
-                                horizontal = 10.dp,
-                                vertical = 2.dp,
-                            )
                             .clickable {
                                 itemClicked.invoke(item.first, item.second)
                             },
                         color = Color(0xFF333333)
                     ) {
                         Text(item.second.name)
+                        VerticalDivider(modifier = Modifier.height(1.dp).fillMaxWidth())
                     }
                 }
             }
@@ -56,17 +58,14 @@ fun NavigationPanel(
     }
 }
 
-data class VaultModel(
-    val name: String,
-    val mountPoint: String,
-    val dataDir: String,
-)
+
 
 @Composable
 fun EditVaultPanel(
     modifier: Modifier = Modifier,
-    vault: VaultModel,
-    onSave: (VaultModel) -> Unit,
+    key: String,
+    vault: VaultDataModel,
+    onSave: (VaultDataModel) -> Unit,
 ) {
     Box(modifier = modifier)
     {
@@ -77,9 +76,9 @@ fun EditVaultPanel(
                 text = "Edit Vault"
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.surface)
-            var name by remember { mutableStateOf(vault.name) }
-            var mountPoint by remember { mutableStateOf(vault.mountPoint) }
-            var dataDir by remember { mutableStateOf(vault.dataDir) }
+            var name by remember(key) { mutableStateOf(vault.name) }
+            var mountPoint by remember(key) { mutableStateOf(vault.mountPoint) }
+            var dataDir by remember(key) { mutableStateOf(vault.dataDir) }
             Column(modifier = Modifier.padding(10.dp)) {
                 Row(modifier = Modifier.padding(10.dp)) {
                     TextField(
@@ -148,8 +147,8 @@ fun EditVaultPanel(
                 }
                 Button(
                     onClick = {
-                        val toSave = VaultModel(name, mountPoint, dataDir)
-                        println("saving $name " + toSave)
+                        val toSave = VaultDataModel(name, mountPoint, dataDir)
+                        println("saving $name $toSave")
                         onSave.invoke(toSave)
                     },
                 ) {
@@ -176,11 +175,11 @@ fun KrencfsUI() {
             {
                 Row {
                     var items by remember {
-                        mutableStateOf<Map<String, VaultModel>?>(
+                        mutableStateOf<Map<String, VaultDataModel>?>(
                             null
                         )
                     }
-                    var currentVault by remember { mutableStateOf<Pair<String, VaultModel>?>(null) }
+                    var vaultKey by remember { mutableStateOf<String?>(null) }
                     Column(
                         Modifier
                             .weight(0.3f)
@@ -203,7 +202,7 @@ fun KrencfsUI() {
                             FloatingActionButton(
                                 onClick = {
                                     val mutableItems = items?.toMutableMap() ?: mutableMapOf()
-                                    mutableItems.put(mutableItems.size.toString(), VaultModel("", "", ""))
+                                    mutableItems.put(mutableItems.size.toString(), VaultDataModel("", "", ""))
                                     items = mutableItems
                                 }
                             ) {
@@ -216,10 +215,11 @@ fun KrencfsUI() {
                                 modifier = Modifier
                                     .fillMaxSize(),
                                 items = this,
-                            ) { key, vault ->
-                                println("$key, $vault")
-                                currentVault = key to vault
-                            }
+                                itemClicked = { key, vault ->
+                                    println("$key, $vault")
+                                    vaultKey = key
+                                }
+                            )
                         } ?: Text(
                             modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
                             text = "Empty state, Start by adding something"
@@ -231,18 +231,22 @@ fun KrencfsUI() {
                             .weight(0.7f)
                     )
                     {
-                        currentVault?.apply {
-                            EditVaultPanel(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                vault = this.second,
-                                onSave = { vault ->
-                                    println("onSave $this")
-                                    val mutableItems = items?.toMutableMap() ?: mutableMapOf()
-                                    mutableItems.replace(first, vault)
-                                    items = mutableItems
-                                }
-                            )
+                        vaultKey?.apply {
+                            items?.get(this)?.let { vaultModel ->
+                                EditVaultPanel(
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    key = this,
+                                    vault = vaultModel,
+                                    onSave = { updatedVault ->
+                                        println("onSave $this")
+                                        val mutableItems = items?.toMutableMap() ?: mutableMapOf()
+                                        mutableItems.replace(this@apply, updatedVault)
+                                        items = mutableItems
+                                    }
+                                )
+                            }
+
                         } ?: Text(modifier = Modifier.align(alignment = Alignment.Center), text = "Empty State")
                     }
                 }

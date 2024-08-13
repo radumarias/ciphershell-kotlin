@@ -67,3 +67,12 @@ It will use the current OS target image for `java-bridge`.
 ```bash
 ./gradlew krencfs:run
 ```
+
+# Contribute
+
+Feel free to fork it, change and use it in any way that you want.
+If you build something interesting and feel like sharing pull requests are always appreciated.
+
+## How to contribute
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).

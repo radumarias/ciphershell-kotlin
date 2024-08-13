@@ -1,24 +1,37 @@
 [versions]
-kotlin = "2.0.0"
-#dokka = "1.9.20"
+kotlin = "2.0.20-RC2"
+compose = "1.7.0-alpha02"
+coroutines = "1.9.0-RC.2"
 #parcelize = "2.0.0"
 #serialization = "2.0.0"
-#coroutines = "1.9.0-RC"
-compose = "1.6.11"
+
+sqldelight = "2.0.2"
+
 vinceglb-filekit = "0.7.0"
 
+#dokka = "1.9.20"
+
 [libraries]
-filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit"}
-filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit"}
+coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit" }
+filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit" }
+
+sqldelight-runtime =  { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
+
 
 [plugins]
+jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 # Kotlin interop plugin
 jetbrains-compose-interop = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 # the actual Compose framework
 jetbrains-compose-framework = { id = "org.jetbrains.compose", version.ref = "compose" }
 
-#jetbrains-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-#jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 #jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
 #jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+#jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+#jetbrains-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

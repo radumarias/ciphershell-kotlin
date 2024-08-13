@@ -8,34 +8,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.window.Tray
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.window.*
 import rs.xor.rencfs.krencfs.design.KrencfsMaterialDarkTheme
 
 fun main() = application {
     var isOpen by remember { mutableStateOf(true) }
     Tray(
         icon = rememberVectorPainter(Icons.Default.Lock),
+        onAction = { isOpen = true },
         menu = {
-            Menu("Main Menu") {
-                Item("First Option") { TODO(/*CLICKED*/) }
-                Item("Second Option") { TODO(/*CLICKED*/) }
-            }
-            Separator()
-            Menu( "Quit?") {
-                Item(
-                    "Quit Right Now!",
-                    onClick = { exitApplication() }
-                )
-            }
-        }
+            Item("Exit", onClick = ::exitApplication)
+        },
     )
     if (isOpen) {
         Window(
             onCloseRequest = { isOpen = false },
             title = "Krencfs",
+            state = rememberWindowState(
+                placement = WindowPlacement.Floating,
+//                width = Dp.Unspecified,
+//                height = Dp.Unspecified,
+            ),
         ) {
+            MenuBar {
+                Menu("File") {
+                    Item("Exit", onClick = ::exitApplication)
+                }
+            }
             KrencfsMaterialDarkTheme {
                 KrencfsUI()
             }

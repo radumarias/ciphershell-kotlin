@@ -1,0 +1,38 @@
+-- Define the Vaults table with an auto-incrementing primary key
+CREATE TABLE Vaults (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    mount TEXT NOT NULL
+);
+
+-- Insert a new vault
+insertVault:
+INSERT INTO Vaults (name, path, mount)
+VALUES (?, ?, ?);
+
+-- Retrieve the ID of the last inserted row
+selectLastInsertId:
+SELECT last_insert_rowid() AS id;
+
+-- Update an existing vault by its ID
+updateVault:
+UPDATE Vaults
+SET name = ?, path = ?, mount = ?
+WHERE id = ?;
+
+-- Delete a vault by its ID
+deleteVault:
+DELETE FROM Vaults
+WHERE id = ?;
+
+-- Select all vaults ordered by name (or any other criteria you want)
+selectAll:
+SELECT * FROM Vaults
+ORDER BY name ASC;
+
+-- Select vaults with pagination support, ordered by name
+selectVaultsPaged:
+SELECT * FROM Vaults
+ORDER BY name ASC
+LIMIT ? OFFSET ?;

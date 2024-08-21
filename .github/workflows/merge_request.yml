@@ -3,9 +3,12 @@ on:
   pull_request:
     branches:
       - main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
-  setup:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -13,19 +16,13 @@ jobs:
       fail-fast: true
     steps:
       - name: Checkout Repository
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Setup Rust
-      - uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@stable
       - name: Setup Java
-      - uses: actions/setup-java@v4
+        uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
-
-  build_ubuntu_desktop:
-    name: Build Ubuntu Desktop
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build
-      - run: ./gradlew krencfs:build
+      - name: Build Ubuntu Desktop
+        run: ./gradlew clean krencfs:build

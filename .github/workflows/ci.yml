@@ -4,10 +4,11 @@ on:
     branches: [ main, release ]
   pull_request:
     branches: [ main, release ]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 env:
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: 0 # TODO: remove this when we cache the builds
@@ -22,19 +23,21 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Clone rencfs repository
         run: |
           git clone https://github.com/radumarias/rencfs
-      
+
       - name: Setup Rust
         run: rustup update
-        
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
-  
+
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build --stacktrace --debug

@@ -10,7 +10,7 @@ application {
     mainClass.set("MainKt")
 
     // Set JVM options
-    applicationDefaultJvmArgs = listOf("-Djava.library.path=../../rencfs/java-bridge/target/release/")
+    applicationDefaultJvmArgs = listOf("-Djava.library.path=rencfs/java-bridge/target/release/")
 }
 
 tasks.test {
@@ -29,7 +29,7 @@ tasks.register<Exec>("buildRust") {
     group = "build"
     description = "Build java-bridge"
 
-    workingDir = file("../../rencfs/java-bridge")
+    workingDir = file("rencfs/java-bridge")
     commandLine = listOf("cargo", "build", "--release")
 }
 

@@ -55,7 +55,7 @@ compose.desktop {
         }
 
         // Set JVM options
-        jvmArgs("-Djava.library.path=encfs/java-bridge/target/release/")
+        jvmArgs("-Djava.library.path=../rencfs/java-bridge/target/release/")
 
         // Set program arguments
         args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
@@ -79,7 +79,7 @@ val buildRust by tasks.registering(Exec::class) {
     description = "Build java-bridge"
 
     environment("RUST_LOG", "debug")
-    workingDir = file("encfs/java-bridge")
+    workingDir = file("../rencfs/java-bridge")
     commandLine = listOf("cargo", "build", "--release")
 }
 

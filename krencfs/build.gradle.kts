@@ -78,6 +78,7 @@ val buildRust by tasks.registering(Exec::class) {
     group = "build"
     description = "Build java-bridge"
 
+    environment("RUST_LOG", "debug")
     workingDir = file("../../rencfs/java-bridge")
     commandLine = listOf("cargo", "build", "--release")
 }

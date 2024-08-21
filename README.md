@@ -1,5 +1,7 @@
 # rencfs-kotlin
 
+[![Merge Request](https://github.com/radumarias/rencfs-kotlin/actions/workflows/ci.yml/badge.svg)](https://github.com/radumarias/rencfs-kotlin/actions/workflows/ci.yml)
+
 GUI for [rencfs](https://github.com/radumarias/rencfs) in Koltin Multiplatform with Compose.
 
 It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.

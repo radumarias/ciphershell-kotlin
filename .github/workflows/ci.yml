@@ -22,6 +22,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Clone rencfs repository
+        run: |
+          git clone https://github.com/radumarias/rencfs
       
       - name: Setup Rust
         run: rustup update

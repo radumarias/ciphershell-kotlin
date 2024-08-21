@@ -1,0 +1,31 @@
+name: Merge Request
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+      fail-fast: true
+    steps:
+      - name: Checkout Repository
+      - uses: actions/checkout@v4
+      - name: Setup Rust
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Setup Java
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+  build_ubuntu_desktop:
+    name: Build Ubuntu Desktop
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+      - run: ./gradlew krencfs:build

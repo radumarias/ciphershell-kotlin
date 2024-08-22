@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            /home/runner/.cargo
+            ~/.cargo
             rencfs/java-bridge/target
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ steps.rust_version_hash.outputs.hash }}-${{ github.ref }}
           # restore-keys: |

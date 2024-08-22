@@ -37,16 +37,16 @@ jobs:
           distribution: 'corretto'
           java-version: '21'
 
-      - name: Java build cache
+      - name: Java Build Cache
         id: cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle
             ${{ github.workspace }}/.gradle
-          key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('**/*.gradle.kts', '') }}-${{ github.ref }}
+          key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
           restore-keys: |
-            java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('**/*.gradle.kts', '') }}-
+            java-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build --stacktrace --debug

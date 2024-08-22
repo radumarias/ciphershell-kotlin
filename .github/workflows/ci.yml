@@ -56,7 +56,7 @@ jobs:
         with:
           path: |
             ~/.cargo
-            ${{ github.workspace }}/**/target/**/deps
+            **/target/**/deps
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           restore-keys: |
             rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}

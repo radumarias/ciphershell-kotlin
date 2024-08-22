@@ -65,4 +65,3 @@ jobs:
 
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build
-

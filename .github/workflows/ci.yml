@@ -64,3 +64,4 @@ jobs:
 
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build --stacktrace --debug
+

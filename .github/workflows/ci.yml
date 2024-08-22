@@ -67,7 +67,7 @@ jobs:
         run: |
           rust_version=$(rustc --version | awk '{print $2}')
           rust_version_hash=$(echo -n $rust_version | sha256sum | awk '{print $1}')
-          echo "::set-output name=hash::$rust_version_hash"
+          echo "{hash}={$rust_version_hash}" >> $GITHUB_OUTPUT
           
       - name: Rust Build Cache
         id: rust-build-cache

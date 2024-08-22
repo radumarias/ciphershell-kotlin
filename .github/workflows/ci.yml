@@ -62,14 +62,21 @@ jobs:
           #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-
           #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
+      - name: Get Rust version hash
+        id: rust_version_hash
+        run: |
+          rust_version=$(rustc --version | awk '{print $2}')
+          rust_version_hash=$(echo -n $rust_version | sha256sum | awk '{print $1}')
+          echo "::set-output name=hash::$rust_version_hash"
+          
       - name: Rust Build Cache
         id: rust-build-cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.cargo
-            rencfs/java-bridge/target/release/deps
-          key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
+            rencfs/java-bridge/target
+          key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ steps.rust_version_hash.outputs.hash }}-${{ github.ref }}
           # restore-keys: |
           #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
           #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-

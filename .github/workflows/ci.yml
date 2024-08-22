@@ -31,12 +31,13 @@ jobs:
           submodules: true
 
       - name: Setup Rust
-        run:
-          rustup update
-          rustup install nightly
-          rustup default nightly
-          rustup update
-
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt, clippy
+          toolchain: nightly
+          cache: true
+          rustflags: "-D warnings"
+      
       - name: Setup Java
         uses: actions/setup-java@v4
         with:

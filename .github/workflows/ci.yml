@@ -57,17 +57,17 @@ jobs:
           #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-
           #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
-      - name: Rust Build Cache
-        id: rust-build-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo
-            rencfs/java-bridge/target/release/deps
-          key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
-          # restore-keys: |
-          #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
-          #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
+      # - name: Rust Build Cache
+      #   id: rust-build-cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/.cargo
+      #       rencfs/java-bridge/target/release/deps
+      #     key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
+      #     # restore-keys: |
+      #     #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
+      #     #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Build Ubuntu Desktop
         run: |

@@ -30,12 +30,18 @@ jobs:
         with:
           submodules: true
 
-      - name: setup Rust
+      - name: Setup Rust
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -y
-          rustup install nightly
+          rustup toolchain install nightly --component rust-docs
           rustup default nightly
+          rustup component add rustc          # Rust compiler
+          rustup component add cargo          # Rust package manager
+          rustup component add clippy         # Linting tool
+          rustup component add rustfmt        # Code formatter
+          rustup component add rust-docs      # Documentation
+          rustup component add rust-analysis  # Rust analysis for tools
           rustup update
+        shell: bash
           
       - name: Setup Java
         uses: actions/setup-java@v4

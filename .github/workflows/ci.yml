@@ -63,5 +63,5 @@ jobs:
             rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Build Ubuntu Desktop
-        run: ./gradlew clean krencfs:build --stacktrace --debug
+        run: ./gradlew clean krencfs:build
 

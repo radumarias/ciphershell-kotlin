@@ -46,6 +46,7 @@ jobs:
             ${{ github.workspace }}/.gradle
           key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
           restore-keys: |
+            java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
             java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-
             java-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
@@ -55,10 +56,11 @@ jobs:
         with:
           path: |
             ~/.cargo
-          key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
+          key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           restore-keys: |
-            java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
-            java-build-cache-${{ runner.os }}-${{ github.workflow }}-
+            rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
+            rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
+            rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build --stacktrace --debug

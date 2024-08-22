@@ -1,3 +1,4 @@
 [submodule "rencfs"]
 	path = rencfs
+	branch = main
 	url = ../rencfs.git

@@ -26,10 +26,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Clone rencfs repository
-        run: |
-          git clone https://github.com/radumarias/rencfs
-
       - name: Setup Rust
         run: rustup update
 

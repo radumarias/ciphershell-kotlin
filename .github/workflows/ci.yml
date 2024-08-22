@@ -31,7 +31,10 @@ jobs:
           submodules: true
 
       - name: Setup Rust
-        run: rustup update
+        run:
+          rustup install nightly
+          rustup default nightly
+          rustup update
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -58,7 +61,7 @@ jobs:
         with:
           path: |
             ~/.cargo
-            rencfs/java-bridge/target/debug/deps
+            rencfs/java-bridge/target/release/deps
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           # restore-keys: |
           #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-

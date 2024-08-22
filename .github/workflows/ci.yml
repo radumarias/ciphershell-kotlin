@@ -57,7 +57,7 @@ jobs:
         with:
           path: |
             ~/.cargo
-            rencfs/java-bridge/target/debug/deps/**
+            rencfs/java-bridge/target/debug/deps
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           # restore-keys: |
           #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-

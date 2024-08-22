@@ -67,3 +67,4 @@ jobs:
           printenv
           ls -lar ${{ github.workspace }}
           ./gradlew clean krencfs:build
+          ls -lar ${{ github.workspace }}

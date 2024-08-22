@@ -38,7 +38,7 @@ jobs:
           java-version: '21'
 
       - name: Java Build Cache
-        id: cache
+        id: java-build-cache
         uses: actions/cache@v4
         with:
           path: |
@@ -50,12 +50,11 @@ jobs:
             java-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Rust Build Cache
-        id: cache
+        id: rust-build-cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.cargo
-
           key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           restore-keys: |
             java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-

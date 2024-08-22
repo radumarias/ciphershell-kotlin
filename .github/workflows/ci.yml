@@ -56,11 +56,14 @@ jobs:
         with:
           path: |
             ~/.cargo
-            ./rencfs/java-bridge/target/**/deps
+            ${{ github.workspace }}/rencfs/java-bridge/target/**/deps
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-${{ github.ref }}
           restore-keys: |
             rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
             rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
 
       - name: Build Ubuntu Desktop
-        run: ./gradlew clean krencfs:build
+        run: |
+          printenv
+          ls -lar ${{ github.workspace }}
+          ./gradlew clean krencfs:build

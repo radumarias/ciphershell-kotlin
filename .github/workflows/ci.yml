@@ -44,9 +44,9 @@ jobs:
           path: |
             ~/.gradle
             ${{ github.workspace }}/.gradle
-          key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('.**/*.gradle.kts', '') }}-${{ github.ref }}
+          key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('**/*.gradle.kts', '') }}-${{ github.ref }}
           restore-keys: |
-            java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('.**/*.gradle.kts', '') }}-
+            java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('**/*.gradle.kts', '') }}-
 
       - name: Build Ubuntu Desktop
         run: ./gradlew clean krencfs:build --stacktrace --debug

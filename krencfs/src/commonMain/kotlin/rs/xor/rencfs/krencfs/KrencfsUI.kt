@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import rs.xor.rencfs.krencfs.design.custom.AutoDismissibleSnackBar
+import rs.xor.rencfs.krencfs.data.Database
 import rs.xor.rencfs.krencfs.data.domain.model.VaultDataModel
+import rs.xor.rencfs.krencfs.design.custom.AutoDismissibleSnackBar
 
 @Composable
 fun NavigationPanel(
@@ -59,7 +61,6 @@ fun NavigationPanel(
 }
 
 
-
 @Composable
 fun EditVaultPanel(
     modifier: Modifier = Modifier,
@@ -67,6 +68,7 @@ fun EditVaultPanel(
     vault: VaultDataModel,
     onSave: (VaultDataModel) -> Unit,
 ) {
+    var vault by remember {  mutableStateOf(vault)  }
     Box(modifier = modifier)
     {
         Column(modifier = Modifier.padding(start = 20.dp)) {
@@ -76,18 +78,15 @@ fun EditVaultPanel(
                 text = "Edit Vault"
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.surface)
-            var name by remember(key) { mutableStateOf(vault.name) }
-            var mountPoint by remember(key) { mutableStateOf(vault.mountPoint) }
-            var dataDir by remember(key) { mutableStateOf(vault.dataDir) }
             Column(modifier = Modifier.padding(10.dp)) {
                 Row(modifier = Modifier.padding(10.dp)) {
                     TextField(
                         placeholder = {
                             Text("Name")
                         },
-                        value = name,
+                        value = vault.name,
                         onValueChange = {
-                            name = it
+                            vault = vault.copy(name = it)
                         },
                         colors = TextFieldDefaults.colors().copy(
                             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -102,9 +101,9 @@ fun EditVaultPanel(
                                 "Mount point"
                             )
                         },
-                        value = mountPoint,
+                        value = vault.mountPoint,
                         onValueChange = {
-                            mountPoint = it
+                            vault = vault.copy(mountPoint = it)
                         },
                         colors = TextFieldDefaults.colors().copy(
                             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -117,9 +116,9 @@ fun EditVaultPanel(
                         placeholder = {
                             Text("Data folder path")
                         },
-                        value = dataDir,
+                        value = vault.dataDir,
                         onValueChange = {
-                            dataDir = it
+                            vault = vault.copy(dataDir = it)
                         },
                         colors = TextFieldDefaults.colors().copy(
                             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -129,10 +128,10 @@ fun EditVaultPanel(
                     // FileKit Compose
                     val launcher = rememberDirectoryPickerLauncher(
                         title = "Choose data folder",
-                        initialDirectory = dataDir
+                        initialDirectory = vault.dataDir
                     ) { directory ->
                         directory?.path?.apply {
-                            dataDir = this
+                            vault = vault.copy(dataDir = this)
                         }
                     }
                     IconButton(onClick = {
@@ -147,9 +146,7 @@ fun EditVaultPanel(
                 }
                 Button(
                     onClick = {
-                        val toSave = VaultDataModel(name, mountPoint, dataDir)
-                        println("saving $name $toSave")
-                        onSave.invoke(toSave)
+                        onSave(vault)
                     },
                 ) {
                     Text("Save")
@@ -162,6 +159,21 @@ fun EditVaultPanel(
 @Preview
 @Composable
 fun KrencfsUI() {
+    val scope = rememberCoroutineScope()
+    var vaultKey by remember { mutableStateOf<String?>(null) }
+
+    var vaults by remember { mutableStateOf<Map<String, VaultDataModel>>(emptyMap()) }
+    LaunchedEffect(Unit) {
+        scope.launch {
+            Database.getVaultRepository()
+                .observeVaults()
+                .collect { newVaults ->
+                    println("newVaults: $newVaults")
+                    vaults = newVaults
+                }
+        }
+    }
+
     Surface {
         Scaffold(
             /*TODO*/
@@ -174,12 +186,7 @@ fun KrencfsUI() {
             )
             {
                 Row {
-                    var items by remember {
-                        mutableStateOf<Map<String, VaultDataModel>?>(
-                            null
-                        )
-                    }
-                    var vaultKey by remember { mutableStateOf<String?>(null) }
+
                     Column(
                         Modifier
                             .weight(0.3f)
@@ -201,28 +208,24 @@ fun KrencfsUI() {
                             )
                             FloatingActionButton(
                                 onClick = {
-                                    val mutableItems = items?.toMutableMap() ?: mutableMapOf()
-                                    mutableItems.put(mutableItems.size.toString(), VaultDataModel("", "", ""))
-                                    items = mutableItems
+                                    // TODO: ask input via modal/dialog
+                                    scope.launch {
+                                        Database.getVaultRepository().addVault()
+                                    }
                                 }
                             ) {
                                 Text("+")
                             }
                         }
                         HorizontalDivider()
-                        items?.apply {
-                            NavigationPanel(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                items = this,
-                                itemClicked = { key, vault ->
-                                    println("$key, $vault")
-                                    vaultKey = key
-                                }
-                            )
-                        } ?: Text(
-                            modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                            text = "Empty state, Start by adding something"
+                        NavigationPanel(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            items = vaults,
+                            itemClicked = { key, vault ->
+                                println("$key, $vault")
+                                vaultKey = key
+                            }
                         )
                         VerticalDivider()
                     }
@@ -232,7 +235,7 @@ fun KrencfsUI() {
                     )
                     {
                         vaultKey?.apply {
-                            items?.get(this)?.let { vaultModel ->
+                            vaults.get(this)?.let { vaultModel ->
                                 EditVaultPanel(
                                     modifier = Modifier
                                         .fillMaxSize(),
@@ -240,9 +243,14 @@ fun KrencfsUI() {
                                     vault = vaultModel,
                                     onSave = { updatedVault ->
                                         println("onSave $this")
-                                        val mutableItems = items?.toMutableMap() ?: mutableMapOf()
-                                        mutableItems.replace(this@apply, updatedVault)
-                                        items = mutableItems
+                                        scope.launch {
+                                            Database.getVaultRepository().updateVault(
+                                                this@apply,
+                                                updatedVault.name,
+                                                updatedVault.dataDir,
+                                                updatedVault.mountPoint
+                                            )
+                                        }
                                     }
                                 )
                             }

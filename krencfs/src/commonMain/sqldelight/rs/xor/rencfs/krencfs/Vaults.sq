@@ -1,10 +1,21 @@
 -- Define the Vaults table with an auto-incrementing primary key
-CREATE TABLE Vaults (
+CREATE TABLE `Vaults` (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     path TEXT NOT NULL,
-    mount TEXT NOT NULL
+    mount TEXT NOT NULL,
+    createdTime TEXT DEFAULT (CURRENT_TIMESTAMP),
+    modifiedTime TEXT DEFAULT (CURRENT_TIMESTAMP)
 );
+
+DROP TRIGGER IF EXISTS update_modified_timestamp_trigger;
+CREATE TRIGGER IF NOT EXISTS update_modified_timestamp_trigger
+BEFORE UPDATE ON Vaults
+FOR EACH ROW
+BEGIN
+    UPDATE Vaults SET modifiedTime = CURRENT_TIMESTAMP;
+END;
+
 
 -- Insert a new vault
 insertVault:
@@ -29,10 +40,10 @@ WHERE id = ?;
 -- Select all vaults ordered by name (or any other criteria you want)
 selectAll:
 SELECT * FROM Vaults
-ORDER BY name ASC;
+ORDER BY modifiedTime ASC;
 
 -- Select vaults with pagination support, ordered by name
 selectVaultsPaged:
 SELECT * FROM Vaults
-ORDER BY name ASC
+ORDER BY modifiedTime ASC
 LIMIT ? OFFSET ?;

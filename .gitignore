@@ -3,3 +3,4 @@
 **/.gradle/
 .kotlin
 .idea
+**sqlite.db

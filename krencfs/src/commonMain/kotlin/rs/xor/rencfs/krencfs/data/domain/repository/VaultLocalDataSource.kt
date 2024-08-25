@@ -28,6 +28,7 @@ class VaultLocalDataSource(
     }
 
     suspend fun updateVault(id: Long, name: String, mountPoint: String, dataDir: String) {
+        println("Update vault id: $id, name: $name, mountPoint: $mountPoint, dataDir: $dataDir")
         vaultsQueries.updateVault(name, dataDir, mountPoint, id)
     }
 

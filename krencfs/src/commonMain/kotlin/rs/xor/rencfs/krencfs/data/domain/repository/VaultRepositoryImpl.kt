@@ -8,9 +8,9 @@ class VaultRepositoryImpl(
     private val localDataSource: VaultLocalDataSource
 ) : VaultRepository {
 
-    override fun observeVaults(): Flow<Map<Long, VaultDataModel>> {
+    override fun observeVaults(): Flow<Map<String, VaultDataModel>> {
         return localDataSource.observeVaults().map { vaultsList ->
-            vaultsList.associateByTo(LinkedHashMap(), { it.id }, { it.toVaultDataModel() })
+            vaultsList.associateByTo(LinkedHashMap(), { it.id.toString() }, { it.toVaultDataModel() })
         }
     }
 
@@ -22,6 +22,7 @@ class VaultRepositoryImpl(
     override suspend fun updateVault(id: String, name: String, mountPoint: String, dataDir: String) {
         val vaultId = id.toLongOrNull()
         if (vaultId != null) {
+            println("VaultRepositoryImpl Update vault id: $id, name: $name, mountPoint: $mountPoint, dataDir: $dataDir")
             localDataSource.updateVault(vaultId, name, mountPoint, dataDir)
         } else {
             throw IllegalArgumentException("Invalid vault ID")

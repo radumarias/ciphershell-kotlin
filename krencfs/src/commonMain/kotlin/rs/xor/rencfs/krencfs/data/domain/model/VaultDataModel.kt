@@ -12,6 +12,6 @@ fun Vaults.toVaultDataModel(): VaultDataModel {
     return VaultDataModel(
         name = this.name,
         mountPoint = this.mount,
-        dataDir = this.path
+        dataDir = this.path,
     )
 }

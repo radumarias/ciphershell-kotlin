@@ -1,7 +1,7 @@
 # rencfs-kotlin
 
 [![ci](https://github.com/radumarias/rencfs-kotlin/actions/workflows/ci.yml/badge.svg)](https://github.com/radumarias/rencfs-kotlin/actions/workflows/ci.yml)
-![codetriage](https://www.codetriage.com/radumarias/rencfs-kotlin/badges/users.svg)
+[![codetriage](https://www.codetriage.com/radumarias/rencfs-kotlin/badges/users.svg)](https://www.codetriage.com/radumarias/rencfs-kotlin)
 
 GUI for [rencfs](https://github.com/radumarias/rencfs) in Koltin Multiplatform with Compose.
 

@@ -6,9 +6,9 @@ import app.cash.sqldelight.db.SqlSchema
 import kotlinx.coroutines.*
 import rs.xor.rencfs.krencfs.KrenkfsDB
 import rs.xor.rencfs.krencfs.VaultsQueries
-import rs.xor.rencfs.krencfs.data.domain.repository.VaultLocalDataSource
-import rs.xor.rencfs.krencfs.data.domain.repository.VaultRepository
-import rs.xor.rencfs.krencfs.data.domain.repository.VaultRepositoryImpl
+import rs.xor.rencfs.krencfs.data.vault.sqldelight.SqlDelightVaultDAO
+import rs.xor.rencfs.krencfs.data.vault.VaultRepository
+import rs.xor.rencfs.krencfs.data.vault.VaultRepositoryImpl
 
 expect suspend fun provideSQLDriver(
     schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
@@ -23,7 +23,7 @@ object Database {
         GlobalScope.async(Dispatchers.IO) {
             val driver = provideSQLDriver(KrenkfsDB.Schema, "Vaults")
             val vaults = VaultsQueries(driver)
-            val localVaultsSource = VaultLocalDataSource(vaults)
+            val localVaultsSource = SqlDelightVaultDAO(vaults)
             VaultRepositoryImpl(localVaultsSource)
         }
     }
@@ -31,5 +31,5 @@ object Database {
     suspend fun getVaultRepository(): VaultRepository {
         return vaultsRepository.await()
     }
-    
+
 }

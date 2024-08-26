@@ -1,21 +1,21 @@
-package rs.xor.rencfs.krencfs.data.domain.repository
+package rs.xor.rencfs.krencfs.data.vault
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import rs.xor.rencfs.krencfs.data.domain.model.VaultDataModel
+import rs.xor.rencfs.krencfs.data.vault.sqldelight.toVaultDataModel
 
 class VaultRepositoryImpl(
-    private val localDataSource: VaultLocalDataSource
+    private val dao: VaultDAO
 ) : VaultRepository {
 
-    override fun observeVaults(): Flow<Map<String, VaultDataModel>> {
-        return localDataSource.observeVaults().map { vaultsList ->
+    override fun observeVaults(): Flow<Map<String, VaultModel>> {
+        return dao.observeVaults().map { vaultsList ->
             vaultsList.associateByTo(LinkedHashMap(), { it.id.toString() }, { it.toVaultDataModel() })
         }
     }
 
     override suspend fun addVault(name: String, mountPoint: String, dataDir: String): String {
-        val lastInsertId = localDataSource.insertVaultAndGetId(name, mountPoint, dataDir)
+        val lastInsertId = dao.insertVaultAndGetId(name, mountPoint, dataDir)
         return lastInsertId.toString()
     }
 
@@ -23,7 +23,7 @@ class VaultRepositoryImpl(
         val vaultId = id.toLongOrNull()
         if (vaultId != null) {
             println("VaultRepositoryImpl Update vault id: $id, name: $name, mountPoint: $mountPoint, dataDir: $dataDir")
-            localDataSource.updateVault(vaultId, name, mountPoint, dataDir)
+            dao.updateVault(vaultId, name, mountPoint, dataDir)
         } else {
             throw IllegalArgumentException("Invalid vault ID")
         }
@@ -32,14 +32,14 @@ class VaultRepositoryImpl(
     override suspend fun deleteVault(id: String) {
         val vaultId = id.toLongOrNull()
         if (vaultId != null) {
-            localDataSource.deleteVault(vaultId)
+            dao.deleteVault(vaultId)
         } else {
             throw IllegalArgumentException("Invalid vault ID")
         }
     }
 
-    override fun getVaultsPaged(limit: Long, offset: Long): Flow<Map<Long, VaultDataModel>> {
-        return localDataSource.getVaultsPaged(limit, offset).map { vaultsList ->
+    override fun getVaultsPaged(limit: Long, offset: Long): Flow<Map<Long, VaultModel>> {
+        return dao.getVaultsPaged(limit, offset).map { vaultsList ->
             vaultsList.associateByTo(LinkedHashMap(), { it.id }, { it.toVaultDataModel() })
         }
     }

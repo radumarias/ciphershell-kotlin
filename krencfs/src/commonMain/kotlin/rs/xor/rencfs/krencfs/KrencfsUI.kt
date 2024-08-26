@@ -17,14 +17,14 @@ import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import rs.xor.rencfs.krencfs.data.Database
-import rs.xor.rencfs.krencfs.data.domain.model.VaultDataModel
+import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.design.custom.AutoDismissibleSnackBar
 
 @Composable
 fun NavigationPanel(
     modifier: Modifier = Modifier,
-    items: Map<String, VaultDataModel>,
-    itemClicked: (String, VaultDataModel) -> Unit,
+    items: Map<String, VaultModel>,
+    itemClicked: (String, VaultModel) -> Unit,
 ) {
     Surface(modifier = modifier) {
         Column(
@@ -65,10 +65,10 @@ fun NavigationPanel(
 fun EditVaultPanel(
     modifier: Modifier = Modifier,
     key: String,
-    vault: VaultDataModel,
-    onSave: (VaultDataModel) -> Unit,
+    vault: VaultModel,
+    onSave: (VaultModel) -> Unit,
 ) {
-    var vault by remember {  mutableStateOf(vault)  }
+    var vault by remember(key) {  mutableStateOf(vault)  }
     Box(modifier = modifier)
     {
         Column(modifier = Modifier.padding(start = 20.dp)) {
@@ -162,7 +162,7 @@ fun KrencfsUI() {
     val scope = rememberCoroutineScope()
     var vaultKey by remember { mutableStateOf<String?>(null) }
 
-    var vaults by remember { mutableStateOf<Map<String, VaultDataModel>>(emptyMap()) }
+    var vaults by remember { mutableStateOf<Map<String, VaultModel>>(emptyMap()) }
     LaunchedEffect(Unit) {
         scope.launch {
             Database.getVaultRepository()

@@ -1,12 +1,11 @@
-package rs.xor.rencfs.krencfs.data.domain.repository
+package rs.xor.rencfs.krencfs.data.vault
 
 import kotlinx.coroutines.flow.Flow
-import rs.xor.rencfs.krencfs.data.domain.model.VaultDataModel
 
 interface VaultRepository {
-    fun observeVaults(): Flow<Map<String, VaultDataModel>>
+    fun observeVaults(): Flow<Map<String, VaultModel>>
     suspend fun addVault(name: String = "", mountPoint: String = "", dataDir: String = ""): String
     suspend fun updateVault(id: String, name: String, mountPoint: String, dataDir: String)
     suspend fun deleteVault(id: String)
-    fun getVaultsPaged(limit: Long, offset: Long): Flow<Map<Long, VaultDataModel>>
+    fun getVaultsPaged(limit: Long, offset: Long): Flow<Map<Long, VaultModel>>
 }

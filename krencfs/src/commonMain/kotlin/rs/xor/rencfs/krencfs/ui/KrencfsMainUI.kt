@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs
+package rs.xor.rencfs.krencfs.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import rs.xor.rencfs.krencfs.data.Database
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.design.custom.AutoDismissibleSnackBar
+import rs.xor.rencfs.krencfs.design.customcomponents.AutoDismissibleSnackBar
 
 @Composable
 fun NavigationPanel(
@@ -158,7 +158,7 @@ fun EditVaultPanel(
 
 @Preview
 @Composable
-fun KrencfsUI() {
+fun KrencfsMainUI() {
     val scope = rememberCoroutineScope()
     var vaultKey by remember { mutableStateOf<String?>(null) }
 

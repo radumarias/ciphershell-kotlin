@@ -6,9 +6,9 @@ import app.cash.sqldelight.db.SqlSchema
 import kotlinx.coroutines.*
 import rs.xor.rencfs.krencfs.KrenkfsDB
 import rs.xor.rencfs.krencfs.VaultsQueries
-import rs.xor.rencfs.krencfs.data.vault.sqldelight.SqlDelightVaultDAO
 import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.data.vault.VaultRepositoryImpl
+import rs.xor.rencfs.krencfs.data.vault.sqldelight.SqlDelightVaultDAO
 
 expect suspend fun provideSQLDriver(
     schema: SqlSchema<QueryResult.AsyncValue<Unit>>,

@@ -15,7 +15,7 @@ class SqlDelightVaultDAO(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : VaultDAO {
 
-    override fun observeVaults(): Flow<List<Vault>> = vaultsQueries
+    override fun observeVaults() = vaultsQueries
         .selectAll()
         .asFlow()
         .mapToList(ioDispatcher)

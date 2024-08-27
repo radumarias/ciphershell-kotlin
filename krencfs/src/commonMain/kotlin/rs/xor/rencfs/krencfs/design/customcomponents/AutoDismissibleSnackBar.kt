@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.design.custom
+package rs.xor.rencfs.krencfs.design.customcomponents
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable

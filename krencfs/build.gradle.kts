@@ -39,13 +39,19 @@ kotlin {
     }
 }
 
-// Retrieve the current user home
 val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = "rs.xor.rencfs.krencfs"
+val applicationClassName = "KRencfsApplicationKt"
+val mainClassPath = "${applicationPackageName}.${applicationClassName}"
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = mainClassPath
+    }
+}
 compose.desktop {
     application {
-        mainClass = "${applicationPackageName}.MainKt"
+        mainClass = mainClassPath
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)

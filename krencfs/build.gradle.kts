@@ -1,15 +1,30 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.jetbrains.compose.framework)
     alias(deps.plugins.jetbrains.compose.interop)
-//    alias(deps.plugins.jetbrains.kotlin.parcelize)
 //    alias(deps.plugins.jetbrains.kotlin.serialization)
     alias(deps.plugins.sqldelight)
+    //    alias(deps.plugins.jetbrains.kotlin.parcelize)
+// Android
+    alias(deps.plugins.google.android.library)
+//    alias(deps.plugins.jetbrains.kotlin.android)
 }
 
 kotlin {
+    androidTarget()
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        androidTarget {
+            // compilerOptions DSL: https://kotl.in/u1r8ln
+            compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+//    jvmToolchain(21)
+
     jvm("desktop")
     sourceSets {
         commonMain {
@@ -31,6 +46,11 @@ kotlin {
                 implementation(deps.coroutines) // Kotlin Coroutines
             }
         }
+        val androidMain by getting
+
+        androidMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -43,6 +63,19 @@ val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = "rs.xor.rencfs.krencfs"
 val applicationClassName = "KRencfsApplicationKt"
 val mainClassPath = "${applicationPackageName}.${applicationClassName}"
+
+android {
+    namespace = applicationPackageName
+    compileSdk = 35
+    defaultConfig {
+        minSdk = 26
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
 
 tasks.withType<Jar> {
     manifest {

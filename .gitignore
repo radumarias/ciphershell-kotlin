@@ -4,3 +4,4 @@
 .kotlin
 .idea
 **sqlite.db
+local.properties

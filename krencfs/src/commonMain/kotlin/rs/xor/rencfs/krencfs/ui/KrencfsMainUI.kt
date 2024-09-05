@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import rs.xor.rencfs.krencfs.data.Database
+import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.design.customcomponents.AutoDismissibleSnackBar
 
@@ -163,9 +163,10 @@ fun KrencfsMainUI() {
     var vaultKey by remember { mutableStateOf<String?>(null) }
 
     var vaults by remember { mutableStateOf<Map<String, VaultModel>>(emptyMap()) }
+
     LaunchedEffect(Unit) {
         scope.launch {
-            Database.getVaultRepository()
+            SQLDelightDB.getVaultRepositoryAsync()
                 .observeVaults()
                 .collect { newVaults ->
                     println("newVaults: $newVaults")
@@ -210,7 +211,7 @@ fun KrencfsMainUI() {
                                 onClick = {
                                     // TODO: ask input via modal/dialog
                                     scope.launch {
-                                        Database.getVaultRepository().addVault()
+                                        SQLDelightDB.getVaultRepositoryAsync().addVault()
                                     }
                                 }
                             ) {
@@ -244,7 +245,7 @@ fun KrencfsMainUI() {
                                     onSave = { updatedVault ->
                                         println("onSave $this")
                                         scope.launch {
-                                            Database.getVaultRepository().updateVault(
+                                            SQLDelightDB.getVaultRepositoryAsync().updateVault(
                                                 this@apply,
                                                 updatedVault.name,
                                                 updatedVault.dataDir,

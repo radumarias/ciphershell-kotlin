@@ -1,6 +1,6 @@
 [versions]
-kotlin = "2.0.20-RC2"
-compose = "1.7.0-alpha03"
+kotlin = "2.0.20"
+compose = "1.7.0-beta01"
 coroutines = "1.9.0-RC.2"
 
 #serialization = "2.0.0"
@@ -12,28 +12,36 @@ vinceglb-filekit = "0.7.0"
 #dokka = "1.9.20"
 
 # Android
-androidGradlePlugin = "8.5.0"
+androidGradlePlugin = "8.6.0-alpha07"
 #parcelize = "2.0.0"
 
 [libraries]
+# Common
 coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+#jetbrains-androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose"}
+jetbrains-compose-material-navigation = { group = "org.jetbrains.compose.material", name = "material-navigation", version.ref = "compose"}
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit" }
 
 sqldelight-runtime =  { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
+
+# Desktop
 sqldelight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 
+# Android
+sqldelight-driver-android  = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 
 [plugins]
+# KMP
 jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-# Kotlin compiler interop plugin
+# Kotlin interop compiler plugin
 jetbrains-compose-interop = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 # the actual Compose framework
 jetbrains-compose-framework = { id = "org.jetbrains.compose", version.ref = "compose" }
 
-#jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
 #jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 #jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 #jetbrains-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
@@ -41,10 +49,11 @@ jetbrains-compose-framework = { id = "org.jetbrains.compose", version.ref = "com
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
 # Android
+#jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
 google-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 google-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
-#compose = [ "compose_runtime", "compose_foundation", "compose_material", "compose_material3", "compose_resources", "compose_ui", "compose_ui_util", "compose_material_icons_extended" ]
-#kotlinx = [ "kotlinx_coroutines", "kotlinx_datetime", "kotlinx_immutable_collections", "kotlinx_serialization_json" ]
+common-sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extensions"]
+common-filekit = ["filekit-core", "filekit-compose"]

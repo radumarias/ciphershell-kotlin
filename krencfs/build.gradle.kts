@@ -19,11 +19,10 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         androidTarget {
-            // compilerOptions DSL: https://kotl.in/u1r8ln
             compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-//    jvmToolchain(21)
+    jvmToolchain(17)
 
     jvm("desktop")
     sourceSets {
@@ -37,24 +36,26 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
 
-                implementation(deps.sqldelight.runtime)
-                implementation(deps.sqldelight.coroutines.extensions)
+                implementation(deps.jetbrains.compose.material.navigation)
+//                implementation(deps.jetbrains.androidx.navigation)
 
-                implementation(deps.filekit.core)
-                implementation(deps.filekit.compose)
+                implementation(deps.bundles.common.filekit)
 
-                implementation(deps.coroutines) // Kotlin Coroutines
+                implementation(deps.bundles.common.sqldelight)
+
+                implementation(deps.coroutines)
             }
         }
-        val androidMain by getting
-
-        androidMain.dependencies {
-            implementation(compose.desktop.currentOs)
+        val androidMain by getting {
+            dependencies {
+                implementation(deps.sqldelight.driver.android)
+            }
         }
-        val desktopMain by getting
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(deps.sqldelight.driver.jvm)
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(deps.sqldelight.driver.jvm)
+            }
         }
     }
 }
@@ -66,13 +67,20 @@ val mainClassPath = "${applicationPackageName}.${applicationClassName}"
 
 android {
     namespace = applicationPackageName
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     compileSdk = 35
+    lint {
+        targetSdk = 35
+    }
     defaultConfig {
         minSdk = 26
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlin {
+        jvmToolchain(17)
     }
 }
 
@@ -82,6 +90,7 @@ tasks.withType<Jar> {
         attributes["Main-Class"] = mainClassPath
     }
 }
+
 compose.desktop {
     application {
         mainClass = mainClassPath
@@ -109,7 +118,8 @@ sqldelight {
             // todo: choose src folders
         }
     }
-    linkSqlite = true
+//    we don't build native targets yet
+//    linkSqlite = true
 }
 
 // Task to build java-bridge

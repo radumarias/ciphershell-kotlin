@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.data
+package rs.xor.rencfs.krencfs.data.sqldelight
 
 import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.QueryResult

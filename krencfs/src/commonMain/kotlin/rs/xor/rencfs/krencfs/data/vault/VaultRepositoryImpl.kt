@@ -1,21 +1,20 @@
 package rs.xor.rencfs.krencfs.data.vault
 
 import kotlinx.coroutines.flow.map
-import rs.xor.rencfs.krencfs.data.vault.sqldelight.toVaultDataModel
 
 class VaultRepositoryImpl(
     private val dao: VaultDAO
 ) : VaultRepository {
 
     override fun observeVaults() = dao.observeVaults().map { vaultsList ->
-            vaultsList.associateByTo(LinkedHashMap(), { it.id.toString() }, { it.toVaultDataModel() })
+            vaultsList.associateByTo(LinkedHashMap(), { it.id.toString() }, { it })
         }
 
-    override fun getVaultsPaged(limit: Long, offset: Long)=  dao.getVaultsPaged(limit, offset).map { vaultsList ->
-            vaultsList.associateByTo(LinkedHashMap(), { it.id }, { it.toVaultDataModel() })
+    override fun getVaultsPaged(limit: Long, offset: Long) =  dao.getVaultsPaged(limit, offset).map { vaultsList ->
+            vaultsList.associateByTo(LinkedHashMap(), { it.id!!.toLong() }, { it })
         }
 
-    override fun getVault(id: Long): VaultModel? = dao.getVaultById(id)?.toVaultDataModel()
+    override fun getVault(id: Long): VaultModel? = dao.getVaultById(id)
 
     override suspend fun addVault(name: String, mountPoint: String, dataDir: String) = dao.insertVaultAndGetId(name, mountPoint, dataDir).toString()
 
@@ -32,4 +31,3 @@ class VaultRepositoryImpl(
     override suspend fun deleteVault(id: String) = id.toLongOrNull()?.let { dao.deleteVault(it) } ?: Unit
 
 }
-

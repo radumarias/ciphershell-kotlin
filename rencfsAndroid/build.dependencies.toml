@@ -1,0 +1,13 @@
+[versions]
+appcompat = "1.7.0"
+#parcelize = "2.0.0"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat"}
+# For loading and tinting drawables on older versions of the platform
+androidx-appcompat-resources = { group = "androidx.appcompat", name = "appcompat-resources", version.ref = "appcompat"}
+
+[plugins]
+
+[bundles]
+androidx-appcompat = ["androidx-appcompat", "androidx-appcompat-resources"]

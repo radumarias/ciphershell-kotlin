@@ -10,7 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/cli" />
-            <option value="$PROJECT_DIR$/krencfs" />
+            <option value="$PROJECT_DIR$/rencfsAndroid" />
+            <option value="$PROJECT_DIR$/rencfsDesktop" />
+            <option value="$PROJECT_DIR$/rencfsMultiplatform" />
           </set>
         </option>
       </GradleProjectSettings>

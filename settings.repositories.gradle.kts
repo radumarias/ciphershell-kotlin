@@ -3,6 +3,9 @@ dependencyResolutionManagement {
         create("deps") {
             from(files("build.dependencies.toml"))
         }
+        create("androidDeps") {
+            from(files("rencfsAndroid/build.dependencies.toml"))
+        }
     }
     repositories {
         google {

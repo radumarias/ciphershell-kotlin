@@ -3,4 +3,6 @@ apply(from = "settings.repositories.gradle.kts")
 rootProject.name = "krencfs"
 
 include(":cli")
-include(":krencfs")
+include(":rencfsAndroid")
+include(":rencfsDesktop")
+include(":rencfsMultiplatform")

@@ -2,10 +2,14 @@
 plugins {
     alias(deps.plugins.google.android.application)
     alias(deps.plugins.jetbrains.kotlin.android)
+    alias(deps.plugins.jetbrains.compose.interop)
+    alias(deps.plugins.jetbrains.compose.framework)
+    alias(androidDeps.plugins.hilt)
+    alias(androidDeps.plugins.ksp)
 }
 
 android {
-    namespace = "rs.xor.io.rencfs"
+    namespace = "rs.xor.io.rencfs.krencfs"
     compileSdk = 35
 
     defaultConfig {
@@ -15,6 +19,9 @@ android {
         versionName = "1.0"
     }
 
+    buildFeatures {
+        compose = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,7 +37,18 @@ android {
     }
 
     dependencies {
-        project(":rencfsMultiplatform")
-//        implementation(androidDeps.)
+        implementation(project(":rencfsMultiplatform"))
+        implementation(androidDeps.activity.compose)
+        implementation(androidDeps.bundles.appcompat)
+
+        implementation(androidDeps.bundles.compose)
+
+
+        // compose
+
+        // hilt
+        implementation(androidDeps.hilt.android)
+        implementation(androidDeps.androidx.hilt.navigation.compose)
+        ksp(androidDeps.hilt.compiler)
     }
 }

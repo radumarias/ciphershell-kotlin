@@ -13,7 +13,7 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-Dwarnings"
-  RUSTDOCFLAGS: "-Dwarnings"  
+  RUSTDOCFLAGS: "-Dwarnings"
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
           rustup component add rust-analysis  # Rust analysis for tools
           rustup update
         shell: bash
-          
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -68,7 +68,7 @@ jobs:
           rust_version=$(rustc --version | awk '{print $2}')
           rust_version_hash=$(echo -n $rust_version | sha256sum | awk '{print $1}')
           echo "{hash}={$rust_version_hash}" >> $GITHUB_OUTPUT
-          
+
       - name: Rust Build Cache
         id: rust-build-cache
         uses: actions/cache@v4
@@ -84,6 +84,4 @@ jobs:
       - name: Build Ubuntu Desktop
         run: |
           printenv
-          ls -lar ${{ github.workspace }}
-          ./gradlew clean krencfs:build
-          ls -lar ${{ github.workspace }}
+          ./gradlew clean rencfsDesktop:build

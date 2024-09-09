@@ -9,6 +9,11 @@ It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-br
 
 You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
 
+> [!WARNING]  
+> **This is still under development. Please do not use it with sensitive data for now, please wait for a
+stable release.  
+> It's mostly ideal for experimental and learning projects.**
+
 ## CLI test app
 
 ### Structure

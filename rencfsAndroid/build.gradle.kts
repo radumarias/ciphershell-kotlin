@@ -1,4 +1,3 @@
-
 plugins {
     alias(deps.plugins.google.android.application)
     alias(deps.plugins.jetbrains.kotlin.android)
@@ -7,14 +6,18 @@ plugins {
     alias(androidDeps.plugins.hilt)
     alias(androidDeps.plugins.ksp)
 }
-
+val packageId = "rs.xor.io.rencfs.krencfs"
+kotlin {
+    jvmToolchain(17)
+}
 android {
-    namespace = "rs.xor.io.rencfs.krencfs"
+    namespace = packageId
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "rs.xor.io.rencfs"
+        applicationId = packageId
         minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
@@ -29,26 +32,36 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+
+    sourceSets {
+        getByName("debug")
+        {
+            java.srcDir("src/main/preview")
+        }
+    }
+
+
     dependencies {
-        implementation(project(":rencfsMultiplatform"))
+        coreLibraryDesugaring(androidDeps.jdk.desugaring)
+
+//        implementation(project(":rencfsMultiplatform"))
         implementation(androidDeps.activity.compose)
         implementation(androidDeps.bundles.appcompat)
 
         implementation(androidDeps.bundles.compose)
 
-
-        // compose
-
         // hilt
-        implementation(androidDeps.hilt.android)
-        implementation(androidDeps.androidx.hilt.navigation.compose)
+        implementation(androidDeps.bundles.hilt)
+
         ksp(androidDeps.hilt.compiler)
     }
 }

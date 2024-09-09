@@ -9,8 +9,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:name=".KrencfsAndroidApplication"
+            android:theme="@style/KrencfsTheme"
+
     >
-        <activity android:name=".MainComposeActivity"
+        <activity android:name=".KrencfsMainLauncherActivity"
                   android:exported="true"
         >
             <intent-filter>
@@ -18,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

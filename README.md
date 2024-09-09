@@ -12,7 +12,7 @@ You need to have [rencfs](https://github.com/radumarias/rencfs) at the same leve
 > [!WARNING]  
 > **This is still under development. Please do not use it with sensitive data for now, please wait for a
 stable release.  
-> It's mostly ideal for experimental and learning projects.**
+> It's mostly ideal for experimental and learning projects. It serves as a reference app for a GUI for `rencfs`**
 
 ## CLI test app
 

@@ -2,7 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
-    alias(deps.plugins.jetbrains.compose.framework)
+    alias(deps.plugins.jetbrains.compose.kmpbom)
     alias(deps.plugins.jetbrains.compose.interop)
 }
 

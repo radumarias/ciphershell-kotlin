@@ -39,8 +39,8 @@ sqldelight-driver-android  = { group = "app.cash.sqldelight", name = "android-dr
 jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 # Kotlin interop compiler plugin
 jetbrains-compose-interop = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-# the actual Compose framework
-jetbrains-compose-framework = { id = "org.jetbrains.compose", version.ref = "compose" }
+#Compose Multiplatform BOM plugin
+jetbrains-compose-kmpbom = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 #jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 #jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

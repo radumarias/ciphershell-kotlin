@@ -2,7 +2,6 @@ plugins {
     alias(deps.plugins.google.android.application)
     alias(deps.plugins.jetbrains.kotlin.android)
     alias(deps.plugins.jetbrains.compose.interop)
-    alias(deps.plugins.jetbrains.compose.framework)
     alias(androidDeps.plugins.hilt)
     alias(androidDeps.plugins.ksp)
 }
@@ -53,7 +52,7 @@ android {
     dependencies {
         coreLibraryDesugaring(androidDeps.jdk.desugaring)
 
-//        implementation(project(":rencfsMultiplatform"))
+        implementation(project(":rencfsMultiplatform"))
         implementation(androidDeps.activity.compose)
         implementation(androidDeps.bundles.appcompat)
 

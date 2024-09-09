@@ -9,10 +9,14 @@ composeConstraintLayout = "1.0.1"
 composeNavigation = "2.7.7"
 hiltNavigationCompose = "1.2.0"
 hilt = "2.52"
-ksp = "2.0.0-1.0.24"
 
+ksp = "2.0.20-1.0.25"
+
+jdkDesugaring="2.1.2"
 
 [libraries]
+jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugaring" }
+
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat"}
@@ -29,7 +33,7 @@ compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compos
 compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
@@ -53,4 +57,8 @@ compose = [
     "compose-ui",
     "compose-tooling",
     "compose-preview",
+]
+hilt = [
+    "hilt-android",
+    "hilt-navigation-compose"
 ]

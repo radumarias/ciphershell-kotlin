@@ -7,12 +7,10 @@ GUI for [rencfs](https://github.com/radumarias/rencfs) in Koltin Multiplatform w
 
 It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-bridge) to interact with Rust code.
 
-You need to have [rencfs](https://github.com/radumarias/rencfs) at the same level with the main project.
-
 > [!WARNING]  
 > **This is still under development. Please do not use it with sensitive data for now, please wait for a
 stable release.  
-> It's mostly ideal for experimental and learning projects. It serves as a reference app for a GUI for `rencfs`**
+> It's mostly ideal for experimental and learning projects. It serves as a reference app for a GUI for `rencfs`.**
 
 ## CLI test app
 

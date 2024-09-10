@@ -61,7 +61,7 @@ This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data
 ### Build
 
 ```bash
-./gradlew krencfs:build
+./gradlew krencfsDesktop:build
 ```
 
 This will also build `java-bridge` for the current OS target.
@@ -71,7 +71,7 @@ This will also build `java-bridge` for the current OS target.
 It will use the current OS target image for `java-bridge`.
 
 ```bash
-./gradlew krencfs:run
+./gradlew krencfsDesktop:run
 ```
 
 # Contribute

@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.jetbrains.compose.kmpbom)
-    alias(deps.plugins.jetbrains.compose.interop)
+    alias(deps.plugins.jetbrains.compose.compiler)
 //    alias(deps.plugins.jetbrains.kotlin.serialization)
     alias(deps.plugins.sqldelight)
     //    alias(deps.plugins.jetbrains.kotlin.parcelize)

@@ -10,8 +10,6 @@ composeNavigation = "2.7.7"
 hiltNavigationCompose = "1.2.0"
 hilt = "2.52"
 
-ksp = "2.0.20-1.0.25"
-
 jdkDesugaring="2.1.2"
 
 [libraries]
@@ -39,8 +37,6 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", v
 
 #navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 [plugins]
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
 appcompat = [
@@ -60,5 +56,5 @@ compose = [
 ]
 hilt = [
     "hilt-android",
-    "hilt-navigation-compose"
+#    "hilt-navigation-compose",
 ]

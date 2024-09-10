@@ -3,8 +3,6 @@ kotlin = "2.0.20"
 compose = "1.7.0-beta01"
 coroutines = "1.9.0-RC.2"
 
-#serialization = "2.0.0"
-
 sqldelight = "2.0.2"
 
 vinceglb-filekit = "0.7.0"
@@ -13,7 +11,9 @@ vinceglb-filekit = "0.7.0"
 
 # Android
 androidGradlePlugin = "8.6.0-alpha07"
-#parcelize = "2.0.0"
+
+ksp = "2.0.20-1.0.25"
+hilt = "2.52"
 
 [libraries]
 # Common
@@ -38,21 +38,26 @@ sqldelight-driver-android  = { group = "app.cash.sqldelight", name = "android-dr
 # KMP
 jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 # Kotlin interop compiler plugin
-jetbrains-compose-interop = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 #Compose Multiplatform BOM plugin
 jetbrains-compose-kmpbom = { id = "org.jetbrains.compose", version.ref = "compose" }
 
-#jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 #jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 #jetbrains-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
 # Android
-#jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize" }
+jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 google-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 google-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 [bundles]
 common-sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extensions"]

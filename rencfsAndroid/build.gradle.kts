@@ -59,9 +59,12 @@ android {
 
         implementation(project(":rencfsMultiplatform"))
 
-        implementation(androidDeps.activity.compose)
-        implementation(androidDeps.bundles.appcompat)
+        implementation(deps.sqldelight.driver.android)
+        implementation(deps.bundles.common.filekit)
 
+        implementation(androidDeps.activity.compose)
+
+        implementation(androidDeps.bundles.appcompat)
         implementation(androidDeps.bundles.compose)
 
         // hilt

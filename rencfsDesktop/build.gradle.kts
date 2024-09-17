@@ -27,8 +27,9 @@ kotlin {
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
 
-                implementation(deps.jetbrains.compose.material.navigation)
+//                implementation(deps.jetbrains.compose.material.navigation)
 //                implementation(deps.jetbrains.androidx.navigation)
+//                implementation("androidx.collection:collection:1.4.3")
 
                 implementation(deps.bundles.common.filekit)
 
@@ -50,14 +51,8 @@ kotlin {
 
 val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = "rs.xor.rencfs.krencfs"
-val applicationClassName = "KRencfsApplicationKt"
-val mainClassPath = "${applicationPackageName}.${applicationClassName}"
-
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = mainClassPath
-    }
-}
+val applicationClassName = "RencfsDesktopApplication"
+val mainClassPath = "${applicationPackageName}.${applicationClassName}Kt"
 
 compose.desktop {
     application {
@@ -65,7 +60,6 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-
             packageName = applicationPackageName
             packageVersion = "1.0.0"
         }

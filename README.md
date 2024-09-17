@@ -58,21 +58,84 @@ This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data
 
 ## GUI app
 
-### Build
+### Integrated Development Environment (IDE)
+
+The multiplatform project is developed mainly using IntelliJ Ultimate or JetBrains Fleet IDE. 
+
+For Android development only, you can use Android Studio version Koala 2024.1.2,
+make sure to change in `build.dependencies.toml`  the entry for androidGradlePlugin from `8.6.0-alpha07` to `8.6.0`. 
+
+**Do not commit this** change! It is only a temporary workaround due to the experimental nature of KMP.
+
+From the Android Studio main window menu, select `File> Open` and then point the explorer to the project' root directory.
+
+If you prefer the command line and have Android Studio installed via the JetBrains installer or by the JetBrains Toolbox app, you can directy start and open the project by running `studio /absolute/path/to/project/root/directory` or  `studio ./relative/path/to/project/root/directory` in the terminal.
+
+From Run Configurations, switch the flavor from rencfsAndroid, rencfsDesktop 
+
+### Build Desktop
 
 ```bash
-./gradlew krencfsDesktop:build
+./gradlew rencfsDesktop:build
 ```
 
 This will also build `java-bridge` for the current OS target.
 
-### Run
+### Run Desktop
 
 It will use the current OS target image for `java-bridge`.
 
 ```bash
-./gradlew krencfsDesktop:run
+./gradlew :rencfsDesktop:run
+# or
+./gradlew clean :rencfsDesktop:run
 ```
+
+### Build Android
+
+#### Prerequisites
+
+Update `rencfsAndroid/local.properties` by defining the property `sdk.dir=<full-path-to-android-sdk-dir>` where `<full-path-to-android-sdk-dir>` is the local Android SDK installation directory.
+Make sure to have platform and build tools corresponding to API level 35. 
+
+TODO: Add more details how to set up and include command line instructions to achieve a working local development environment from command line
+
+```properties
+#sample of local.properties file
+sdk.dir=<full-path-to-android-sdk-dir>
+```
+### Run Android
+#### Run via gradle
+
+** Pre-requisites **
+Ensure an Android device is connected to your PC and you have fulfilled the above build pre-requisites.
+
+Run `./gradlew :rencfsAndroid:installDebug` in the project root directory
+
+#### Manual run via ADB
+
+**Pre-requisites**
+
+1. Build the apk as described in the previous step.
+2. Locate the apk file: `find . -name "*.apk" -print`
+
+Run `adb install -t -r <path-to-apk>`
+
+Example:
+`adb install -t -r ./rencfsAndroid/build/outputs/apk/debug/rencfsAndroid-debug.apk`
+
+Launch the app manually via adb:
+`adb shell am start -n "rs.xor.rencfs.krencfs/rs.xor.rencfs.krencfs.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER`
+
+At this point, you should also be able to find the App Launcher on your home screen
+
+#### Manual run via sideload
+
+**Pre-requisites** 
+
+Build and locate the apk the same way as the above
+
+Copy the apk file to the device and open it with file manager, install and run.
 
 # Contribute
 

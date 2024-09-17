@@ -39,33 +39,33 @@ kotlin {
             resources.srcDir("src/commonMain/res")
 
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material3)
+                api(compose.materialIconsExtended)
+                api(compose.ui)
+                api(compose.components.resources)
+                api(compose.components.uiToolingPreview)
 
-                implementation(deps.jetbrains.compose.material.navigation)
+//                implementation(deps.jetbrains.compose.material.navigation)
 //                implementation(deps.jetbrains.androidx.navigation)
 
-                implementation(deps.bundles.common.filekit)
+                api(deps.bundles.common.filekit)
 
-                implementation(deps.bundles.common.sqldelight)
+                api(deps.bundles.common.sqldelight)
 
-                implementation(deps.coroutines)
+                api(deps.coroutines)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(deps.sqldelight.driver.android)
+                api(deps.sqldelight.driver.android)
             }
         }
         val desktopMain by getting {
             dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(deps.sqldelight.driver.jvm)
+                api(compose.desktop.currentOs)
+                api(deps.sqldelight.driver.jvm)
             }
         }
     }
@@ -73,19 +73,10 @@ kotlin {
 
 val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = "rs.xor.rencfs.krencfs"
-val applicationClassName = "KRencfsApplicationKt"
-val mainClassPath = "${applicationPackageName}.${applicationClassName}"
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = mainClassPath
-    }
-}
 
 compose.desktop {
     application {
-        mainClass = mainClassPath
-
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
 

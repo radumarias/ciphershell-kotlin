@@ -20,7 +20,7 @@ hilt = "2.52"
 coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
 #jetbrains-androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose"}
-jetbrains-compose-material-navigation = { group = "org.jetbrains.compose.material", name = "material-navigation", version.ref = "compose"}
+#jetbrains-compose-material-navigation = { group = "org.jetbrains.compose.material", name = "material-navigation", version.ref = "compose"}
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit" }

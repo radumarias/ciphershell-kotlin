@@ -16,14 +16,12 @@ env:
   RUSTDOCFLAGS: "-Dwarnings"
 
 jobs:
-  build:
+  build-desktop:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ ubuntu-latest ]
       fail-fast: true
-    env:
-      STAGE: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -85,3 +83,47 @@ jobs:
         run: |
           printenv
           ./gradlew clean rencfsDesktop:build
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup Rust
+# TODO: Could this become a common step?
+        run: |
+          rustup toolchain install nightly --component rust-docs
+          rustup default nightly
+          rustup component add rustc          # Rust compiler
+          rustup component add cargo          # Rust package manager
+          rustup component add clippy         # Linting tool
+          rustup component add rustfmt        # Code formatter
+          rustup component add rust-docs      # Documentation
+          rustup component add rust-analysis  # Rust analysis for tools
+          rustup update
+        shell: bash
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+      - name: Java Build Cache
+        id: java-build-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle
+            ${{ github.workspace }}/.gradle
+          key: android-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
+      - name: Get Rust version hash
+        id: rust_version_hash
+        run: |
+          rust_version=$(rustc --version | awk '{print $2}')
+          rust_version_hash=$(echo -n $rust_version | sha256sum | awk '{print $1}')
+          echo "{hash}={$rust_version_hash}" >> $GITHUB_OUTPUT
+      - name: Build Android App
+        run: |
+          printenv
+          ./gradlew clean rencfsAndroid:assembleDebug

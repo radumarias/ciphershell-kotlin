@@ -19,7 +19,7 @@ stable release.
 - [Main.kt](cli/src/main/kotlin/Main.kt): Main file that uses the Rust code.
 - [Rust.kt](cli/src/main/kotlin/Rust.kt): Namespace for all the exported Rust functions.
 
-### Exposed functions
+### Exposed rencfs api
 
 - `fun hello(str: String): String;`: Test function that takes a string and returns it with some additional one.
 - `fun mount(mnt: String, dataDir: String, password: String, umountFirst: Bolean): Int;`: Mounts a filesystem at `mnt`
@@ -38,7 +38,7 @@ stable release.
   ```
   Set app state. Helpful to simulate various errors and `dry-run`.
 
-### Build
+### Building rencfs command line
 
 ```bash
 ./gradlew cli:build
@@ -46,7 +46,7 @@ stable release.
 
 This will also build `java-bridge` for the current OS target.
 
-### Run
+### Run rencfs command line 
 
 It will use the current OS target image for `java-bridge`.
 
@@ -56,7 +56,7 @@ It will use the current OS target image for `java-bridge`.
 
 This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data dir `$currentUserHome/rencfs/data`. Feel free to change in [build.gradle.ks](cli/build.gradle.kts).
 
-## GUI app
+## Graphical User Interface Application (GUI app)
 
 ### Integrated Development Environment (IDE)
 
@@ -73,7 +73,7 @@ If you prefer the command line and have Android Studio installed via the JetBrai
 
 From Run Configurations, switch the flavor from rencfsAndroid, rencfsDesktop 
 
-### Build Desktop
+### Build Desktop GUI App
 
 ```bash
 ./gradlew rencfsDesktop:build
@@ -81,7 +81,7 @@ From Run Configurations, switch the flavor from rencfsAndroid, rencfsDesktop
 
 This will also build `java-bridge` for the current OS target.
 
-### Run Desktop
+### Run Desktop GUI App
 
 It will use the current OS target image for `java-bridge`.
 
@@ -91,7 +91,7 @@ It will use the current OS target image for `java-bridge`.
 ./gradlew clean :rencfsDesktop:run
 ```
 
-### Build Android
+### Build Android App
 
 #### Prerequisites
 
@@ -104,15 +104,18 @@ TODO: Add more details how to set up and include command line instructions to ac
 #sample of local.properties file
 sdk.dir=<full-path-to-android-sdk-dir>
 ```
-### Run Android
-#### Run via gradle
+### Run Android App
+
+There are multiple ways to run the Android App.
+
+#### Via gradle
 
 ** Pre-requisites **
 Ensure an Android device is connected to your PC and you have fulfilled the above build pre-requisites.
 
 Run `./gradlew :rencfsAndroid:installDebug` in the project root directory
 
-#### Manual run via ADB
+#### Via ADB
 
 **Pre-requisites**
 
@@ -129,13 +132,13 @@ Launch the app manually via adb:
 
 At this point, you should also be able to find the App Launcher on your home screen
 
-#### Manual run via sideload
+#### Sideloading
 
 **Pre-requisites** 
 
 Build and locate the apk the same way as the above
 
-Copy the apk file to the device and open it with file manager, install and run.
+Obtain the apk file on the device (various means - download link, email attachment, etc.) and access it (typically via a file manager), choose install and then run it. 
 
 # Contribute
 

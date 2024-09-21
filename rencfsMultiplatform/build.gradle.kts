@@ -25,6 +25,7 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
         androidTarget {
             compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -34,25 +35,37 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
+        all {
+            languageSettings {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         commonMain {
 //            kotlin.srcDir("commonMain/kotlin")
             resources.srcDir("src/commonMain/res")
 
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                api(compose.runtimeSaveable)
+                api(compose.ui)
+//                api(compose.uiUtil)
+//                api(compose.uiTooling)
+                api(compose.material)
                 api(compose.material3)
                 api(compose.materialIconsExtended)
-                api(compose.ui)
-                api(compose.components.resources)
+//                api(compose.preview)
                 api(compose.components.uiToolingPreview)
+                api(compose.components.resources)
+                api(compose.animation)
+                api(compose.animationGraphics)
 
 //                implementation(deps.jetbrains.compose.material.navigation)
 //                implementation(deps.jetbrains.androidx.navigation)
 
-                api(deps.bundles.common.filekit)
+                implementation(deps.bundles.common.filekit)
 
-                api(deps.bundles.common.sqldelight)
+                implementation(deps.bundles.common.sqldelight)
 
                 api(deps.coroutines)
             }

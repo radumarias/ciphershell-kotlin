@@ -12,6 +12,8 @@ vinceglb-filekit = "0.7.0"
 # Android
 androidGradlePlugin = "8.6.0-alpha07"
 
+#lifecycle = "2.8.2"
+
 ksp = "2.0.20-1.0.25"
 hilt = "2.52"
 
@@ -19,6 +21,7 @@ hilt = "2.52"
 # Common
 coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
+#jetbrains-lifecycle = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime", version.ref = "lifecycle"}
 #jetbrains-androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose"}
 #jetbrains-compose-material-navigation = { group = "org.jetbrains.compose.material", name = "material-navigation", version.ref = "compose"}
 

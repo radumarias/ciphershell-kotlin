@@ -9,7 +9,7 @@ import rs.xor.rencfs.krencfs.RootContextProvider
 open class KrencfsAndroidApplication : Application() {
 
     override fun onCreate() {
-        RootContextProvider.initialize(getApplicationContext())
+        RootContextProvider.initialize(applicationContext)
         super.onCreate()
         Log.d(TAG, "onCreate")
     }

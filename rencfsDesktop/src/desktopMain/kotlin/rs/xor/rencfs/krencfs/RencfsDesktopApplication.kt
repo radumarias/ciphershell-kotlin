@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.window.*
-import rs.xor.rencfs.krencfs.ui.KrencfsMainUI
-import rs.xor.rencfs.krencfs.ui.design.KrencfsMaterialDarkTheme
+import rs.xor.rencfs.krencfs.ui.RencfsMainUI
+import rs.xor.rencfs.krencfs.ui.RencfsMaterialDarkTheme
 
 fun main() = application {
     var isOpen by remember { mutableStateOf(true) }
@@ -36,8 +36,8 @@ fun main() = application {
                     Item("Exit", onClick = ::exitApplication)
                 }
             }
-            KrencfsMaterialDarkTheme {
-                KrencfsMainUI()
+            RencfsMaterialDarkTheme {
+                RencfsMainUI()
             }
         }
     }

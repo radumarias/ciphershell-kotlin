@@ -1,5 +1,6 @@
 package rs.xor.rencfs.krencfs.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,14 +12,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.design.customcomponents.AutoDismissibleSnackBar
+import rs.xor.rencfs.krencfs.ui.branding.DesignSystem
 
 @Composable
 fun NavigationPanel(
@@ -26,49 +26,47 @@ fun NavigationPanel(
     items: Map<String, VaultModel>,
     itemClicked: (String, VaultModel) -> Unit,
 ) {
-    Surface(modifier = modifier) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-        ) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top,
+    ) {
 
-            Spacer(modifier = Modifier.height(20.dp))
-            LazyColumn(
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                state = rememberLazyListState(),
-            ) {
-                itemsIndexed(
-                    items = items.toList(),
-                    key = { _, entry -> entry.first })
-                { _, item ->
-                    Surface(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .fillMaxWidth()
-                            .clickable {
-                                itemClicked.invoke(item.first, item.second)
-                            },
-                        color = Color(0xFF333333)
-                    ) {
-                        Text(item.second.name)
-                        VerticalDivider(modifier = Modifier.height(1.dp).fillMaxWidth())
-                    }
+        Spacer(modifier = Modifier.height(20.dp))
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            state = rememberLazyListState(),
+        ) {
+            itemsIndexed(
+                items = items.toList(),
+                key = { _, entry -> entry.first })
+            { _, item ->
+                Surface(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .clickable {
+                            itemClicked.invoke(item.first, item.second)
+                        },
+                ) {
+                    Text(item.second.name)
+                    HorizontalDivider(
+                        modifier = Modifier.height(1.dp).fillMaxWidth()
+                    )
                 }
             }
         }
     }
 }
 
-
 @Composable
 fun EditVaultPanel(
     modifier: Modifier = Modifier,
     key: String,
-    vault: VaultModel,
+    vaultModel: VaultModel,
     onSave: (VaultModel) -> Unit,
 ) {
-    var vault by remember(key) {  mutableStateOf(vault)  }
+    var vault by remember(key) { mutableStateOf(vaultModel) }
     Box(modifier = modifier)
     {
         Column(modifier = Modifier.padding(start = 20.dp)) {
@@ -77,7 +75,7 @@ fun EditVaultPanel(
                 style = MaterialTheme.typography.bodyMedium,
                 text = "Edit Vault"
             )
-            HorizontalDivider(color = MaterialTheme.colorScheme.surface)
+            HorizontalDivider()
             Column(modifier = Modifier.padding(10.dp)) {
                 Row(modifier = Modifier.padding(10.dp)) {
                     TextField(
@@ -87,11 +85,7 @@ fun EditVaultPanel(
                         value = vault.name,
                         onValueChange = {
                             vault = vault.copy(name = it)
-                        },
-                        colors = TextFieldDefaults.colors().copy(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                            focusedContainerColor = MaterialTheme.colorScheme.surface
-                        )
+                        }
                     )
                 }
                 Row(modifier = Modifier.padding(10.dp)) {
@@ -104,11 +98,7 @@ fun EditVaultPanel(
                         value = vault.mountPoint,
                         onValueChange = {
                             vault = vault.copy(mountPoint = it)
-                        },
-                        colors = TextFieldDefaults.colors().copy(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                            focusedContainerColor = MaterialTheme.colorScheme.surface
-                        )
+                        }
                     )
                 }
                 Row(modifier = Modifier.padding(10.dp)) {
@@ -120,10 +110,6 @@ fun EditVaultPanel(
                         onValueChange = {
                             vault = vault.copy(dataDir = it)
                         },
-                        colors = TextFieldDefaults.colors().copy(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                            focusedContainerColor = MaterialTheme.colorScheme.surface
-                        )
                     )
                     // FileKit Compose
                     val launcher = rememberDirectoryPickerLauncher(
@@ -156,9 +142,8 @@ fun EditVaultPanel(
     }
 }
 
-@Preview
 @Composable
-fun KrencfsMainUI() {
+fun RencfsMainUI() {
     val scope = rememberCoroutineScope()
     var vaultKey by remember { mutableStateOf<String?>(null) }
 
@@ -228,8 +213,8 @@ fun KrencfsMainUI() {
                                 vaultKey = key
                             }
                         )
-                        VerticalDivider()
                     }
+                    VerticalDivider()
                     Box(
                         Modifier
                             .weight(0.7f)
@@ -241,7 +226,7 @@ fun KrencfsMainUI() {
                                     modifier = Modifier
                                         .fillMaxSize(),
                                     key = this,
-                                    vault = vaultModel,
+                                    vaultModel = vaultModel,
                                     onSave = { updatedVault ->
                                         println("onSave $this")
                                         scope.launch {

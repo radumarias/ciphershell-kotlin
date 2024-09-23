@@ -1,6 +1,7 @@
 package rs.xor.rencfs.krencfs.design.customcomponents
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import rs.xor.rencfs.krencfs.ui.branding.DesignSystem
 
 @Composable
 fun AutoDismissibleSnackBar(
@@ -46,7 +48,8 @@ fun AutoDismissibleSnackBar(
                 )
             },
         ) {
-            Text(modifier = Modifier.wrapContentSize(),
+            Text(
+                modifier = Modifier.wrapContentSize(),
                 text = message
             )
         }

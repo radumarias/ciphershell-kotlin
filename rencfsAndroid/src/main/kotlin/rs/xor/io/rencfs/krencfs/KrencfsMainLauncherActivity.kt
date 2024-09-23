@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import rs.xor.rencfs.krencfs.ui.KrencfsMainUI
-import rs.xor.rencfs.krencfs.ui.design.KrencfsMaterialDarkTheme
+import rs.xor.rencfs.krencfs.ui.RencfsMainUI
+import rs.xor.rencfs.krencfs.ui.RencfsMaterialDarkTheme
 
 class KrencfsMainLauncherActivity : ComponentActivity() {
 
@@ -14,8 +14,8 @@ class KrencfsMainLauncherActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Log.d("KrencfsMainLauncherActivity", "onCreate")
         setContent {
-            KrencfsMaterialDarkTheme {
-                KrencfsMainUI()
+            RencfsMaterialDarkTheme {
+                RencfsMainUI()
             }
         }
 

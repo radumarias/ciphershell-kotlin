@@ -1,14 +1,12 @@
-import androidx.compose.foundation.background
+package rs.xor.rencfs.krencfs.ui.branding
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import rs.xor.rencfs.krencfs.ui.branding.DesignSystem
-import rs.xor.rencfs.krencfs.ui.branding.backgroundAngularGradient
 
-@Preview(widthDp = 200, heightDp = 100)
+@Preview(widthDp = 280, heightDp = 100)
 @Composable
 fun Preview_Oxidized_Iron() {
     Box(modifier = Modifier
@@ -17,7 +15,7 @@ fun Preview_Oxidized_Iron() {
     )
 }
 
-@Preview(widthDp = 200, heightDp = 100)
+@Preview(widthDp = 280, heightDp = 100)
 @Composable
 fun Preview_Oxidized_Copper() {
     Box(modifier = Modifier

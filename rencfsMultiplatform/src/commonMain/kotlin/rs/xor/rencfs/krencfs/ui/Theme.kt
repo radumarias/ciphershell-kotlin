@@ -16,6 +16,8 @@ fun RencfsMaterialDarkTheme(
         onPrimary = Color.White,
         primaryContainer = DesignSystem.Colors.Palette.Primary_Black_800,
         onPrimaryContainer = DesignSystem.Colors.Palette.Primary_Black_100,
+        secondary = DesignSystem.Colors.Palette.Secondary_Brown_600,
+        onSecondary = DesignSystem.Colors.Palette.Secondary_Brown_100,
     ),
     shapes: Shapes = MaterialTheme.shapes,
     typography: Typography? = null,
@@ -23,28 +25,7 @@ fun RencfsMaterialDarkTheme(
 ) {
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = typography ?: DesignSystem.Typography.JetBrainsMono().let { JBMono ->
-            MaterialTheme.typography.copy(
-                displayLarge = MaterialTheme.typography.displayLarge.copy(
-                    fontFamily = JBMono,
-                    fontSize = 110.sp
-                ),
-                displayMedium = MaterialTheme.typography.displayMedium.copy(fontFamily = JBMono),
-                displaySmall = MaterialTheme.typography.displaySmall.copy(fontFamily = JBMono),
-                headlineLarge = MaterialTheme.typography.headlineLarge.copy(fontFamily = JBMono),
-                headlineMedium = MaterialTheme.typography.headlineMedium.copy(fontFamily = JBMono),
-                headlineSmall = MaterialTheme.typography.headlineSmall.copy(fontFamily = JBMono),
-                titleLarge = MaterialTheme.typography.titleLarge.copy(fontFamily = JBMono),
-                titleMedium = MaterialTheme.typography.titleMedium.copy(fontFamily = JBMono),
-                titleSmall = MaterialTheme.typography.titleSmall.copy(fontFamily = JBMono),
-                bodyLarge = MaterialTheme.typography.bodyLarge.copy(fontFamily = JBMono),
-                bodyMedium = MaterialTheme.typography.bodyMedium.copy(fontFamily = JBMono),
-                bodySmall = MaterialTheme.typography.bodySmall.copy(fontFamily = JBMono),
-                labelLarge = MaterialTheme.typography.labelLarge.copy(fontFamily = JBMono),
-                labelMedium = MaterialTheme.typography.labelMedium.copy(fontFamily = JBMono),
-                labelSmall = MaterialTheme.typography.labelSmall.copy(fontFamily = JBMono)
-            )
-        },
+        typography = typography ?: MaterialTheme.typography,
         shapes = shapes,
         content = content,
     )

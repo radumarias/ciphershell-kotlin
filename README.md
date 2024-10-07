@@ -62,10 +62,7 @@ This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data
 
 The multiplatform project is developed mainly using IntelliJ Ultimate or JetBrains Fleet IDE. 
 
-For Android development only, you can use Android Studio version Koala 2024.1.2,
-make sure to change in `build.dependencies.toml`  the entry for androidGradlePlugin from `8.6.0-alpha07` to `8.6.0`. 
-
-**Do not commit this** change! It is only a temporary workaround due to the experimental nature of KMP.
+For Android development only, you can use Android Studio version Koala 2024.1.2. 
 
 From the Android Studio main window menu, select `File> Open` and then point the explorer to the project' root directory.
 
@@ -92,6 +89,13 @@ It will use the current OS target image for `java-bridge`.
 ```
 
 ### Build Android App
+
+#### WARNING: K2 is not supported. Don't enable it.
+
+The latest Android Studio IDE will ask you to enable K2 (because we are using Kotlin 2.0.0+) but it is not working out of the box.
+Don't enable it, you could encounter unexpected issues.
+
+We can enable it when in the future, asuming it doesn't break the IDE forever.
 
 #### Prerequisites
 

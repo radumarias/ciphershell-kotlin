@@ -29,7 +29,6 @@ kotlin {
 
 //                implementation(deps.jetbrains.compose.material.navigation)
 //                implementation(deps.jetbrains.androidx.navigation)
-//                implementation("androidx.collection:collection:1.4.3")
 
                 implementation(deps.bundles.common.filekit)
 

@@ -62,7 +62,7 @@ This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data
 
 The multiplatform project is developed mainly using IntelliJ Ultimate or JetBrains Fleet IDE. 
 
-For Android development only, you can use Android Studio version Koala 2024.1.2. 
+For Android development only, you can use Android Studio version Ladybug 2024.2.1. 
 
 From the Android Studio main window menu, select `File> Open` and then point the explorer to the project' root directory.
 

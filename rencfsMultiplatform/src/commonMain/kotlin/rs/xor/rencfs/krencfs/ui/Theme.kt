@@ -16,6 +16,8 @@ fun RencfsMaterialDarkTheme(
         onPrimary = Color.White,
         primaryContainer = DesignSystem.Colors.Palette.Primary_Black_800,
         onPrimaryContainer = DesignSystem.Colors.Palette.Primary_Black_100,
+        secondary = DesignSystem.Colors.Palette.Secondary_Brown_600,
+        onSecondary = DesignSystem.Colors.Palette.Secondary_Brown_100,
     ),
     shapes: Shapes = MaterialTheme.shapes,
     typography: Typography? = null,

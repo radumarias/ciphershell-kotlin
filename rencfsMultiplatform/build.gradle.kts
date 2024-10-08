@@ -41,21 +41,16 @@ kotlin {
             }
         }
         commonMain {
-//            kotlin.srcDir("commonMain/kotlin")
             resources.srcDir("src/commonMain/res")
 
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
+                api(compose.runtime)
+                api(compose.foundation)
                 api(compose.runtimeSaveable)
                 api(compose.ui)
-//                api(compose.uiUtil)
-//                api(compose.uiTooling)
-                api(compose.material)
                 api(compose.material3)
                 api(compose.materialIconsExtended)
                 api(compose.preview)
-                implementation(compose.components.uiToolingPreview)
                 api(compose.components.resources)
                 api(compose.animation)
                 api(compose.animationGraphics)
@@ -63,8 +58,8 @@ kotlin {
 //                implementation(deps.jetbrains.compose.material.navigation)
 //                implementation(deps.jetbrains.androidx.navigation)
 
+                implementation(compose.components.uiToolingPreview)
                 implementation(deps.bundles.common.filekit)
-
                 implementation(deps.bundles.common.sqldelight)
 
                 api(deps.coroutines)

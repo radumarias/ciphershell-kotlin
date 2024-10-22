@@ -152,3 +152,7 @@ If you build something interesting and feel like sharing pull requests are alway
 ## How to contribute
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+# Credits
+
+Thank you [Andrei Mărcuţ](https://github.com/andreimarcut) for having the initiative of writing the GUI in Kotlin Multiplatform Compose.

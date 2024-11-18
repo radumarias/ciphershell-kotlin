@@ -25,6 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.edit_vault_panel_title
+import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.ui.customcomponents.AutoDismissibleSnackBar
@@ -82,7 +85,7 @@ fun EditVaultPanel(
             Text(
                 modifier = Modifier.padding(10.dp).wrapContentSize(),
                 style = MaterialTheme.typography.bodyMedium,
-                text = "Edit Vault"
+                text = stringResource(Res.string.edit_vault_panel_title),
             )
             HorizontalDivider()
             Column(modifier = Modifier.padding(10.dp)) {

@@ -26,9 +26,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
-
-//                implementation(deps.jetbrains.compose.material.navigation)
-//                implementation(deps.jetbrains.androidx.navigation)
+                implementation(compose.animation)
 
                 implementation(deps.bundles.common.filekit)
 

@@ -10,9 +10,10 @@ vinceglb-filekit = "0.7.0"
 #dokka = "1.9.20"
 
 # Android
-androidGradlePlugin = "8.7.2"
+androidGradlePlugin = "8.7.3"
 
-#lifecycle = "2.8.2"
+lifecycle = "2.8.4"
+navigation = "2.8.0-alpha10"
 
 ksp = "2.0.21-1.0.26"
 hilt = "2.52"
@@ -21,9 +22,9 @@ hilt = "2.52"
 # Common
 coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
-#jetbrains-lifecycle = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime", version.ref = "lifecycle"}
-#jetbrains-androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose"}
-#jetbrains-compose-material-navigation = { group = "org.jetbrains.compose.material", name = "material-navigation", version.ref = "compose"}
+jetbrains-androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+jetbrains-androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+jetbrains-androidx-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit" }

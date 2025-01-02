@@ -21,6 +21,7 @@ fun main() = application {
             Item("Exit", onClick = ::exitApplication)
         },
     )
+
     if (isOpen) {
         Window(
             onCloseRequest = { isOpen = false },
@@ -37,7 +38,7 @@ fun main() = application {
                 }
             }
             RencfsMaterialDarkTheme {
-                RencfsMainUI()
+                RencfsComposeAdaptiveApp(DeviceType.Desktop)
             }
         }
     }

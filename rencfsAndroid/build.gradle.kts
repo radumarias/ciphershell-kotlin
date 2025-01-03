@@ -1,3 +1,5 @@
+val packageId = "rs.xor.io.rencfs.krencfs"
+
 plugins {
     alias(deps.plugins.google.android.application)
     alias(deps.plugins.jetbrains.compose.compiler)
@@ -5,10 +7,11 @@ plugins {
     alias(deps.plugins.google.ksp)
     alias(deps.plugins.google.hilt)
 }
-val packageId = "rs.xor.io.rencfs.krencfs"
+
 kotlin {
     jvmToolchain(17)
 }
+
 android {
     namespace = packageId
     compileSdk = 35
@@ -28,12 +31,14 @@ android {
     buildFeatures {
         compose = true
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
@@ -43,15 +48,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-
-    sourceSets {
-        getByName("debug")
-        {
-            java.srcDir("src/main/preview")
-        }
-    }
-
 
     dependencies {
         coreLibraryDesugaring(androidDeps.jdk.desugaring)
@@ -69,6 +65,5 @@ android {
 
         // hilt
         implementation(androidDeps.bundles.hilt)
-
     }
 }

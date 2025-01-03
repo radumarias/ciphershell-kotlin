@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 compose = "1.7.3"
 coroutines = "1.9.0"
 
@@ -16,8 +16,8 @@ lifecycle = "2.8.4"
 navigation = "2.8.0-alpha11"
 adaptive = "1.0.1"
 
-ksp = "2.0.21-1.0.26"
-hilt = "2.52"
+ksp = "2.1.0-1.0.29"
+hilt = "2.54"
 
 [libraries]
 # Common

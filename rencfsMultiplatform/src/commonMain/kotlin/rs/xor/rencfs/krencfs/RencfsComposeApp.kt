@@ -38,10 +38,6 @@ import rs.xor.rencfs.krencfs.ui.screens.SettingsScreen
 import rs.xor.rencfs.krencfs.ui.screens.VaultListScreen
 import rs.xor.rencfs.krencfs.ui.screens.VaultViewer
 
-enum class AppType{
-
-}
-
 enum class RencfsScreen(
     val route: String,
     val title: String,

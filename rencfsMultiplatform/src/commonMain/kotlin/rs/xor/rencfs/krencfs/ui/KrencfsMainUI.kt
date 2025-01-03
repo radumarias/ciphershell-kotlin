@@ -158,9 +158,8 @@ fun EditVaultPanel(
 fun RencfsMainUI() {
     val scope = rememberCoroutineScope()
     var vaultKey by remember { mutableStateOf<String?>(null) }
-
+//    NavigationSuiteScaffold
     var vaults by remember { mutableStateOf<Map<String, VaultModel>>(emptyMap()) }
-
     LaunchedEffect(Unit) {
         scope.launch {
             SQLDelightDB.getVaultRepositoryAsync()

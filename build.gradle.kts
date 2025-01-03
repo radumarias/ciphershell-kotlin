@@ -3,10 +3,6 @@ buildscript {
         mavenCentral()
         google()
     }
-
-    dependencies {
-        /*TODO*/
-    }
 }
 
 plugins {

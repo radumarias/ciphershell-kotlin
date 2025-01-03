@@ -54,6 +54,7 @@ kotlin {
                 api(compose.components.resources)
                 api(compose.animation)
                 api(compose.animationGraphics)
+                api(compose.material3AdaptiveNavigationSuite)
 
                 implementation(deps.jetbrains.androidx.navigation.compose)
                 implementation(deps.jetbrains.androidx.lifecycle.runtime.compose)

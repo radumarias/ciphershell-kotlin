@@ -50,17 +50,19 @@ kotlin {
                 api(compose.ui)
                 api(compose.material3)
                 api(compose.materialIconsExtended)
-                api(compose.preview)
                 api(compose.components.resources)
                 api(compose.animation)
                 api(compose.animationGraphics)
                 api(compose.material3AdaptiveNavigationSuite)
 
+//                todo: not supported in kmp
+//                api(compose.preview)
+//                implementation(compose.components.uiToolingPreview)
+
                 implementation(deps.jetbrains.androidx.navigation.compose)
                 implementation(deps.jetbrains.androidx.lifecycle.runtime.compose)
                 implementation(deps.jetbrains.androidx.lifecycle.viewmodel.compose)
 
-                implementation(compose.components.uiToolingPreview)
                 implementation(deps.bundles.common.filekit)
                 implementation(deps.bundles.common.sqldelight)
 
@@ -119,6 +121,15 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+    }
+    sourceSets {
+        getByName("debug")
+        {
+            java.srcDir("src/androidMain/preview")
+        }
+    }
+    dependencies {
+        implementation(androidDeps.compose.tooling)
     }
 }
 

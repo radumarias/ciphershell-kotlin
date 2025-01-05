@@ -1,10 +1,9 @@
-package rs.xor.rencfs.krencfs.ui
+package rs.xor.rencfs.krencfs.ui.design
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import rs.xor.rencfs.krencfs.ui.branding.DesignSystem
 
 
 @Composable

@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui.branding
+package rs.xor.rencfs.krencfs.ui.design
 
 import androidx.compose.foundation.background
 import androidx.compose.runtime.*

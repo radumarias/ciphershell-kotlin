@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui.customcomponents
+package rs.xor.rencfs.krencfs.ui.design.customcomponents
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

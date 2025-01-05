@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.window.*
-import rs.xor.rencfs.krencfs.ui.RencfsMainUI
-import rs.xor.rencfs.krencfs.ui.RencfsMaterialDarkTheme
+import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
+import rs.xor.rencfs.krencfs.ui.display.DisplayType
 
 fun main() = application {
     var isOpen by remember { mutableStateOf(true) }
@@ -24,6 +24,7 @@ fun main() = application {
 
     if (isOpen) {
         Window(
+            undecorated = false,
             onCloseRequest = { isOpen = false },
             title = "Krencfs",
             state = rememberWindowState(
@@ -38,7 +39,7 @@ fun main() = application {
                 }
             }
             RencfsMaterialDarkTheme {
-                RencfsComposeAdaptiveApp(DeviceType.Desktop)
+                RencfsComposeAdaptiveApp(DisplayType.Desktop)
             }
         }
     }

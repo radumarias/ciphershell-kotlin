@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui.screens
+package rs.xor.rencfs.krencfs.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,12 +19,6 @@ fun AboutScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "About Rencfs",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
         Card(
             modifier = Modifier.fillMaxWidth()
         ) {

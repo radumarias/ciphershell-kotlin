@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui
+package rs.xor.rencfs.krencfs.ui.state
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -9,9 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import rs.xor.rencfs.krencfs.ui.RencfsMaterialDarkTheme
-import rs.xor.rencfs.krencfs.ui.branding.DesignSystem
-import rs.xor.rencfs.krencfs.ui.branding.backgroundAngularGradient
+import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
+import rs.xor.rencfs.krencfs.ui.design.DesignSystem
+import rs.xor.rencfs.krencfs.ui.design.backgroundAngularGradient
+import rs.xor.rencfs.krencfs.ui.design.customcomponents.AutoDismissibleSnackBar
 
 
 @Preview(device = "id:pixel_9_pro_xl")

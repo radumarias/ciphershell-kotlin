@@ -1,10 +1,32 @@
 package rs.xor.rencfs.krencfs.ui.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreHoriz
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,16 +34,17 @@ import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.ui.ErrorState
-import rs.xor.rencfs.krencfs.ui.LoadingState
-import rs.xor.rencfs.krencfs.ui.UiState
+import rs.xor.rencfs.krencfs.ui.state.ErrorState
+import rs.xor.rencfs.krencfs.ui.state.LoadingState
+import rs.xor.rencfs.krencfs.ui.state.UiState
 
 // VaultEditor.kt
 @Composable
 fun VaultEditor(
-    vaultId: String?,
-    onSave: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    vaultId: String? = null,
+    createVault: Boolean = false,
+    onSave: () -> Unit
 ) {
     var uiState by remember { mutableStateOf<UiState<VaultModel>>(UiState.Loading) }
     val scope = rememberCoroutineScope()
@@ -31,15 +54,24 @@ fun VaultEditor(
     LaunchedEffect(vaultId) {
         uiState = UiState.Loading
         try {
+            val repo = SQLDelightDB.getVaultRepositoryAsync()
             vaultId?.let {
-                val vault = SQLDelightDB.getVaultRepositoryAsync().getVault(it.toLong())
+                val vault = repo.getVault(it.toLong())
                 uiState = if (vault != null) {
                     UiState.Success(vault)
                 } else {
                     UiState.Error("Vault not found")
                 }
             } ?: run {
-                uiState = UiState.Error("Invalid vault ID")
+                uiState = if (createVault) {
+                    // TODO: Improve this, introduce drafting
+                    val newVault = repo.getVault(repo.addVault().toLong())!!
+                    UiState.Success(newVault)
+                }
+                else
+                {
+                    UiState.Error("Invalid vault ID")
+                }
             }
         } catch (e: Exception) {
             uiState = UiState.Error("Failed to load vault: ${e.message}")
@@ -163,7 +195,6 @@ private fun VaultEditorContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DataDirField(
     value: String,

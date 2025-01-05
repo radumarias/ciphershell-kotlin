@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui.screens
+package rs.xor.rencfs.krencfs.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +28,6 @@ fun SettingsScreen() {
     ) {
         var autoMount by remember { mutableStateOf(false) }
         var showNotifications by remember { mutableStateOf(true) }
-
-        Text(
-            text = "General Settings",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         Card(
             modifier = Modifier.fillMaxWidth()

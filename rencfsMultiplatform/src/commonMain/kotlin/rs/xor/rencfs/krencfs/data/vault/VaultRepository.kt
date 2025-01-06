@@ -9,4 +9,5 @@ interface VaultRepository {
     suspend fun addVault(name: String = "", mountPoint: String = "", dataDir: String = ""): String
     suspend fun updateVault(id: String, name: String, mountPoint: String, dataDir: String)
     suspend fun deleteVault(id: String)
+    fun count(): Long
 }

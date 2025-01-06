@@ -3,8 +3,8 @@ package rs.xor.rencfs.krencfs.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import rs.xor.rencfs.krencfs.RencfsComposeAdaptiveApp
+import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
-import rs.xor.rencfs.krencfs.ui.display.DisplayType
 
 
 @Composable

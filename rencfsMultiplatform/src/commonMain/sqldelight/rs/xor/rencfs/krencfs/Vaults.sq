@@ -5,6 +5,9 @@ CREATE TABLE `Vault` (
     `mount` TEXT NOT NULL
 );
 
+count:
+SELECT COUNT(*) FROM `Vault`;
+
 selectAll:
 SELECT * FROM `Vault`;
 

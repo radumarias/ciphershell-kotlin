@@ -1,8 +1,11 @@
 package rs.xor.rencfs.krencfs.ui.design
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
@@ -18,7 +21,13 @@ fun RencfsMaterialDarkTheme(
         secondary = DesignSystem.Colors.Palette.Secondary_Brown_600,
         onSecondary = DesignSystem.Colors.Palette.Secondary_Brown_100,
     ),
-    shapes: Shapes = MaterialTheme.shapes,
+    shapes: Shapes = Shapes(
+        extraSmall = RoundedCornerShape(4.dp),
+        small = RoundedCornerShape(8.dp),
+        medium = RoundedCornerShape(16.dp),
+        large = RoundedCornerShape(24.dp),
+        extraLarge = RoundedCornerShape(32.dp),
+    ),
     typography: Typography? = null,
     content: @Composable () -> Unit,
 ) {

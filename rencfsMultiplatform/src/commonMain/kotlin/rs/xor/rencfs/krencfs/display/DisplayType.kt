@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.ui.display
+package rs.xor.rencfs.krencfs.display
 
 enum class DisplayType {
     Phone,      // Handheld, small-screen devices

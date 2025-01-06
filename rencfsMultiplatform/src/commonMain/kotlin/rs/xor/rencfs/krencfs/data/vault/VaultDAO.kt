@@ -13,4 +13,5 @@ interface VaultDAO {
     suspend fun updateVault(id: Long, name: String, mountPoint: String, dataDir: String)
     suspend fun deleteVault(id: Long)
 
+    fun count(): Long
 }

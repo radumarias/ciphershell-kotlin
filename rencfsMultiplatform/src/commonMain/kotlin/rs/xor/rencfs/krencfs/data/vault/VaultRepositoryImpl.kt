@@ -30,4 +30,6 @@ class VaultRepositoryImpl(
 
     override suspend fun deleteVault(id: String) = id.toLongOrNull()?.let { dao.deleteVault(it) } ?: Unit
 
+    override  fun count() =  dao.count()
+
 }

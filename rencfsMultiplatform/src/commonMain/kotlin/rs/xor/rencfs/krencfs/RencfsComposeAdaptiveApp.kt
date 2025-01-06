@@ -4,7 +4,6 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -31,18 +34,41 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import kotlinx.coroutines.delay
+import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
+import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.navigation.RencfsNavigationRoutes
 import rs.xor.rencfs.krencfs.screen.AboutScreen
 import rs.xor.rencfs.krencfs.screen.SettingsScreen
+import rs.xor.rencfs.krencfs.screen.SplashScreen
 import rs.xor.rencfs.krencfs.screen.VaultListScreen
 import rs.xor.rencfs.krencfs.screen.VaultViewer
 import rs.xor.rencfs.krencfs.ui.components.VaultEditor
-import rs.xor.rencfs.krencfs.ui.display.DisplayType
 
+@Composable
+fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
+    var isLoading by remember { mutableStateOf(true) }
+    var count by remember { mutableStateOf(0L) }
+
+    if (isLoading) {
+        SplashScreen()
+        LaunchedEffect(Unit) {
+            val start = System.currentTimeMillis()
+            count = SQLDelightDB.getVaultRepositoryAsync().count()
+            val loadTime = System.currentTimeMillis() - start
+            if (loadTime < 2000) {
+                delay(2000 - loadTime)
+            }
+            isLoading = false
+        }
+    } else {
+        RencfsComposeAdaptiveApp2(deviceType, count <= 0)
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
+fun RencfsComposeAdaptiveApp2(deviceType: DisplayType, firstTime: Boolean = false) {
     val navController = rememberNavController()
     val createVaultUseCase = {
         navController.navigate(RencfsNavigationRoutes.VaultCreate.route) {
@@ -92,13 +118,14 @@ fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
                         onClick = createVaultUseCase
                     )
                 }
+
                 else -> {
                     // TODO
                 }
             }
         },
         layoutType = when (deviceType) {
-                DisplayType.Phone -> NavigationSuiteType.NavigationBar
+            DisplayType.Phone -> NavigationSuiteType.NavigationBar
             else -> NavigationSuiteType.NavigationRail
 //         else  -> NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo() // not yet supported by kmp
         }
@@ -120,12 +147,17 @@ fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
                                 IconButton(onClick = {
                                     currentBackStackEntry?.arguments?.getString("vaultId")
                                         ?.let { vaultId ->
-                                            navController.navigate(RencfsNavigationRoutes.vaultEditRoute(vaultId))
+                                            navController.navigate(
+                                                RencfsNavigationRoutes.vaultEditRoute(
+                                                    vaultId
+                                                )
+                                            )
                                         }
                                 }) {
                                     Icon(Icons.Filled.Edit, "Edit")
                                 }
                             }
+
                             else -> {}
                         }
                     }
@@ -144,12 +176,7 @@ fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
                 },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },
-                popExitTransition = {
-                    slideOutVertically(
-                        targetOffsetY = { it },
-                        animationSpec = tween(200)
-                    )
-                },
+                popExitTransition = { ExitTransition.None },
 //            enterTransition = { EnterTransition.None },
 //            exitTransition = { ExitTransition.None },
 //            popEnterTransition = { EnterTransition.None },
@@ -157,6 +184,7 @@ fun RencfsComposeAdaptiveApp(deviceType: DisplayType) {
             ) {
                 composable(RencfsNavigationRoutes.VaultList.route) {
                     VaultListScreen(
+                        firstStart = firstTime,
                         onVaultSelected = { vaultId ->
                             navController.navigate(RencfsNavigationRoutes.vaultDetailRoute(vaultId))
                         },

@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,6 +17,7 @@ enum class RencfsNavigationRoutes(
     val icon: ImageVector,
     val isTopLevel: Boolean = false,
 ) {
+    Splash("splash", "CipherShell", Icons.Filled.Lock),
     VaultList("vaults", "Vaults", Icons.Filled.Folder, true),
     VaultCreate("vault", "Add Vault", Icons.Filled.Add),
     VaultView("vault/{vaultId}", "Vault Details", Icons.Filled.Folder),

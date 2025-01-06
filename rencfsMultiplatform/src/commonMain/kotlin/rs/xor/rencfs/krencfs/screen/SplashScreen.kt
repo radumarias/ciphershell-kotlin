@@ -30,7 +30,6 @@ import krencfs.rencfsmultiplatform.generated.resources.welcome_screen_welcome_te
 import krencfs.rencfsmultiplatform.generated.resources.welcome_screen_welcome_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import java.awt.SplashScreen
 
 
 @Composable

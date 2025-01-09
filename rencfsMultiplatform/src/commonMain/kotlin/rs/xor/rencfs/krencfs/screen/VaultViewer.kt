@@ -15,16 +15,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.button_label_mount_vault
+import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.ui.state.ErrorState
 import rs.xor.rencfs.krencfs.ui.state.LoadingState
 import rs.xor.rencfs.krencfs.ui.state.UiState
 
-// VaultViewer.kt
 @Composable
 fun VaultViewer(
     vaultId: String?,
@@ -56,7 +57,6 @@ fun VaultViewer(
         is UiState.Error -> ErrorState(state.message)
     }
 }
-
 
 @Composable
 private fun VaultContent(
@@ -92,8 +92,9 @@ private fun VaultContent(
         }
         Button(
             onClick = { System.out.println("Mount: Cluck!") },
+            modifier = Modifier.padding(top = 16.dp)
         ) {
-            Text("Mount")
+            Text(stringResource(Res.string.button_label_mount_vault))
         }
     }
 }

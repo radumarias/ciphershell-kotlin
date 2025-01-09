@@ -39,7 +39,7 @@ fun main() = application {
                 }
             }
             RencfsMaterialDarkTheme {
-                RencfsComposeAdaptiveApp(DisplayType.Desktop)
+                RencfsComposeMainApp(DisplayType.Desktop)
             }
         }
     }

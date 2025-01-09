@@ -27,7 +27,6 @@ sealed class UiState<out T> {
     data class Error(val message: String) : UiState<Nothing>()
 }
 
-
 @Composable
 fun LoadingState(modifier: Modifier = Modifier) {
     Box(

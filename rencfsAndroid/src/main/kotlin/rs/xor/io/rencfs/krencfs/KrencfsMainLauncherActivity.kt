@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import rs.xor.rencfs.krencfs.display.DisplayType
-import rs.xor.rencfs.krencfs.RencfsComposeAdaptiveApp
+import rs.xor.rencfs.krencfs.RencfsComposeMainApp
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
 class KrencfsMainLauncherActivity : ComponentActivity() {
@@ -16,7 +16,7 @@ class KrencfsMainLauncherActivity : ComponentActivity() {
         Log.d("KrencfsMainLauncherActivity", "onCreate")
         setContent {
             RencfsMaterialDarkTheme {
-                RencfsComposeAdaptiveApp(DisplayType.Phone)
+                RencfsComposeMainApp(DisplayType.Phone)
             }
         }
     }

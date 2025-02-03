@@ -57,28 +57,26 @@ fun VaultEditor(
     val scope = rememberCoroutineScope()
     var isSaving by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var currentVaultId by remember { mutableStateOf<String?>(vaultId) }
 
     LaunchedEffect(vaultId) {
         uiState = UiState.Loading
         try {
             val repo = SQLDelightDB.getVaultRepositoryAsync()
-            vaultId?.let {
-                val vault = repo.getVault(it.toLong())
+            if (createVault) {
+                // Create a new vault and store its ID
+                currentVaultId = repo.addVault().toString()
+                val newVault = repo.getVault(currentVaultId!!.toLong())!!
+                uiState = UiState.Success(newVault)
+            } else if (vaultId != null) {
+                val vault = repo.getVault(vaultId.toLong())
                 uiState = if (vault != null) {
                     UiState.Success(vault)
                 } else {
                     UiState.Error("Vault not found")
                 }
-            } ?: run {
-                uiState = if (createVault) {
-                    // TODO: Improve this, introduce drafting
-                    val newVault = repo.getVault(repo.addVault().toLong())!!
-                    UiState.Success(newVault)
-                }
-                else
-                {
-                    UiState.Error("Invalid vault ID")
-                }
+            } else {
+                uiState = UiState.Error("Invalid vault ID")
             }
         } catch (e: Exception) {
             uiState = UiState.Error("Failed to load vault: ${e.message}")
@@ -95,14 +93,18 @@ fun VaultEditor(
                         try {
                             isSaving = true
                             errorMessage = null
-                            vaultId?.let {
-                                SQLDelightDB.getVaultRepositoryAsync().updateVault(
-                                    it,
+
+                            val repo = SQLDelightDB.getVaultRepositoryAsync()
+                            currentVaultId?.let { id ->
+                                repo.updateVault(
+                                    id,
                                     updatedVault.name,
                                     updatedVault.dataDir,
                                     updatedVault.mountPoint
                                 )
                                 onSave()
+                            } ?: run {
+                                errorMessage = "Invalid vault ID"
                             }
                         } catch (e: Exception) {
                             errorMessage = "Failed to save changes: ${e.message}"
@@ -115,7 +117,6 @@ fun VaultEditor(
                 modifier = modifier
             )
 
-            // Show error snackbar if there's an error
             errorMessage?.let { error ->
                 Snackbar(
                     modifier = Modifier.padding(16.dp),

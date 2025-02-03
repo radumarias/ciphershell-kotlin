@@ -5,4 +5,5 @@ data class VaultModel(
     val name: String,
     val mountPoint: String,
     val dataDir: String,
+    val password: String? = null,
 )

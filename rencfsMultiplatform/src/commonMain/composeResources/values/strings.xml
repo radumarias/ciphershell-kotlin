@@ -6,5 +6,6 @@
     <string name="welcome_screen_welcome_text">Thank you for choosing CipherShell to safeguard your files with robust encryption and enhance your data security. If you need any assistance, please explore our getting started guides: https://github.com/radumarias/rencfs-desktop. Your privacy is our priority, and we're here to help you ensure data integrity and memory safety.</string>
 
     <string name="button_label_add_folder">+ Add folder</string>
-    <string name="button_label_mount_vault">Mount</string>
+    <string name="button_label_mount_lock">Lock</string>
+    <string name="button_label_mount_unlock">Unlock</string>
 </resources>

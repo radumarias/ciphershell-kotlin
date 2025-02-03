@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,6 +32,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
@@ -135,6 +142,7 @@ private fun VaultEditorContent(
 ) {
     var editedVault by remember { mutableStateOf(vault) }
     var hasChanges by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -174,6 +182,44 @@ private fun VaultEditorContent(
                 hasChanges = true
             },
             enabled = !isSaving
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        // New Password Field
+        OutlinedTextField(
+            value = editedVault.password ?: "",
+            onValueChange = {
+                editedVault = editedVault.copy(password = it)
+                hasChanges = true
+            },
+            label = { Text("Password") },
+            enabled = !isSaving,
+            visualTransformation = if (passwordVisible)
+                VisualTransformation.None
+            else
+                PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next
+            ),
+            trailingIcon = {
+                IconButton(
+                    onClick = { passwordVisible = !passwordVisible }
+                ) {
+                    Icon(
+                        imageVector = if (passwordVisible)
+                            Icons.Default.VisibilityOff
+                        else
+                            Icons.Default.Visibility,
+                        contentDescription = if (passwordVisible)
+                            "Hide password"
+                        else
+                            "Show password"
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(Modifier.height(16.dp))

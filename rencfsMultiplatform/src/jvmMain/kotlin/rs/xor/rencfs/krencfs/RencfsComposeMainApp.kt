@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.delay
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.display.DisplayType
-import rs.xor.rencfs.krencfs.navigation.RencfsNavigation
+import rs.xor.rencfs.krencfs.navigation.PlatformNavigation
 import rs.xor.rencfs.krencfs.navigation.RencfsNavigationController
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute
 import rs.xor.rencfs.krencfs.screen.SplashScreen
@@ -62,7 +62,7 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
             onVaultSelected = onVaultSelectedUseCase
         )
 
-        RencfsNavigation(
+        PlatformNavigation.RencfsNavigation(
             navigationController = navigationController,
             deviceType = deviceType,
             vaultListState = vaultListState,
@@ -70,4 +70,3 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
         )
     }
 }
-

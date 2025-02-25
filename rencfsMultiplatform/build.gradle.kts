@@ -80,6 +80,14 @@ kotlin {
                 api(deps.sqldelight.driver.jvm)
             }
         }
+        // Define jvmMain source set
+        val jvmMain by creating {
+            dependsOn(commonMain.get())
+        }
+
+        // Link jvmMain to Android and Desktop
+        androidMain.dependsOn(jvmMain)
+        desktopMain.dependsOn(jvmMain)
     }
 }
 

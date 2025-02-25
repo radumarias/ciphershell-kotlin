@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 compose = "1.7.3"
 coroutines = "1.9.0"
 
@@ -14,9 +14,8 @@ androidGradlePlugin = "8.7.3"
 
 lifecycle = "2.8.4"
 navigation = "2.8.0-alpha11"
-adaptive = "1.0.1"
 
-ksp = "2.1.0-1.0.29"
+ksp = "2.1.10-1.0.30"
 hilt = "2.54"
 
 [libraries]

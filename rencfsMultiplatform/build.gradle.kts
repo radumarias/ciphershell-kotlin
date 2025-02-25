@@ -83,11 +83,6 @@ kotlin {
         // Define jvmMain source set
         val jvmMain by creating {
             dependsOn(commonMain.get())
-            dependencies {
-                api(compose.material3)
-                api(compose.material3AdaptiveNavigationSuite)
-                implementation(deps.jetbrains.androidx.navigation.compose)
-            }
         }
 
         // Link jvmMain to Android and Desktop

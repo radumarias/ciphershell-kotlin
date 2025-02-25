@@ -1,6 +1,6 @@
 [versions]
 appcompat = "1.7.0"
-activity = "1.9.3"
+activity = "1.10.0"
 #parcelize = "2.0.0"
 
 compose = "1.7.6"

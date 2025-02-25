@@ -9,6 +9,7 @@ expect object PlatformNavigation {
     @Composable
     fun RencfsNavigation(
         navigationController: RencfsNavigationController,
+        topDestinations: List<RencfsRoute>,
         deviceType: DisplayType,
         vaultListState: VaultListScreenState,
         vaultListUseCase: VaultListScreenUseCase

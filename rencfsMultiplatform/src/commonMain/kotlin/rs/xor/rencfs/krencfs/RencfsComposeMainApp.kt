@@ -12,12 +12,17 @@ import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.navigation.PlatformNavigation
 import rs.xor.rencfs.krencfs.navigation.RencfsNavigationController
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute
+import rs.xor.rencfs.krencfs.navigation.RencfsRoute.About
+import rs.xor.rencfs.krencfs.navigation.RencfsRoute.Settings
+import rs.xor.rencfs.krencfs.navigation.RencfsRoute.VaultList
 import rs.xor.rencfs.krencfs.screen.SplashScreen
 import rs.xor.rencfs.krencfs.screen.usecase.OnCreateVaultUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.OnVaultSelectedUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.SelectVaultUseCaseParams
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenStateImpl
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCaseImpl
+
+val topDestinations = listOf(VaultList, Settings, About).filter { it.isTopLevel }
 
 @Composable
 fun RencfsComposeMainApp(deviceType: DisplayType) {
@@ -64,6 +69,7 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
 
         PlatformNavigation.RencfsNavigation(
             navigationController = navigationController,
+            topDestinations = topDestinations ,
             deviceType = deviceType,
             vaultListState = vaultListState,
             vaultListUseCase = vaultListUseCase

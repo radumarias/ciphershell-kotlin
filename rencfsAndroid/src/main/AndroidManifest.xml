@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:name=".KrencfsAndroidApplication"
-            android:theme="@style/KrencfsTheme"
+            android:theme="@style/Theme.App.Starting"
 
     >
         <activity android:name=".KrencfsMainLauncherActivity"

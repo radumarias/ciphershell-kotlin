@@ -94,6 +94,7 @@ jobs:
       - name: Setup Rust
 # TODO: Could this become a common step?
         run: |
+          rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
           rustup toolchain install nightly --component rust-docs
           rustup default nightly
           rustup component add rustc          # Rust compiler

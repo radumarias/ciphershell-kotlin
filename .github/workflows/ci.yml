@@ -94,9 +94,9 @@ jobs:
       - name: Setup Rust
 # TODO: Could this become a common step?
         run: |
-          rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
           rustup toolchain install nightly --component rust-docs
           rustup default nightly
+          rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
           rustup component add rustc          # Rust compiler
           rustup component add cargo          # Rust package manager
           rustup component add clippy         # Linting tool
@@ -119,8 +119,6 @@ jobs:
             ~/.gradle
             ${{ github.workspace }}/.gradle
           key: android-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
-      - name: Verify Rust Targets
-        run: rustup show
       - name: Get Rust version hash
         id: rust_version_hash
         run: |

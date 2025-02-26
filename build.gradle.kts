@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        gradlePluginPortal()
         mavenCentral()
         google()
     }
@@ -19,4 +20,5 @@ plugins {
     alias(deps.plugins.google.hilt) apply false
 
     alias(deps.plugins.jetbrains.kotlin.parcelize) apply false
+    alias(deps.plugins.mozilla.rust.android.plugin) apply false
 }

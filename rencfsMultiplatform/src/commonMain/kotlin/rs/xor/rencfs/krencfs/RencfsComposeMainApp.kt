@@ -6,23 +6,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.navigation.PlatformNavigation
 import rs.xor.rencfs.krencfs.navigation.RencfsNavigationController
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute
-import rs.xor.rencfs.krencfs.navigation.RencfsRoute.About
-import rs.xor.rencfs.krencfs.navigation.RencfsRoute.Settings
-import rs.xor.rencfs.krencfs.navigation.RencfsRoute.VaultList
 import rs.xor.rencfs.krencfs.screen.SplashScreen
 import rs.xor.rencfs.krencfs.screen.usecase.OnCreateVaultUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.OnVaultSelectedUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.SelectVaultUseCaseParams
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenStateImpl
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCaseImpl
-
-val topDestinations = listOf(VaultList, Settings, About).filter { it.isTopLevel }
 
 @Composable
 fun RencfsComposeMainApp(deviceType: DisplayType) {
@@ -42,8 +39,29 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
         }
     } else {
         // Instantiate navigation controller
-        val navigationController = remember { RencfsNavigationController(RencfsRoute.VaultList) }
-
+        val navController = rememberNavController()
+        val navigationController = remember {
+            RencfsNavigationController(RencfsRoute.VaultList, navController)
+            { route, resolvedRoute, isBack ->
+                println("Navigating to: $resolvedRoute, isBack: $isBack")
+                if (isBack) {
+                    val success = navController.navigateUp()
+                    println("NavigateUp success: $success")
+                    if (!success) {
+                        navController.navigate(resolvedRoute) {
+                            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                } else {
+                    navController.navigate(resolvedRoute) {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = false
+                    }
+                }
+            }
+        }
         // Instantiate state
         val vaultListState = remember { VaultListScreenStateImpl(count <= 0) }
 
@@ -69,10 +87,9 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
 
         PlatformNavigation.RencfsNavigation(
             navigationController = navigationController,
-            topDestinations = topDestinations ,
             deviceType = deviceType,
             vaultListState = vaultListState,
-            vaultListUseCase = vaultListUseCase
+            vaultListUseCase = vaultListUseCase,
         )
     }
 }

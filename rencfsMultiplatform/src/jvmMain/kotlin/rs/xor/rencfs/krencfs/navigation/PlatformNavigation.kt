@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +31,7 @@ import androidx.navigation.navArgument
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute.About
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute.Settings
+import rs.xor.rencfs.krencfs.navigation.RencfsRoute.VaultCreate
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute.VaultList
 import rs.xor.rencfs.krencfs.screen.AboutScreen
 import rs.xor.rencfs.krencfs.screen.SettingsScreen
@@ -44,31 +46,14 @@ actual object PlatformNavigation {
     @Composable
     actual fun RencfsNavigation(
         navigationController: RencfsNavigationController,
-        topDestinations: List<RencfsRoute>,
         deviceType: DisplayType,
         vaultListState: VaultListScreenState,
-        vaultListUseCase: VaultListScreenUseCase
+        vaultListUseCase: VaultListScreenUseCase,
     ) {
-        val navController = rememberNavController()
         val currentRoute by navigationController.currentRouteFlow.collectAsState()
-
-        // Sync navigation controller with NavController
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            val route = when (destination.route) {
-                VaultList.route -> VaultList
-                RencfsRoute.VaultCreate.route -> RencfsRoute.VaultCreate
-                Settings.route -> Settings
-                About.route -> About
-                else -> VaultList // Fallback
-            }
-            if (route != navigationController.currentRouteFlow.value) {
-                navigationController.navigateTo(route)
-            }
-        }
-
         NavigationSuiteScaffold(
             navigationSuiteItems = {
-                topDestinations.forEach { screen ->
+                listOf(VaultList, Settings, About).forEach { screen ->
                     item(
                         icon = {
                             Icon(
@@ -78,15 +63,7 @@ actual object PlatformNavigation {
                         },
                         label = { Text(screen.mapToTitle()) },
                         selected = currentRoute == screen,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
+                        onClick = { navigationController.navigateTo(screen) }
                     )
                 }
                 if (deviceType == DisplayType.Desktop) {
@@ -94,7 +71,7 @@ actual object PlatformNavigation {
                         icon = { Icon(Icons.Filled.Add, contentDescription = "Add folder") },
                         label = { Text("Add folder") },
                         selected = false,
-                        onClick = { navController.navigate(RencfsRoute.VaultCreate.route) }
+                        onClick = { navigationController.navigateTo(RencfsRoute.VaultCreate) }
                     )
                 }
             },
@@ -109,7 +86,7 @@ actual object PlatformNavigation {
                         title = { Text(currentRoute.mapToTitle()) },
                         navigationIcon = {
                             if (!currentRoute.isTopLevel) {
-                                IconButton(onClick = { navController.navigateUp() }) {
+                                IconButton(onClick = { navigationController.handleBack() }) {
                                     Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                                 }
                             }
@@ -117,8 +94,8 @@ actual object PlatformNavigation {
                         actions = {
                             if (currentRoute is RencfsRoute.VaultView) {
                                 IconButton(onClick = {
-                                    navController.navigate(
-                                        RencfsRoute.VaultEdit.routeWithArgs((currentRoute as RencfsRoute.VaultView).vaultId)
+                                    navigationController.navigateTo(
+                                        RencfsRoute.VaultEdit((currentRoute as RencfsRoute.VaultView).vaultId)
                                     )
                                 }) {
                                     Icon(Icons.Filled.Edit, "Edit")
@@ -130,7 +107,7 @@ actual object PlatformNavigation {
             ) { padding ->
 
                 NavHost(
-                    navController = navController,
+                    navController = navigationController.navController,
                     startDestination = VaultList.route,
                     modifier = Modifier.fillMaxSize().padding(padding),
                     enterTransition = {
@@ -149,30 +126,28 @@ actual object PlatformNavigation {
                         VaultListScreen(viewState = vaultListState, interactor = vaultListUseCase)
                     }
                     composable(RencfsRoute.VaultCreate.route) {
-                        VaultEditor(createVault = true, onSave = { navController.navigateUp() })
+                        VaultEditor(createVault = true, onSave = { navigationController.navigateUp() })
                     }
                     composable(
                         RencfsRoute.VaultView.BASE_ROUTE,
                         arguments = listOf(vaultId)
                     ) { backStackEntry ->
-                        backStackEntry.arguments?.getString(RencfsRoute.VAULT_ID_PARAM)?.apply {
-                            navigationController.navigateTo(RencfsRoute.VaultView(this))
-                            VaultViewer(vaultId = this)
+                        backStackEntry.arguments?.getString(RencfsRoute.VAULT_ID_PARAM)?.let { vaultId ->
+                            VaultViewer(vaultId = vaultId)
                         } ?: run {
                             println("Vault ID not found")
-                            navController.navigateUp()
+                            navigationController.navigateUp()
                         }
                     }
                     composable(
                         RencfsRoute.VaultEdit.BASE_ROUTE,
                         arguments = listOf(vaultId)
                     ) { backStackEntry ->
-                        backStackEntry.arguments?.getString(RencfsRoute.VAULT_ID_PARAM)?.apply {
-                            navigationController.navigateTo(RencfsRoute.VaultEdit(this))
-                            VaultEditor(vaultId = this, onSave = { navController.navigateUp() })
+                        backStackEntry.arguments?.getString(RencfsRoute.VAULT_ID_PARAM)?.let { vaultId ->
+                            VaultEditor(vaultId = vaultId, onSave = { navigationController.navigateUp() })
                         } ?: run {
                             println("Vault ID not found")
-                            navController.navigateUp()
+                            navigationController.navigateUp()  //
                         }
                     }
                     composable(Settings.route) { SettingsScreen() }

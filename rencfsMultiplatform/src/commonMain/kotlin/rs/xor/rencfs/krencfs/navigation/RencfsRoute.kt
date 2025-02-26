@@ -21,7 +21,7 @@ import rs.xor.rencfs.krencfs.navigation.RencfsRoute.Settings
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute.VaultList
 
 sealed class RencfsRoute(val route: String, val isTopLevel: Boolean = false) {
-    data object VaultList : RencfsRoute(VAULT_LIST_ROUTE, true)
+    data object VaultList : RencfsRoute(VAULT_LIST_ROUTE, isTopLevel = true)
     data object VaultCreate : RencfsRoute(VAULT_CREATE_ROUTE)
 
     data class VaultView(val vaultId: String) : RencfsRoute(BASE_ROUTE) {
@@ -38,9 +38,9 @@ sealed class RencfsRoute(val route: String, val isTopLevel: Boolean = false) {
         }
     }
 
-    data object Settings : RencfsRoute(SETTINGS_ROUTE, true)
+    data object Settings : RencfsRoute(SETTINGS_ROUTE, isTopLevel = true)
 
-    data object About : RencfsRoute(ABOUT_ROUTE, true)
+    data object About : RencfsRoute(ABOUT_ROUTE, isTopLevel = true)
 
     companion object {
 

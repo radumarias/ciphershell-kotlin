@@ -104,6 +104,7 @@ jobs:
           rustup component add rust-docs      # Documentation
           rustup component add rust-analysis  # Rust analysis for tools
           rustup update
+          rustup show
         shell: bash
       - name: Setup Java
         uses: actions/setup-java@v4

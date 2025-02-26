@@ -118,6 +118,8 @@ jobs:
             ~/.gradle
             ${{ github.workspace }}/.gradle
           key: android-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
+      - name: Verify Rust Targets
+        run: rustup show
       - name: Get Rust version hash
         id: rust_version_hash
         run: |

@@ -6,7 +6,7 @@ plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.jetbrains.compose.kmpbom)
     alias(deps.plugins.jetbrains.compose.compiler)
-//    alias(deps.plugins.jetbrains.kotlin.serialization)
+    alias(deps.plugins.jetbrains.kotlin.serialization)
     alias(deps.plugins.sqldelight)
     //    alias(deps.plugins.jetbrains.kotlin.parcelize)
 // Android
@@ -59,6 +59,7 @@ kotlin {
 //                api(compose.preview)
 //                implementation(compose.components.uiToolingPreview)
 
+                implementation(deps.jetbrains.kotlinx.serialization.json)
                 implementation(deps.jetbrains.androidx.navigation.compose)
                 implementation(deps.jetbrains.androidx.lifecycle.runtime.compose)
                 implementation(deps.jetbrains.androidx.lifecycle.viewmodel.compose)

@@ -58,7 +58,7 @@ fun VaultViewer(
                 uiState = if (vault != null) {
                     UiState.Success(vault)
                 } else {
-                    UiState.Error("Vault not found")
+                    UiState.Error("Vault not found $vaultId")
                 }
             } ?: run {
                 uiState = UiState.Error("Invalid vault ID")
@@ -119,8 +119,9 @@ private fun VaultContent(
     var isLocked by remember { mutableStateOf(true) }
     var showPasswordDialog by remember { mutableStateOf(false) }
     var pendingLockState by remember { mutableStateOf(false) }
-    var error by remember { mutableStateOf<String?>(null) }
+    val error by remember { mutableStateOf<String?>(null) }
 
+    println(vault)
     Column(
         modifier = modifier
             .fillMaxSize()

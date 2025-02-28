@@ -3,6 +3,8 @@ kotlin = "2.1.10"
 compose = "1.7.3"
 coroutines = "1.9.0"
 
+serialization = "1.6.0"
+
 sqldelight = "2.0.2"
 
 vinceglb-filekit = "0.7.0"
@@ -26,6 +28,8 @@ coroutines =   { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-cor
 jetbrains-androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 jetbrains-androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 jetbrains-androidx-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
+
+jetbrains-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "vinceglb-filekit" }
 filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", version.ref = "vinceglb-filekit" }

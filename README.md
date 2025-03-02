@@ -90,13 +90,6 @@ It will use the current OS target image for `java-bridge`.
 
 ### Build Android App
 
-#### WARNING: K2 is not supported. Don't enable it.
-
-The latest Android Studio IDE will ask you to enable K2 (because we are using Kotlin 2.0.0+) but it is not working out of the box.
-Don't enable it, you could encounter unexpected issues.
-
-We can enable it when in the future, asuming it doesn't break the IDE forever.
-
 #### Prerequisites
 
 Update `rencfsAndroid/local.properties` by defining the property `sdk.dir=<full-path-to-android-sdk-dir>` where `<full-path-to-android-sdk-dir>` is the local Android SDK installation directory.

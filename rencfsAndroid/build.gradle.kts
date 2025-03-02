@@ -2,10 +2,10 @@ val packageId = "rs.xor.io.rencfs.krencfs"
 
 plugins {
     alias(deps.plugins.google.android.application)
+    alias(deps.plugins.google.android.hilt)
+    alias(deps.plugins.google.ksp)
     alias(deps.plugins.jetbrains.compose.compiler)
     alias(deps.plugins.jetbrains.kotlin.android)
-    alias(deps.plugins.google.ksp)
-    alias(deps.plugins.google.hilt)
     alias(deps.plugins.mozilla.rust.android.plugin)
 }
 

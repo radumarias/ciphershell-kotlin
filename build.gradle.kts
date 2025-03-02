@@ -7,18 +7,18 @@ buildscript {
 }
 
 plugins {
-    alias(deps.plugins.jetbrains.kotlin.multiplatform) apply false
-    alias(deps.plugins.jetbrains.compose.kmpbom) apply false
-    alias(deps.plugins.jetbrains.compose.compiler) apply false
-    alias(deps.plugins.jetbrains.kotlin.serialization) apply false
-    alias(deps.plugins.sqldelight) apply false
-// Android
-    alias(deps.plugins.google.android.application) apply false
-    alias(deps.plugins.google.android.library) apply false
-    alias(deps.plugins.jetbrains.kotlin.android) apply false
-    alias(deps.plugins.google.ksp) apply false
-    alias(deps.plugins.google.hilt) apply false
-
-    alias(deps.plugins.jetbrains.kotlin.parcelize) apply false
-    alias(deps.plugins.mozilla.rust.android.plugin) apply false
+    listOf(
+        deps.plugins.jetbrains.compose.kmpbom,
+        deps.plugins.jetbrains.compose.compiler,
+        deps.plugins.jetbrains.kotlin.multiplatform,
+        deps.plugins.jetbrains.kotlin.serialization,
+        deps.plugins.sqldelight,
+        deps.plugins.google.android.application,
+        deps.plugins.google.android.hilt,
+        deps.plugins.google.android.library,
+        deps.plugins.google.ksp,
+        deps.plugins.jetbrains.kotlin.android,
+        deps.plugins.jetbrains.kotlin.parcelize,
+        deps.plugins.mozilla.rust.android.plugin,
+    ).forEach { alias(it) apply false }
 }

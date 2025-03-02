@@ -64,11 +64,10 @@ compose.desktop {
 
 val rustLibBuildTarget: String = when {
     OperatingSystem.current().isWindows -> "x86_64-pc-windows-msvc"
-    OperatingSystem.current().isMacOsX -> {
-        if (System.getProperty("os.arch") == "aarch64") "aarch64-apple-darwin"
-        else "x86_64-apple-darwin"
+    OperatingSystem.current().isMacOsX -> when {
+        System.getProperty("os.arch") == "aarch64" -> "aarch64-apple-darwin"
+        else -> "x86_64-apple-darwin"
     }
-
     else -> "x86_64-unknown-linux-gnu"
 }
 
@@ -81,7 +80,6 @@ val rustLibName = when {
 
 tasks.register<Exec>("buildRencfsRustJavaBridge") {
     group = "build"
-    description = "Builds the Rust native library"
     workingDir = file(rustLibBaseDir)
     commandLine = listOf("cargo", "build", "--target", rustLibBuildTarget, "--release")
 }
@@ -92,6 +90,11 @@ tasks.register<Copy>("copyRencfsJavaBridgeLib") {
     into(layout.buildDirectory.dir("../libs"))
 }
 
-tasks.named("assemble") {
+tasks.named("compileKotlinDesktop") {
     finalizedBy("copyRencfsJavaBridgeLib")
 }
+
+tasks.named<Delete>("clean") {
+    delete(layout.buildDirectory.dir("../libs"))
+}
+

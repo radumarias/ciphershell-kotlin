@@ -3,7 +3,7 @@ kotlin = "2.1.10"
 compose = "1.7.3"
 coroutines = "1.9.0"
 
-serialization = "1.6.0"
+serialization = "1.6.3"
 
 sqldelight = "2.0.2"
 

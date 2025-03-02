@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 import rs.xor.rencfs.krencfs.RootContextProvider
+import rs.xor.rencfs.krencfs.lib.RencfsLibLoader
 
 @HiltAndroidApp
 open class KrencfsAndroidApplication : Application() {

@@ -154,17 +154,6 @@ sqldelight {
 //    linkSqlite = true
 }
 
-// Task to build java-bridge
-val buildRust by tasks.registering(Exec::class) {
-    group = "build"
-    description = "Build java-bridge"
-
-    environment("RUST_LOG", "debug")
-    workingDir = file("../rencfs/java-bridge")
-    commandLine = listOf("cargo", "build", "--release")
-}
-
-// Make the build task depend on the buildRust task
-tasks.named("build") {
-    dependsOn(buildRust)
+tasks.named<Delete>("clean") {
+    delete("../rencfs/java-bridge/target")
 }

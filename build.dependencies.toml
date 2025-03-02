@@ -3,7 +3,7 @@ kotlin = "2.1.10"
 compose = "1.7.3"
 coroutines = "1.9.0"
 
-serialization = "1.6.0"
+serialization = "1.6.3"
 
 sqldelight = "2.0.2"
 
@@ -13,6 +13,7 @@ vinceglb-filekit = "0.7.0"
 
 # Android
 androidGradlePlugin = "8.7.3"
+rustAndroidGradle = "0.9.6"
 
 lifecycle = "2.8.4"
 navigation = "2.8.0-alpha11"
@@ -66,7 +67,8 @@ google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-
+# Rust
+mozilla-rust-android-plugin = { id = "org.mozilla.rust-android-gradle.rust-android", version.ref = "rustAndroidGradle" }
 [bundles]
 common-sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extensions"]
 common-filekit = ["filekit-core", "filekit-compose"]

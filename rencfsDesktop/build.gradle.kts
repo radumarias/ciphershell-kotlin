@@ -1,3 +1,4 @@
+import org.gradle.internal.os.OperatingSystem
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -46,7 +47,6 @@ kotlin {
     }
 }
 
-val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = "rs.xor.rencfs.krencfs"
 val applicationClassName = "RencfsDesktopApplication"
 val mainClassPath = "${applicationPackageName}.${applicationClassName}Kt"
@@ -54,18 +54,44 @@ val mainClassPath = "${applicationPackageName}.${applicationClassName}Kt"
 compose.desktop {
     application {
         mainClass = mainClassPath
-
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = applicationPackageName
             packageVersion = "1.0.0"
         }
-
-        // Set JVM options
-        jvmArgs("-Djava.library.path=../rencfs/java-bridge/target/release/")
-
-        // Set program arguments
-        args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
     }
 }
 
+val rustLibBuildTarget: String = when {
+    OperatingSystem.current().isWindows -> "x86_64-pc-windows-msvc"
+    OperatingSystem.current().isMacOsX -> {
+        if (System.getProperty("os.arch") == "aarch64") "aarch64-apple-darwin"
+        else "x86_64-apple-darwin"
+    }
+
+    else -> "x86_64-unknown-linux-gnu"
+}
+
+val rustLibBaseDir = "${projectDir}/../rencfs/java-bridge"
+val rustLibName = when {
+    OperatingSystem.current().isWindows -> "java_bridge.dll"
+    OperatingSystem.current().isMacOsX -> "libjava_bridge.dylib"
+    else -> "libjava_bridge.so"
+}
+
+tasks.register<Exec>("buildRencfsRustJavaBridge") {
+    group = "build"
+    description = "Builds the Rust native library"
+    workingDir = file(rustLibBaseDir)
+    commandLine = listOf("cargo", "build", "--target", rustLibBuildTarget, "--release")
+}
+
+tasks.register<Copy>("copyRencfsJavaBridgeLib") {
+    dependsOn("buildRencfsRustJavaBridge")
+    from(file("${rustLibBaseDir}/target/${rustLibBuildTarget}/release").resolve(rustLibName))
+    into(layout.buildDirectory.dir("../libs"))
+}
+
+tasks.named("assemble") {
+    finalizedBy("copyRencfsJavaBridgeLib")
+}

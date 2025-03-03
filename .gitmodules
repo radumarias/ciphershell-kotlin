@@ -1,3 +1,4 @@
 [submodule "rencfs"]
 	path = rencfs
 	url = ../../xoriors/rencfs
+	branch = main

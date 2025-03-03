@@ -12,7 +12,7 @@ vinceglb-filekit = "0.7.0"
 #dokka = "1.9.20"
 
 # Android
-androidGradlePlugin = "8.7.3"
+androidGradlePlugin = "8.8.2"
 rustAndroidGradle = "0.9.6"
 
 lifecycle = "2.8.4"
@@ -63,10 +63,11 @@ google-android-application = { id = "com.android.application", version.ref = "an
 google-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+google-android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
 # Rust
 mozilla-rust-android-plugin = { id = "org.mozilla.rust-android-gradle.rust-android", version.ref = "rustAndroidGradle" }
 [bundles]

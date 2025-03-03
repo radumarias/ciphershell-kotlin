@@ -19,7 +19,6 @@ import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
 
 fun main() = application {
-
     var isOpen by remember { mutableStateOf(true) }
     Tray(
         icon = rememberVectorPainter(Icons.Default.Lock),

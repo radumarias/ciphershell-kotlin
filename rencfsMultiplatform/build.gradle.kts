@@ -55,7 +55,7 @@ kotlin {
                 api(compose.animationGraphics)
                 api(compose.material3AdaptiveNavigationSuite)
 
-//                todo: not supported in kmp
+//                todo: not yet supported in kmp
 //                api(compose.preview)
 //                implementation(compose.components.uiToolingPreview)
 
@@ -68,6 +68,9 @@ kotlin {
                 implementation(deps.bundles.common.sqldelight)
 
                 api(deps.coroutines)
+
+                implementation(project(":rencfsWrapper"))
+
             }
         }
         val androidMain by getting {
@@ -92,9 +95,8 @@ kotlin {
     }
 }
 
-val currentUserHome: String? = System.getProperty("user.home")
-val applicationPackageName = "rs.xor.rencfs.krencfs"
-
+//val currentUserHome: String? = System.getProperty("user.home")
+val applicationPackageName = project.findProperty("RENCFS_PACKAGE_NAME") as String?
 
 compose.desktop {
     application {
@@ -109,7 +111,7 @@ compose.desktop {
         jvmArgs("-Djava.library.path=../rencfs/java-bridge/target/release/")
 
         // Set program arguments
-        args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
+//        args("$currentUserHome/rencfs/mnt", "$currentUserHome/rencfs/data", "a")
     }
 }
 

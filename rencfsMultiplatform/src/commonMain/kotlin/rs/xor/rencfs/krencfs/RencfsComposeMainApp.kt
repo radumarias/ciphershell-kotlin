@@ -22,8 +22,8 @@ import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCaseImpl
 
 @Composable
 fun RencfsComposeMainApp(deviceType: DisplayType) {
-    val rencfsLib = RencfsLib.create()
-    println("RencfsComposeMainApp called" + rencfsLib.rencfsHello("Hi from Multiplatform!"))
+//    val rencfsLib = RencfsLib.create()
+//    println("RencfsComposeMainApp called" + rencfsLib.rencfsHello("Hi from Multiplatform!"))
     var isLoading by remember { mutableStateOf(true) }
     var count by remember { mutableStateOf(0L) }
 

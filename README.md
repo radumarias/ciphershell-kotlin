@@ -12,57 +12,11 @@ It uses the [java-bridge](https://github.com/radumarias/rencfs/tree/main/java-br
 stable release.  
 > It's mostly ideal for experimental and learning projects. It serves as a reference app for a GUI for `rencfs`.**
 
-## CLI test app
-
-### Structure
-
-- [Main.kt](cli/src/main/kotlin/Main.kt): Main file that uses the Rust code.
-- [Rust.kt](cli/src/main/kotlin/Rust.kt): Namespace for all the exported Rust functions.
-
-### Exposed rencfs api
-
-- `fun hello(str: String): String;`: Test function that takes a string and returns it with some additional one.
-- `fun mount(mnt: String, dataDir: String, password: String, umountFirst: Bolean): Int;`: Mounts a filesystem at `mnt`
-  with `dataDir`
-  and `password`, returning the mount handle.umount_first: If true, unmounts the filesystem at `mnt` before mounting.  
-  **@param** `umount_first`: If `true`, unmounts the filesystem at `mnt` before mounting.
-- `fun umount(handle: Int);`: Unmounts the filesystem at `mount handle` returned by [mount].
-- `fun umountAll();`: Unmounts all mounted filesystems.
-- ```text
-  fun state(
-  dryRun: Boolean = false,
-  simulateMountError: Boolean = false,
-  simulateUmountError: Boolean = false,
-  simulateUmountAllError: Boolean = false,
-  );
-  ```
-  Set app state. Helpful to simulate various errors and `dry-run`.
-
-### Building rencfs command line
-
-```bash
-./gradlew cli:build
-```
-
-This will also build `java-bridge` for the current OS target.
-
-### Run rencfs command line 
-
-It will use the current OS target image for `java-bridge`.
-
-```bash
-./gradlew cli:run
-```
-
-This will create the mount in `$currentUserHome/rencfs/mnt` and will use as data dir `$currentUserHome/rencfs/data`. Feel free to change in [build.gradle.ks](cli/build.gradle.kts).
-
 ## Graphical User Interface Application (GUI app)
 
 ### Integrated Development Environment (IDE)
 
-The multiplatform project is developed mainly using IntelliJ Ultimate or JetBrains Fleet IDE. 
-
-For Android development only, you can use Android Studio version Ladybug 2024.2.1.patch1
+The multiplatform project is developed mainly using the latest version of Android Studio as of the time of writing this document.
 
 From the Android Studio main window menu, select `File> Open` and then point the explorer to the project' root directory.
 

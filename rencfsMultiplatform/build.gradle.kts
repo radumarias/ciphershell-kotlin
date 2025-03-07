@@ -68,6 +68,9 @@ kotlin {
                 implementation(deps.bundles.common.sqldelight)
 
                 api(deps.coroutines)
+
+                implementation(project(":rencfsWrapper"))
+
             }
         }
         val androidMain by getting {
@@ -155,8 +158,4 @@ sqldelight {
 
 tasks.named<Delete>("clean") {
     delete("../rencfs/java-bridge/target")
-}
-
-dependencies {
-    implementation(project(":rencfsWrapper"))
 }

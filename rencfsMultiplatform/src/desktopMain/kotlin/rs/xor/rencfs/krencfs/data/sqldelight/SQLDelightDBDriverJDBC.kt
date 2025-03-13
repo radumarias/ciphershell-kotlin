@@ -12,9 +12,9 @@ actual suspend fun provideSQLDriver(
     databaseName: String,
     databaseFileName: String,
 ): SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$databaseFileName")
-        .apply {
-            println("provideSQLDriver: $this")
-            if (!File(databaseFileName).exists()) {
-                schema.awaitCreate(this)
-            }
+    .apply {
+        println("provideSQLDriver: $this")
+        if (!File(databaseFileName).exists()) {
+            schema.awaitCreate(this)
         }
+    }

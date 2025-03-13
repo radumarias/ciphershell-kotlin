@@ -7,5 +7,5 @@ import app.cash.sqldelight.db.SqlSchema
 expect suspend fun provideSQLDriver(
     schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
     databaseName: String,
-    databaseFileName: String = "${databaseName}.sqlite.db",
+    databaseFileName: String = "$databaseName.sqlite.db",
 ): SqlDriver

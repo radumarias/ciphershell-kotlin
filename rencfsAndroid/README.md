@@ -4,3 +4,7 @@ rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-andro
 
 2. Cargo Android Build needs to finds the python executable in PATH, alias python to python3:
 sudo ln -s "$(which python3)" /usr/local/bin/python
+
+Before pushing:
+- Run `./gradlew prePushCheck` to verify formatting.
+- Fix issues with `./gradlew spotlessApply` if needed.

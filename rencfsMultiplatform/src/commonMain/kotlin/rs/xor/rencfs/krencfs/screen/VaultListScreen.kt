@@ -44,9 +44,8 @@ import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.screen.usecase.OnCreateVaultUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.OnVaultSelectedUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.SelectVaultUseCaseParams
-import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenState
-
+import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCase
 
 @Composable
 fun VaultListScreen(
@@ -59,20 +58,24 @@ fun VaultListScreen(
         VaultsEmptyStateScreen(onAddFolderClick = interactor.onCreateVault)
     } else {
         VaultListContent(
-            vaults = vaults, onVaultSelected = interactor.onVaultSelected, onCreateVault = interactor.onCreateVault
+            vaults = vaults,
+            onVaultSelected = interactor.onVaultSelected,
+            onCreateVault = interactor.onCreateVault,
         )
     }
 }
 
 @Composable
 fun VaultListContent(
-    vaults: Map<String, VaultModel>, onVaultSelected: OnVaultSelectedUseCase, onCreateVault: OnCreateVaultUseCase?
+    vaults: Map<String, VaultModel>,
+    onVaultSelected: OnVaultSelectedUseCase,
+    onCreateVault: OnCreateVaultUseCase?,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             VaultList(
                 vaults = vaults,
-                onVaultClick = { onVaultSelected(SelectVaultUseCaseParams(it)) }
+                onVaultClick = { onVaultSelected(SelectVaultUseCaseParams(it)) },
             )
         }
         onCreateVault?.apply {
@@ -107,17 +110,16 @@ private fun VaultListItem(
     onClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-
             Text(
                 text = vault.name.let { if (it.isEmpty()) "Unnamed" else it },
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
             Text(
                 text = vault.mountPoint.let { if (it.isEmpty()) "No mount point" else it },
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }
@@ -138,10 +140,10 @@ fun VaultsEmptyStateScreen(
                     imageVector = vectorResource(Res.drawable.application_icon),
                     contentDescription = stringResource(Res.string.application_name),
                     contentScale = ContentScale.Inside,
-                    modifier = Modifier.size(220.dp).clip(CircleShape).background(Color.White)
+                    modifier = Modifier.size(220.dp).clip(CircleShape).background(Color.White),
                 )
             }
-            val displayType: DisplayType = DisplayType.Desktop;//LocalDisplayTypeProvider.current
+            val displayType: DisplayType = DisplayType.Desktop; // LocalDisplayTypeProvider.current
             // if (displayType == DisplayType.Mobile) { 0.5f } else { 1f }
             item {
                 Text(
@@ -150,11 +152,11 @@ fun VaultsEmptyStateScreen(
                             when (displayType) {
                                 DisplayType.Phone -> 0.5f
                                 else -> 1f
-                            }
+                            },
                         ).padding(vertical = 16.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
-                    text = stringResource(Res.string.welcome_screen_welcome_text)
+                    text = stringResource(Res.string.welcome_screen_welcome_text),
                 )
             }
 

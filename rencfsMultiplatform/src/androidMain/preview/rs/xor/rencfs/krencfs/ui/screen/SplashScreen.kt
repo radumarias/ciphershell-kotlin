@@ -7,7 +7,8 @@ import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
 @Preview(
     showBackground = true,
-    widthDp = 1920, heightDp = 1080
+    widthDp = 1920,
+    heightDp = 1080,
 )
 @Composable
 fun PreviewSplashScreen() {

@@ -10,7 +10,6 @@ import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
 class KrencfsMainLauncherActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 

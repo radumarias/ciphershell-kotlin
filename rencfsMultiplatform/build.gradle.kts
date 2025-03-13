@@ -12,6 +12,7 @@ plugins {
 // Android
     alias(deps.plugins.google.android.library)
 //    alias(deps.plugins.jetbrains.kotlin.android)
+    alias(deps.plugins.spotless)
 }
 
 java {
@@ -154,6 +155,18 @@ sqldelight {
     }
 //    we don't build native targets yet
 //    linkSqlite = true
+}
+
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint("1.5.0")
+            .editorConfigOverride(
+                mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable")
+            )
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 tasks.named<Delete>("clean") {

@@ -5,6 +5,7 @@ plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.jetbrains.compose.kmpbom)
     alias(deps.plugins.jetbrains.compose.compiler)
+    alias(deps.plugins.spotless)
 }
 
 java {
@@ -47,6 +48,20 @@ kotlin {
     }
 }
 
+spotless {
+    java {
+        target("src/**/*.java")
+        googleJavaFormat("1.23.0")
+        importOrder("java", "javax", "org", "com", "")
+        removeUnusedImports()
+    }
+    kotlin {
+        target("src/**/*.kt")
+        ktlint("1.5.0")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
 val applicationPackageName = "rs.xor.rencfs.krencfs"
 val applicationClassName = "RencfsDesktopApplication"
 val mainClassPath = "${applicationPackageName}.${applicationClassName}Kt"

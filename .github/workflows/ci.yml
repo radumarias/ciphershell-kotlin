@@ -16,37 +16,52 @@ env:
   RUSTDOCFLAGS: "-Dwarnings"
 
 jobs:
+  spotless:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17', '21' ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Spotless Check
+        run: ./gradlew spotlessCheck --stacktrace
+
   build-desktop:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ ubuntu-latest ]
       fail-fast: true
+    needs: spotless # Only runs if spotless passes
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           submodules: true
-
       - name: Setup Rust
         run: |
           rustup toolchain install nightly --component rust-docs
           rustup default nightly
-          rustup component add rustc          # Rust compiler
-          rustup component add cargo          # Rust package manager
-          rustup component add clippy         # Linting tool
-          rustup component add rustfmt        # Code formatter
-          rustup component add rust-docs      # Documentation
-          rustup component add rust-analysis  # Rust analysis for tools
+          rustup component add rustc
+          rustup component add cargo
+          rustup component add clippy
+          rustup component add rustfmt
+          rustup component add rust-docs
+          rustup component add rust-analysis
           rustup update
         shell: bash
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
-
       - name: Java Build Cache
         id: java-build-cache
         uses: actions/cache@v4
@@ -55,18 +70,12 @@ jobs:
             ~/.gradle
             ${{ github.workspace }}/.gradle
           key: java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
-          # restore-keys: |
-          #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-${{ hashFiles('gradle.properties', '**/*.gradle.kts') }}-${{ github.ref }}
-          #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./krencfs/build.dependencies.toml') }}-
-          #   java-build-cache-${{ runner.os }}-${{ github.workflow }}-
-
       - name: Get Rust version hash
         id: rust_version_hash
         run: |
           rust_version=$(rustc --version | awk '{print $2}')
           rust_version_hash=$(echo -n $rust_version | sha256sum | awk '{print $1}')
           echo "{hash}={$rust_version_hash}" >> $GITHUB_OUTPUT
-
       - name: Rust Build Cache
         id: rust-build-cache
         uses: actions/cache@v4
@@ -75,10 +84,6 @@ jobs:
             ~/.cargo
             rencfs/java-bridge/target
           key: rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ steps.rust_version_hash.outputs.hash }}-${{ github.ref }}
-          # restore-keys: |
-          #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-${{ hashFiles('./rencfs/**.toml', './rencfs/**.lock') }}-
-          #   rust-build-cache-${{ runner.os }}-${{ github.workflow }}-
-
       - name: Build Ubuntu Desktop
         run: |
           printenv
@@ -86,23 +91,23 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
+    needs: spotless # Only runs if spotless passes
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           submodules: true
       - name: Setup Rust
-# TODO: Could this become a common step?
         run: |
           rustup toolchain install nightly --component rust-docs
           rustup default nightly
           rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
-          rustup component add rustc          # Rust compiler
-          rustup component add cargo          # Rust package manager
-          rustup component add clippy         # Linting tool
-          rustup component add rustfmt        # Code formatter
-          rustup component add rust-docs      # Documentation
-          rustup component add rust-analysis  # Rust analysis for tools
+          rustup component add rustc
+          rustup component add cargo
+          rustup component add clippy
+          rustup component add rustfmt
+          rustup component add rust-docs
+          rustup component add rust-analysis
           rustup update
           rustup show
         shell: bash

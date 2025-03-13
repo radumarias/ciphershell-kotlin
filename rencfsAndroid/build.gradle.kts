@@ -7,6 +7,7 @@ plugins {
     alias(deps.plugins.jetbrains.compose.compiler)
     alias(deps.plugins.jetbrains.kotlin.android)
     alias(deps.plugins.mozilla.rust.android.plugin)
+    alias(deps.plugins.spotless)
 }
 
 kotlin {
@@ -78,6 +79,15 @@ cargo {
     targets = listOf( "arm64", "x86_64")
     apiLevel = 21
     profile = "release"
+}
+
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint("1.5.0")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 tasks.matching { it.name in listOf("javaPreCompileDebug", "javaPreCompileRelease") }.configureEach {

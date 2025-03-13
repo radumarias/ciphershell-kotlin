@@ -11,33 +11,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun AboutScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 InfoItem(
                     title = "Version",
-                    content = "1.0.0"
+                    content = "1.0.0",
                 )
                 InfoItem(
                     title = "Description",
-                    content = "Rencfs is an encrypted filesystem implementation in Kotlin"
+                    content = "Rencfs is an encrypted filesystem implementation in Kotlin",
                 )
                 InfoItem(
                     title = "License",
-                    content = "MIT License"
+                    content = "MIT License",
                 )
                 InfoItem(
                     title = "Repository",
-                    content = "github.com/radumarias/rencfs-kotlin"
+                    content = "github.com/radumarias/rencfs-kotlin",
                 )
             }
         }
@@ -47,20 +46,20 @@ fun AboutScreen() {
 @Composable
 private fun InfoItem(
     title: String,
-    content: String
+    content: String,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            .padding(vertical = 4.dp),
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Text(
             text = content,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }

@@ -18,7 +18,6 @@ import krencfs.rencfsmultiplatform.generated.resources.application_name
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-
 @Composable
 fun SplashScreen() {
     Surface {
@@ -33,7 +32,7 @@ fun SplashScreen() {
                 modifier = Modifier.wrapContentSize(),
                 imageVector = vectorResource(Res.drawable.application_icon),
                 contentDescription = stringResource(Res.string.application_name),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.Inside,
             )
         }
     }

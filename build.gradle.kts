@@ -20,5 +20,6 @@ plugins {
         deps.plugins.jetbrains.kotlin.android,
         deps.plugins.jetbrains.kotlin.parcelize,
         deps.plugins.mozilla.rust.android.plugin,
+        deps.plugins.spotless,
     ).forEach { alias(it) apply false }
 }

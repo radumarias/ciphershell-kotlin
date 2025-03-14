@@ -1,6 +1,10 @@
 package rs.xor.rencfs.krencfs.data.sqldelight
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import rs.xor.rencfs.krencfs.KrenkfsDB
 import rs.xor.rencfs.krencfs.VaultsQueries
 import rs.xor.rencfs.krencfs.data.vault.VaultRepository
@@ -20,8 +24,5 @@ object SQLDelightDB {
 
 //    fun getVaultRepository(): VaultRepository = runBlocking { vaultsRepository.await() }
 
-    suspend
-    fun getVaultRepositoryAsync(
-    ): VaultRepository = vaultsRepository.await()
-
+    suspend fun getVaultRepositoryAsync(): VaultRepository = vaultsRepository.await()
 }

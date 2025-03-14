@@ -6,7 +6,6 @@ import rs.xor.rencfs.krencfs.RencfsComposeMainApp
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
-
 @Composable
 @Preview(device = "id:pixel_9_pro_xl")
 fun PreviewApplication() {

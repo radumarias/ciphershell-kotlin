@@ -9,7 +9,9 @@ import kotlinx.coroutines.launch
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 
-class VaultListScreenStateImpl(firstTime: Boolean) : VaultListScreenState {
+class VaultListScreenStateImpl(
+    firstTime: Boolean,
+) : VaultListScreenState {
     private val _vaults = MutableStateFlow<Map<String, VaultModel>>(emptyMap())
     override val vaults: StateFlow<Map<String, VaultModel>> = _vaults.asStateFlow()
     override val firstStart: Boolean = firstTime
@@ -25,5 +27,5 @@ class VaultListScreenStateImpl(firstTime: Boolean) : VaultListScreenState {
 
 class VaultListScreenUseCaseImpl(
     override val onCreateVault: OnCreateVaultUseCase,
-    override val onVaultSelected: OnVaultSelectedUseCase
+    override val onVaultSelected: OnVaultSelectedUseCase,
 ) : VaultListScreenUseCase

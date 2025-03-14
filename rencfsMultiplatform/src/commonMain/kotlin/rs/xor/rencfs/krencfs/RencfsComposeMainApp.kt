@@ -10,7 +10,6 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
 import rs.xor.rencfs.krencfs.display.DisplayType
-import rs.xor.rencfs.krencfs.lib.RencfsLib
 import rs.xor.rencfs.krencfs.navigation.PlatformNavigation
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute
 import rs.xor.rencfs.krencfs.screen.SplashScreen
@@ -57,7 +56,7 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
         // Instantiate use case
         val vaultListUseCase = VaultListScreenUseCaseImpl(
             onCreateVault = onCreateVaultUseCase,
-            onVaultSelected = onVaultSelectedUseCase
+            onVaultSelected = onVaultSelectedUseCase,
         )
 
         PlatformNavigation.RencfsNavigation(

@@ -51,7 +51,7 @@ fun VaultEditor(
     modifier: Modifier = Modifier,
     vaultId: String? = null,
     createVault: Boolean = false,
-    onSave: () -> Unit
+    onSave: () -> Unit,
 ) {
     var uiState by remember { mutableStateOf<UiState<VaultModel>>(UiState.Loading) }
     val scope = rememberCoroutineScope()
@@ -100,7 +100,7 @@ fun VaultEditor(
                                     id,
                                     updatedVault.name,
                                     updatedVault.dataDir,
-                                    updatedVault.mountPoint
+                                    updatedVault.mountPoint,
                                 )
                                 onSave()
                             } ?: run {
@@ -114,7 +114,7 @@ fun VaultEditor(
                     }
                 },
                 isSaving = isSaving,
-                modifier = modifier
+                modifier = modifier,
             )
 
             errorMessage?.let { error ->
@@ -124,7 +124,7 @@ fun VaultEditor(
                         TextButton(onClick = { errorMessage = null }) {
                             Text("DISMISS")
                         }
-                    }
+                    },
                 ) {
                     Text(error)
                 }
@@ -139,7 +139,7 @@ private fun VaultEditorContent(
     vault: VaultModel,
     onSave: (VaultModel) -> Unit,
     isSaving: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
     var hasChanges by remember { mutableStateOf(false) }
@@ -148,7 +148,7 @@ private fun VaultEditorContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         OutlinedTextField(
             value = editedVault.name,
@@ -158,7 +158,7 @@ private fun VaultEditorContent(
             },
             label = { Text("Name") },
             enabled = !isSaving,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(Modifier.height(16.dp))
@@ -171,7 +171,7 @@ private fun VaultEditorContent(
             },
             label = { Text("Mount Point") },
             enabled = !isSaving,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(Modifier.height(16.dp))
@@ -182,7 +182,7 @@ private fun VaultEditorContent(
                 editedVault = editedVault.copy(dataDir = it)
                 hasChanges = true
             },
-            enabled = !isSaving
+            enabled = !isSaving,
         )
 
         Spacer(Modifier.height(16.dp))
@@ -196,31 +196,34 @@ private fun VaultEditorContent(
             },
             label = { Text("Password") },
             enabled = !isSaving,
-            visualTransformation = if (passwordVisible)
+            visualTransformation = if (passwordVisible) {
                 VisualTransformation.None
-            else
-                PasswordVisualTransformation(),
+            } else {
+                PasswordVisualTransformation()
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Next,
             ),
             trailingIcon = {
                 IconButton(
-                    onClick = { passwordVisible = !passwordVisible }
+                    onClick = { passwordVisible = !passwordVisible },
                 ) {
                     Icon(
-                        imageVector = if (passwordVisible)
+                        imageVector = if (passwordVisible) {
                             Icons.Default.VisibilityOff
-                        else
-                            Icons.Default.Visibility,
-                        contentDescription = if (passwordVisible)
+                        } else {
+                            Icons.Default.Visibility
+                        },
+                        contentDescription = if (passwordVisible) {
                             "Hide password"
-                        else
+                        } else {
                             "Show password"
+                        },
                     )
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(Modifier.height(16.dp))
@@ -228,12 +231,12 @@ private fun VaultEditorContent(
         Button(
             onClick = { onSave(editedVault) },
             modifier = Modifier.align(Alignment.End),
-            enabled = hasChanges && !isSaving
+            enabled = hasChanges && !isSaving,
         ) {
             if (isSaving) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
                 Spacer(Modifier.width(8.dp))
             }
@@ -247,13 +250,13 @@ private fun DataDirField(
     value: String,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         OutlinedTextField(
             value = value,
@@ -261,12 +264,12 @@ private fun DataDirField(
             label = { Text("Data Directory") },
             enabled = enabled,
             modifier = Modifier.weight(1f),
-            singleLine = true
+            singleLine = true,
         )
 
         val launcher = rememberDirectoryPickerLauncher(
             title = "Choose data folder",
-            initialDirectory = value
+            initialDirectory = value,
         ) { directory ->
             directory?.path?.let(onValueChange)
         }
@@ -274,15 +277,16 @@ private fun DataDirField(
         IconButton(
             onClick = { launcher.launch() },
             enabled = enabled,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp),
         ) {
             Icon(
                 Icons.Outlined.MoreHoriz,
                 contentDescription = "Browse",
-                tint = if (enabled)
+                tint = if (enabled) {
                     MaterialTheme.colorScheme.primary
-                else
+                } else {
                     MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                },
             )
         }
     }

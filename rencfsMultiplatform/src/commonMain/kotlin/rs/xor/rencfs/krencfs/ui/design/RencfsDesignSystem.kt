@@ -1,7 +1,11 @@
 package rs.xor.rencfs.krencfs.ui.design
 
 import androidx.compose.foundation.background
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -11,7 +15,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntSize
-import krencfs.rencfsmultiplatform.generated.resources.*
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_bold
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_bold_italic
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_extrabold
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_extrabold_italic
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_italic
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_medium
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_medium_italic
+import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_regular
 import org.jetbrains.compose.resources.Font
 import kotlin.math.cos
 import kotlin.math.sin
@@ -72,27 +84,27 @@ object DesignSystem {
 
         val Secondary_Brown = Palette.Secondary_Brown_600
 
-        val Notification_Info = Color (0xFF467599)
+        val Notification_Info = Color(0xFF467599)
         val Notification_Success = Color(0xFF21A872)
         val Notification_Warning = Color(0xFFE9D018)
         val Notification_Error = Color(0xFFD2331B)
 
         object Gradient {
             val Oxidized_Iron = listOf(
-                    Color(0xFF914227),
-                    Color(0xFF8F3000),
-                    Color(0xFFB54737),
-                    Color(0xFFEB986C),
-                    Color(0xFFE08B7A),
-                )
+                Color(0xFF914227),
+                Color(0xFF8F3000),
+                Color(0xFFB54737),
+                Color(0xFFEB986C),
+                Color(0xFFE08B7A),
+            )
 
             val Oxidized_Copper = listOf(
-                    Color(0xFF3D5652),
-                    Color(0xFF4F726D),
-                    Color(0xFF6A9B94),
-                    Color(0xFF9EBEB9),
-                    Color(0xFF5C8680),
-                )
+                Color(0xFF3D5652),
+                Color(0xFF4F726D),
+                Color(0xFF6A9B94),
+                Color(0xFF9EBEB9),
+                Color(0xFF5C8680),
+            )
         }
     }
 
@@ -102,51 +114,51 @@ object DesignSystem {
             Font(
                 Res.font.jetbrainsmono_regular,
                 FontWeight.Normal,
-                FontStyle.Normal
+                FontStyle.Normal,
             ),
             Font(
                 Res.font.jetbrainsmono_italic,
                 FontWeight.Normal,
-                FontStyle.Italic
+                FontStyle.Italic,
             ),
 
             Font(
                 Res.font.jetbrainsmono_bold,
                 FontWeight.Bold,
-                FontStyle.Normal
+                FontStyle.Normal,
             ),
             Font(
                 Res.font.jetbrainsmono_bold_italic,
                 FontWeight.Bold,
-                FontStyle.Italic
+                FontStyle.Italic,
             ),
 
             Font(
                 Res.font.jetbrainsmono_extrabold,
                 FontWeight.ExtraBold,
-                FontStyle.Normal
+                FontStyle.Normal,
             ),
             Font(
                 Res.font.jetbrainsmono_extrabold_italic,
                 FontWeight.ExtraBold,
-                FontStyle.Italic
+                FontStyle.Italic,
             ),
 
             Font(
                 Res.font.jetbrainsmono_medium,
                 FontWeight.Medium,
-                FontStyle.Normal
+                FontStyle.Normal,
             ),
             Font(
                 Res.font.jetbrainsmono_medium_italic,
                 FontWeight.Medium,
-                FontStyle.Italic
-            )
+                FontStyle.Italic,
+            ),
         )
     }
 }
 
-//calculate offset based on angle and size
+// calculate offset based on angle and size
 fun gradientOffset(angleInDegrees: Double, width: Float, height: Float): Offset {
     val angleInRadians = Math.toRadians(angleInDegrees)
     val x = cos(angleInRadians).toFloat() * width
@@ -158,18 +170,18 @@ fun gradientOffset(angleInDegrees: Double, width: Float, height: Float): Offset 
 fun Modifier.backgroundAngularGradient(
     colors: List<Color>,
     startAngleInDegrees: Double = 101.14,
-    endAngleInDegrees: Double = -51.23
+    endAngleInDegrees: Double = -51.23,
 ): Modifier {
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
 
     return onSizeChanged { size ->
-            containerSize = size // Capture the container size
-        }
+        containerSize = size // Capture the container size
+    }
         .background(
             brush = Brush.linearGradient(
                 colors = colors,
                 end = gradientOffset(startAngleInDegrees, containerSize.width.toFloat(), containerSize.height.toFloat()),
-                start = gradientOffset(endAngleInDegrees, containerSize.width.toFloat(), containerSize.height.toFloat())
-            )
+                start = gradientOffset(endAngleInDegrees, containerSize.width.toFloat(), containerSize.height.toFloat()),
+            ),
         )
 }

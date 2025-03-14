@@ -39,9 +39,8 @@ fun AutoDismissibleSnackBar(
     AnimatedVisibility(
         visible = snackBarVisibleState,
         enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-        exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
-    )
-    {
+        exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
+    ) {
         Snackbar(
             modifier = modifier,
             action = {
@@ -49,13 +48,13 @@ fun AutoDismissibleSnackBar(
                     modifier = Modifier
                         .clickable { dismiss() }
                         .padding(10.dp),
-                    text = "X"
+                    text = "X",
                 )
             },
         ) {
             Text(
                 modifier = Modifier.wrapContentSize(),
-                text = message
+                text = message,
             )
         }
     }

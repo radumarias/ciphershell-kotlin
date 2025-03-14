@@ -52,7 +52,7 @@ actual object PlatformNavigation {
                 ?.let { backStackEntry ->
                     RencfsRoute.fromRoute(
                         backStackEntry.destination.route,
-                        backStackEntry.arguments
+                        backStackEntry.arguments,
                     )
                 } ?: VaultList
 
@@ -65,12 +65,12 @@ actual object PlatformNavigation {
                         icon = {
                             Icon(
                                 screen.mapToIcon(),
-                                contentDescription = screen.mapToTitle()
+                                contentDescription = screen.mapToTitle(),
                             )
                         },
                         label = { Text(screen.mapToTitle()) },
                         selected = currentRoute == screen,
-                        onClick = { navigationController.navigate(screen.route) }
+                        onClick = { navigationController.navigate(screen.route) },
                     )
                 }
                 if (deviceType == DisplayType.Desktop) {
@@ -78,19 +78,19 @@ actual object PlatformNavigation {
                         icon = {
                             Icon(
                                 Icons.Filled.Add,
-                                contentDescription = "Add folder"
+                                contentDescription = "Add folder",
                             )
                         },
                         label = { Text("Add folder") },
                         selected = false,
-                        onClick = { navigationController.navigate(VaultCreate.route) }
+                        onClick = { navigationController.navigate(VaultCreate.route) },
                     )
                 }
             },
             layoutType = when (deviceType) {
                 DisplayType.Phone -> NavigationSuiteType.NavigationBar
                 else -> NavigationSuiteType.NavigationRail
-            }
+            },
         ) {
             Scaffold(
                 topBar = {
@@ -111,9 +111,9 @@ actual object PlatformNavigation {
                                     Icon(Icons.Filled.Edit, "Edit")
                                 }
                             }
-                        }
+                        },
                     )
-                }
+                },
             ) { padding ->
 
                 NavHost(
@@ -123,10 +123,10 @@ actual object PlatformNavigation {
                     enterTransition = {
                         slideInVertically(
                             initialOffsetY = { it },
-                            animationSpec = tween(200)
+                            animationSpec = tween(200),
                         )
                     },
-                    exitTransition = { ExitTransition.None }
+                    exitTransition = { ExitTransition.None },
                 ) {
                     val vaultId = navArgument(RencfsRoute.VAULT_PARAM_ID) {
                         type = NavType.StringType
@@ -135,17 +135,18 @@ actual object PlatformNavigation {
                     composable(VaultList.route) {
                         VaultListScreen(
                             viewState = vaultListState,
-                            interactor = vaultListUseCase
+                            interactor = vaultListUseCase,
                         )
                     }
                     composable(VaultCreate.route) {
                         VaultEditor(
                             createVault = true,
-                            onSave = { navigationController.navigateUp() })
+                            onSave = { navigationController.navigateUp() },
+                        )
                     }
                     composable(
                         RencfsRoute.VaultView.BASE_ROUTE,
-                        arguments = listOf(vaultId)
+                        arguments = listOf(vaultId),
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
@@ -157,16 +158,17 @@ actual object PlatformNavigation {
                     }
                     composable(
                         RencfsRoute.VaultEdit.BASE_ROUTE,
-                        arguments = listOf(vaultId)
+                        arguments = listOf(vaultId),
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
                                 VaultEditor(
                                     vaultId = vaultId,
-                                    onSave = { navigationController.navigateUp() })
+                                    onSave = { navigationController.navigateUp() },
+                                )
                             } ?: run {
                             println("Vault ID not found: vaultId")
-                            navigationController.navigateUp()  //
+                            navigationController.navigateUp() //
                         }
                     }
                     composable(Settings.route) { SettingsScreen() }

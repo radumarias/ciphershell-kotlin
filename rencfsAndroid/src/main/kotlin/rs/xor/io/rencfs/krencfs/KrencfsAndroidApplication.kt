@@ -7,7 +7,6 @@ import rs.xor.rencfs.krencfs.RootContextProvider
 
 @HiltAndroidApp
 open class KrencfsAndroidApplication : Application() {
-
     override fun onCreate() {
         RootContextProvider.initialize(applicationContext)
         super.onCreate()

@@ -85,7 +85,7 @@ private fun VaultLockSwitch(
             .wrapContentSize()
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Switch(
             checked = isLocked,
@@ -93,19 +93,20 @@ private fun VaultLockSwitch(
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = if (isLocked) Icons.Default.Lock else Icons.Default.LockOpen,
                 contentDescription = if (isLocked) "Locked" else "Unlocked",
-                tint = if (isLocked)
+                tint = if (isLocked) {
                     MaterialTheme.colorScheme.primary
-                else
+                } else {
                     MaterialTheme.colorScheme.outline
+                },
             )
             Text(
                 text = if (isLocked) "Locked" else "Unlocked",
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }
@@ -125,27 +126,27 @@ private fun VaultContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
                 ListItem(
                     headlineContent = { Text(vault.name) },
-                    supportingContent = { Text("Name") }
+                    supportingContent = { Text("Name") },
                 )
                 HorizontalDivider()
                 ListItem(
                     headlineContent = { Text(vault.mountPoint) },
-                    supportingContent = { Text("Mount Point") }
+                    supportingContent = { Text("Mount Point") },
                 )
                 HorizontalDivider()
                 ListItem(
                     headlineContent = { Text(vault.dataDir) },
-                    supportingContent = { Text("Data Directory") }
+                    supportingContent = { Text("Data Directory") },
                 )
             }
         }
@@ -155,7 +156,7 @@ private fun VaultContent(
             onLockStateChanged = { newState ->
                 pendingLockState = newState
                 showPasswordDialog = true
-            }
+            },
         )
 
         error?.let {
@@ -163,7 +164,7 @@ private fun VaultContent(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
     }
@@ -178,7 +179,7 @@ private fun VaultContent(
             onDismiss = {
                 showPasswordDialog = false
                 pendingLockState = isLocked
-            }
+            },
         )
     }
 }
@@ -186,7 +187,7 @@ private fun VaultContent(
 @Composable
 private fun PasswordDialog(
     onConfirm: (String) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -199,38 +200,41 @@ private fun PasswordDialog(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                visualTransformation = if (passwordVisible)
+                visualTransformation = if (passwordVisible) {
                     VisualTransformation.None
-                else
-                    PasswordVisualTransformation(),
+                } else {
+                    PasswordVisualTransformation()
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Done,
                 ),
                 trailingIcon = {
                     IconButton(
-                        onClick = { passwordVisible = !passwordVisible }
+                        onClick = { passwordVisible = !passwordVisible },
                     ) {
                         Icon(
-                            imageVector = if (passwordVisible)
+                            imageVector = if (passwordVisible) {
                                 Icons.Default.VisibilityOff
-                            else
-                                Icons.Default.Visibility,
-                            contentDescription = if (passwordVisible)
+                            } else {
+                                Icons.Default.Visibility
+                            },
+                            contentDescription = if (passwordVisible) {
                                 "Hide password"
-                            else
+                            } else {
                                 "Show password"
+                            },
                         )
                     }
                 },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         },
         confirmButton = {
             TextButton(
                 onClick = { onConfirm(password) },
-                enabled = password.isNotEmpty()
+                enabled = password.isNotEmpty(),
             ) {
                 Text("Confirm")
             }
@@ -239,6 +243,6 @@ private fun PasswordDialog(
             TextButton(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
     )
 }

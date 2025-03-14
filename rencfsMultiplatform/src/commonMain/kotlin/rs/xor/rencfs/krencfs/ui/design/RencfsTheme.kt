@@ -1,13 +1,15 @@
 package rs.xor.rencfs.krencfs.ui.design
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 
 @Composable
 fun RencfsMaterialDarkTheme(
@@ -37,7 +39,7 @@ fun RencfsMaterialDarkTheme(
             MaterialTheme.typography.copy(
                 displayLarge = MaterialTheme.typography.displayLarge.copy(
                     fontFamily = JBMono,
-                    fontSize = 110.sp
+                    fontSize = 110.sp,
                 ),
                 displayMedium = MaterialTheme.typography.displayMedium.copy(fontFamily = JBMono),
                 displaySmall = MaterialTheme.typography.displaySmall.copy(fontFamily = JBMono),
@@ -52,7 +54,7 @@ fun RencfsMaterialDarkTheme(
                 bodySmall = MaterialTheme.typography.bodySmall.copy(fontFamily = JBMono),
                 labelLarge = MaterialTheme.typography.labelLarge.copy(fontFamily = JBMono),
                 labelMedium = MaterialTheme.typography.labelMedium.copy(fontFamily = JBMono),
-                labelSmall = MaterialTheme.typography.labelSmall.copy(fontFamily = JBMono)
+                labelSmall = MaterialTheme.typography.labelSmall.copy(fontFamily = JBMono),
             )
         },
         shapes = shapes,

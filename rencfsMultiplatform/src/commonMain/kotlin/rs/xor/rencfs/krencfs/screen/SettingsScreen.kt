@@ -24,20 +24,20 @@ fun SettingsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         var autoMount by remember { mutableStateOf(false) }
         var showNotifications by remember { mutableStateOf(true) }
 
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 SettingItem(
                     title = "Auto-mount Vaults",
                     subtitle = "Automatically mount vaults on startup",
                     checked = autoMount,
-                    onCheckedChange = { autoMount = it }
+                    onCheckedChange = { autoMount = it },
                 )
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -46,7 +46,7 @@ fun SettingsScreen() {
                     title = "Show Notifications",
                     subtitle = "Display notifications for mount/unmount events",
                     checked = showNotifications,
-                    onCheckedChange = { showNotifications = it }
+                    onCheckedChange = { showNotifications = it },
                 )
             }
         }
@@ -58,24 +58,24 @@ private fun SettingItem(
     title: String,
     subtitle: String,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title)
             Text(
                 text = subtitle,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
         Switch(
             checked = checked,
-            onCheckedChange = onCheckedChange
+            onCheckedChange = onCheckedChange,
         )
     }
 }

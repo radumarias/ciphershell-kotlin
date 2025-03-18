@@ -8,7 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
-import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
+import org.koin.core.context.GlobalContext.get
+import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.navigation.PlatformNavigation
 import rs.xor.rencfs.krencfs.navigation.RencfsRoute
@@ -20,7 +21,16 @@ import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenStateImpl
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCaseImpl
 
 @Composable
-fun RencfsComposeMainApp(deviceType: DisplayType) {
+fun RencfsComposeMainAppContainer(deviceType: DisplayType) {
+    val vaultRepository = remember { get().get<VaultRepository>() }
+    RencfsComposeMainApp(deviceType, vaultRepository)
+}
+
+@Composable
+fun RencfsComposeMainApp(
+    deviceType: DisplayType,
+    vaultRepository: VaultRepository,
+) {
 //    val rencfsLib = RencfsLib.create()
 //    println("RencfsComposeMainApp called" + rencfsLib.rencfsHello("Hi from Multiplatform!"))
     var isLoading by remember { mutableStateOf(true) }
@@ -30,7 +40,7 @@ fun RencfsComposeMainApp(deviceType: DisplayType) {
         SplashScreen()
         LaunchedEffect(Unit) {
             val start = System.currentTimeMillis()
-            count = SQLDelightDB.getVaultRepositoryAsync().count()
+            count = vaultRepository.count()
             val loadTime = System.currentTimeMillis() - start
             if (loadTime < 2000) {
                 delay(2000 - loadTime)

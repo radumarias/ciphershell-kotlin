@@ -36,6 +36,7 @@ kotlin {
 
                 implementation(deps.coroutines)
                 implementation(project(":rencfsMultiplatform"))
+                implementation(deps.koin.core)
             }
         }
 

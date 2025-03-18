@@ -2,15 +2,20 @@ package rs.xor.io.rencfs.krencfs
 
 import android.app.Application
 import android.util.Log
-import dagger.hilt.android.HiltAndroidApp
-import rs.xor.rencfs.krencfs.RootContextProvider
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import rs.xor.rencfs.krencfs.data.sqldelight.di.androidModule
+import rs.xor.rencfs.krencfs.di.sqlDelightModule
 
-@HiltAndroidApp
 open class KrencfsAndroidApplication : Application() {
     override fun onCreate() {
-        RootContextProvider.initialize(applicationContext)
         super.onCreate()
         Log.d(TAG, "onCreate")
+        startKoin {
+            Log.d(TAG, "startKoin")
+            androidContext(this@KrencfsAndroidApplication)
+            modules(sqlDelightModule, androidModule)
+        }
     }
 
     companion object {

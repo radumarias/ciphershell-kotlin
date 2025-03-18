@@ -13,6 +13,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.koin.core.context.GlobalContext.startKoin
+import rs.xor.rencfs.krencfs.di.sqlDelightModule
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
@@ -28,6 +30,9 @@ fun main() =
         )
 
         if (isOpen) {
+            startKoin {
+                modules(sqlDelightModule)
+            }
             Window(
                 undecorated = false,
                 onCloseRequest = { isOpen = false },
@@ -45,7 +50,7 @@ fun main() =
                     }
                 }
                 RencfsMaterialDarkTheme {
-                    RencfsComposeMainApp(DisplayType.Desktop)
+                    RencfsComposeMainAppContainer(DisplayType.Desktop)
                 }
             }
         }

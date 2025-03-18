@@ -14,7 +14,6 @@ plugins {
         deps.plugins.jetbrains.kotlin.serialization,
         deps.plugins.sqldelight,
         deps.plugins.google.android.application,
-        deps.plugins.google.android.hilt,
         deps.plugins.google.android.library,
         deps.plugins.google.ksp,
         deps.plugins.jetbrains.kotlin.android,

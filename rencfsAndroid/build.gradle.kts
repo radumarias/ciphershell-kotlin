@@ -2,7 +2,6 @@ val packageId = "rs.xor.io.rencfs.krencfs"
 
 plugins {
     alias(deps.plugins.google.android.application)
-    alias(deps.plugins.google.android.hilt)
     alias(deps.plugins.google.ksp)
     alias(deps.plugins.jetbrains.compose.compiler)
     alias(deps.plugins.jetbrains.kotlin.android)
@@ -19,10 +18,6 @@ android {
     compileSdk = 35
 
     ndkVersion = "27.2.12479018"
-
-    hilt {
-        enableAggregatingTask = true
-    }
 
     defaultConfig {
         applicationId = packageId
@@ -55,7 +50,6 @@ android {
 
     dependencies {
         coreLibraryDesugaring(androidDeps.jdk.desugaring)
-        ksp(androidDeps.hilt.compiler)
 
         implementation(project(":rencfsMultiplatform"))
 
@@ -67,8 +61,7 @@ android {
         implementation(androidDeps.bundles.appcompat)
         implementation(androidDeps.bundles.compose)
 
-        // hilt
-        implementation(androidDeps.bundles.hilt)
+        implementation(deps.koin.android)
     }
 }
 

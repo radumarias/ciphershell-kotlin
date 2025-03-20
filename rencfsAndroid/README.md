@@ -6,5 +6,5 @@ rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-andro
 sudo ln -s "$(which python3)" /usr/local/bin/python
 
 Before pushing:
-- Run `./gradlew prePushCheck` to verify formatting.
+- Run `./gradlew spotlessCheck` to verify formatting.
 - Fix issues with `./gradlew spotlessApply` if needed.

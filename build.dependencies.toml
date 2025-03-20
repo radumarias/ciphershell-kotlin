@@ -19,10 +19,10 @@ lifecycle = "2.8.4"
 navigation = "2.8.0-alpha11"
 
 ksp = "2.1.10-1.0.30"
-hilt = "2.54"
 spotless = "7.0.2"
 ktlint = "1.5.0"
 googlejavaformat = "1.23.0"
+koin = "3.5.3"
 
 [libraries]
 # Common
@@ -39,15 +39,16 @@ filekit-compose = { group = "io.github.vinceglb", name = "filekit-compose", vers
 
 sqldelight-runtime =  { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
+ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
+google-java-format = { module = "com.google.googlejavaformat:google-java-format", version.ref = "googlejavaformat" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 # Desktop
 sqldelight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 
 # Android
 sqldelight-driver-android  = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
-
-ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
-google-java-format = { module = "com.google.googlejavaformat:google-java-format", version.ref = "googlejavaformat" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 
 [plugins]
 # KMP
@@ -72,8 +73,6 @@ google-android-application = { id = "com.android.application", version.ref = "an
 google-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-google-android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 

@@ -37,8 +37,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
+import org.koin.core.context.GlobalContext.get
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
+import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.ui.state.ErrorState
 import rs.xor.rencfs.krencfs.ui.state.LoadingState
 import rs.xor.rencfs.krencfs.ui.state.UiState
@@ -49,12 +50,13 @@ fun VaultViewer(
     modifier: Modifier = Modifier,
 ) {
     var uiState by remember { mutableStateOf<UiState<VaultModel>>(UiState.Loading) }
+    val vaultRepository = remember { get().get<VaultRepository>() }
 
     LaunchedEffect(vaultId) {
         uiState = UiState.Loading
         try {
             vaultId?.let {
-                val vault = SQLDelightDB.getVaultRepositoryAsync().getVault(it.toLong())
+                val vault = vaultRepository.getVault(it.toLong())
                 uiState = if (vault != null) {
                     UiState.Success(vault)
                 } else {

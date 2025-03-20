@@ -39,8 +39,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import kotlinx.coroutines.launch
-import rs.xor.rencfs.krencfs.data.sqldelight.SQLDelightDB
+import org.koin.core.context.GlobalContext.get
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
+import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.ui.state.ErrorState
 import rs.xor.rencfs.krencfs.ui.state.LoadingState
 import rs.xor.rencfs.krencfs.ui.state.UiState
@@ -58,18 +59,18 @@ fun VaultEditor(
     var isSaving by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var currentVaultId by remember { mutableStateOf<String?>(vaultId) }
+    val vaultRepository = remember { get().get<VaultRepository>() }
 
     LaunchedEffect(vaultId) {
         uiState = UiState.Loading
         try {
-            val repo = SQLDelightDB.getVaultRepositoryAsync()
             if (createVault) {
                 // Create a new vault and store its ID
-                currentVaultId = repo.addVault().toString()
-                val newVault = repo.getVault(currentVaultId!!.toLong())!!
+                currentVaultId = vaultRepository.addVault().toString()
+                val newVault = vaultRepository.getVault(currentVaultId!!.toLong())!!
                 uiState = UiState.Success(newVault)
             } else if (vaultId != null) {
-                val vault = repo.getVault(vaultId.toLong())
+                val vault = vaultRepository.getVault(vaultId.toLong())
                 uiState = if (vault != null) {
                     UiState.Success(vault)
                 } else {
@@ -94,9 +95,8 @@ fun VaultEditor(
                             isSaving = true
                             errorMessage = null
 
-                            val repo = SQLDelightDB.getVaultRepositoryAsync()
                             currentVaultId?.let { id ->
-                                repo.updateVault(
+                                vaultRepository.updateVault(
                                     id,
                                     updatedVault.name,
                                     updatedVault.dataDir,

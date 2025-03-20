@@ -71,12 +71,13 @@ kotlin {
                 api(deps.coroutines)
 
                 implementation(project(":rencfsWrapper"))
-
+                implementation(deps.koin.core)
             }
         }
         val androidMain by getting {
             dependencies {
                 api(deps.sqldelight.driver.android)
+                implementation(deps.koin.android)
             }
         }
         val desktopMain by getting {

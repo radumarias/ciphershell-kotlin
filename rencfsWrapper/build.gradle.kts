@@ -1,10 +1,10 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.google.android.library)
+    alias(deps.plugins.spotless)
 }
 
 java {
@@ -78,6 +78,29 @@ android {
     }
 }
 
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint("1.5.0")
+            .editorConfigOverride(
+                mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable"),
+            )
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint("1.5.0")
+    }
+}
+
 tasks.named<Delete>("clean") {
     delete("../rencfs/java-bridge/target")
+}
+
+tasks.matching { it.name == "build" }.configureEach {
+    if (tasks.findByName("spotlessCheck") != null) {
+        dependsOn(tasks.named("spotlessCheck"))
+    }
 }

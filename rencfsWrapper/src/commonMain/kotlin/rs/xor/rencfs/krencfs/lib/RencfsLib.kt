@@ -3,13 +3,9 @@ package rs.xor.rencfs.krencfs.lib
 import hello
 
 abstract class RencfsLib {
-    fun rencfsHello(str: String): String {
-        return hello(str)
-    }
+    fun rencfsHello(str: String): String = hello(str)
 
     companion object {
-        fun create(): RencfsLib {
-            return RencfsLibLoader.loadLib()
-        }
+        fun create(): RencfsLib = RencfsLibLoader.loadLib()
     }
 }

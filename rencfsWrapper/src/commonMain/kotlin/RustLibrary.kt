@@ -4,24 +4,25 @@
 /***
  * Test function that takes a string and returns it with some additional one.
  */
-external fun hello(str: String): String;
+
+external fun hello(str: String): String
 
 /***
  * Mounts a filesystem at `mnt` with `dataDir` and `password`, returning the mount handle.
  *
  * @param umountFirst: If `true`, unmounts the filesystem at `mnt` before mounting.
  */
-external fun mount(mnt: String, dataDir: String, password: String, umountFirst: Boolean): Int;
+external fun mount(mnt: String, dataDir: String, password: String, umountFirst: Boolean): Int
 
 /***
  * Unmounts the filesystem at `mount handle` returned by [mount].
  */
-external fun umount(handle: Int);
+external fun umount(handle: Int)
 
 /***
  * Unmounts all mounted filesystems.
  */
-external fun umountAll();
+external fun umountAll()
 
 /***
  * Set state.
@@ -33,5 +34,4 @@ external fun state(
     simulateMountError: Boolean = false,
     simulateUmountError: Boolean = false,
     simulateUmountAllError: Boolean = false,
-);
-
+)

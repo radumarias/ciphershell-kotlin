@@ -97,7 +97,7 @@ kotlin {
     }
 }
 
-//val currentUserHome: String? = System.getProperty("user.home")
+// val currentUserHome: String? = System.getProperty("user.home")
 val applicationPackageName = project.findProperty("RENCFS_PACKAGE_NAME") as String?
 
 compose.desktop {
@@ -117,7 +117,6 @@ compose.desktop {
     }
 }
 
-
 android {
     namespace = applicationPackageName
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -136,8 +135,7 @@ android {
         jvmToolchain(17)
     }
     sourceSets {
-        getByName("debug")
-        {
+        getByName("debug") {
             java.srcDir("src/androidMain/preview")
         }
     }
@@ -163,13 +161,23 @@ spotless {
         target("src/**/*.kt")
         ktlint("1.5.0")
             .editorConfigOverride(
-                mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable")
+                mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable"),
             )
         trimTrailingWhitespace()
         endWithNewline()
+    }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint("1.5.0")
     }
 }
 
 tasks.named<Delete>("clean") {
     delete("../rencfs/java-bridge/target")
+}
+
+tasks.matching { it.name == "build" }.configureEach {
+    if (tasks.findByName("spotlessCheck") != null) {
+        dependsOn(tasks.named("spotlessCheck"))
+    }
 }

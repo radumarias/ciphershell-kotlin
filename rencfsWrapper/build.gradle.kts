@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(deps.plugins.jetbrains.kotlin.multiplatform)
     alias(deps.plugins.google.android.library)
+    alias(deps.plugins.spotless)
 }
 
 java {
@@ -75,6 +76,18 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+    }
+}
+
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint("1.5.0")
+            .editorConfigOverride(
+                mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable")
+            )
+        trimTrailingWhitespace()
+        endWithNewline()
     }
 }
 

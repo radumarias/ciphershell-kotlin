@@ -62,10 +62,14 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint("1.5.0")
+    }
 }
 val applicationPackageName = "rs.xor.rencfs.krencfs"
 val applicationClassName = "RencfsDesktopApplication"
-val mainClassPath = "${applicationPackageName}.${applicationClassName}Kt"
+val mainClassPath = "$applicationPackageName.${applicationClassName}Kt"
 
 compose.desktop {
     application {
@@ -78,21 +82,24 @@ compose.desktop {
     }
 }
 
-val rustLibBuildTarget: String = when {
-    OperatingSystem.current().isWindows -> "x86_64-pc-windows-msvc"
-    OperatingSystem.current().isMacOsX -> when {
-        System.getProperty("os.arch") == "aarch64" -> "aarch64-apple-darwin"
-        else -> "x86_64-apple-darwin"
+val rustLibBuildTarget: String =
+    when {
+        OperatingSystem.current().isWindows -> "x86_64-pc-windows-msvc"
+        OperatingSystem.current().isMacOsX ->
+            when {
+                System.getProperty("os.arch") == "aarch64" -> "aarch64-apple-darwin"
+                else -> "x86_64-apple-darwin"
+            }
+        else -> "x86_64-unknown-linux-gnu"
     }
-    else -> "x86_64-unknown-linux-gnu"
-}
 
-val rustLibBaseDir = "${projectDir}/../rencfs/java-bridge"
-val rustLibName = when {
-    OperatingSystem.current().isWindows -> "java_bridge.dll"
-    OperatingSystem.current().isMacOsX -> "libjava_bridge.dylib"
-    else -> "libjava_bridge.so"
-}
+val rustLibBaseDir = "$projectDir/../rencfs/java-bridge"
+val rustLibName =
+    when {
+        OperatingSystem.current().isWindows -> "java_bridge.dll"
+        OperatingSystem.current().isMacOsX -> "libjava_bridge.dylib"
+        else -> "libjava_bridge.so"
+    }
 
 tasks.register<Exec>("buildRencfsRustJavaBridge") {
     group = "build"
@@ -102,7 +109,7 @@ tasks.register<Exec>("buildRencfsRustJavaBridge") {
 
 tasks.register<Copy>("copyRencfsJavaBridgeLib") {
     dependsOn("buildRencfsRustJavaBridge")
-    from(file("${rustLibBaseDir}/target/${rustLibBuildTarget}/release").resolve(rustLibName))
+    from(file("$rustLibBaseDir/target/$rustLibBuildTarget/release").resolve(rustLibName))
     into(layout.buildDirectory.dir("../libs"))
 }
 
@@ -114,3 +121,8 @@ tasks.named<Delete>("clean") {
     delete(layout.buildDirectory.dir("../libs"))
 }
 
+tasks.matching { it.name == "build" }.configureEach {
+    if (tasks.findByName("spotlessCheck") != null) {
+        dependsOn(tasks.named("spotlessCheck"))
+    }
+}

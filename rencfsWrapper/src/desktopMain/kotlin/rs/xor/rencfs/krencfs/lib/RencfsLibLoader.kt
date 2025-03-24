@@ -4,8 +4,7 @@ import java.io.File
 
 @Suppress("UnsafeDynamicallyLoadedCode")
 actual object RencfsLibLoader {
-    actual fun loadLib() =
-    object : RencfsLib() {
+    actual fun loadLib() = object : RencfsLib() {
         init {
             val libPath = resolveLibPath()
             println("Loading library from $libPath")

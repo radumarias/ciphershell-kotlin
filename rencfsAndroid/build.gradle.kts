@@ -67,9 +67,9 @@ android {
 
 cargo {
     verbose = true
-    module  = "../rencfs/java-bridge"
+    module = "../rencfs/java-bridge"
     libname = "java_bridge"
-    targets = listOf( "arm64", "x86_64")
+    targets = listOf("arm64", "x86_64")
     apiLevel = 21
     profile = "release"
 }
@@ -81,8 +81,18 @@ spotless {
         trimTrailingWhitespace()
         endWithNewline()
     }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint("1.5.0")
+    }
 }
 
 tasks.matching { it.name in listOf("javaPreCompileDebug", "javaPreCompileRelease") }.configureEach {
     dependsOn("cargoBuild")
+}
+
+tasks.matching { it.name == "build" }.configureEach {
+    if (tasks.findByName("spotlessCheck") != null) {
+        dependsOn(tasks.named("spotlessCheck"))
+    }
 }

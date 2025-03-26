@@ -17,14 +17,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.settings_auto_mount_vaults_subtitle
+import krencfs.rencfsmultiplatform.generated.resources.settings_auto_mount_vaults_title
+import krencfs.rencfsmultiplatform.generated.resources.settings_show_notifications_subtitle
+import krencfs.rencfsmultiplatform.generated.resources.settings_show_notifications_title
+import org.jetbrains.compose.resources.stringResource
+import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingExtraSmall
+import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
+import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
 
 @Composable
 fun SettingsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(paddingNormal),
     ) {
         var autoMount by remember { mutableStateOf(false) }
         var showNotifications by remember { mutableStateOf(true) }
@@ -32,19 +40,23 @@ fun SettingsScreen() {
         Card(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(paddingNormal)) {
                 SettingItem(
-                    title = "Auto-mount Vaults",
-                    subtitle = "Automatically mount vaults on startup",
+                    title = stringResource(
+                        Res.string.settings_auto_mount_vaults_title),
+                    subtitle = stringResource(
+                        Res.string.settings_auto_mount_vaults_subtitle),
                     checked = autoMount,
                     onCheckedChange = { autoMount = it },
                 )
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = paddingSmall))
 
                 SettingItem(
-                    title = "Show Notifications",
-                    subtitle = "Display notifications for mount/unmount events",
+                    title = stringResource(
+                        Res.string.settings_show_notifications_title),
+                    subtitle = stringResource(
+                        Res.string.settings_show_notifications_subtitle),
                     checked = showNotifications,
                     onCheckedChange = { showNotifications = it },
                 )
@@ -63,7 +75,7 @@ private fun SettingItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = paddingExtraSmall),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column(modifier = Modifier.weight(1f)) {

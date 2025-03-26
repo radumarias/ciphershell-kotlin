@@ -10,9 +10,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.app_description
+import krencfs.rencfsmultiplatform.generated.resources.app_license
+import krencfs.rencfsmultiplatform.generated.resources.app_repository
+import krencfs.rencfsmultiplatform.generated.resources.app_version
+import krencfs.rencfsmultiplatform.generated.resources.title_description
+import krencfs.rencfsmultiplatform.generated.resources.title_license
+import krencfs.rencfsmultiplatform.generated.resources.title_repository
+import krencfs.rencfsmultiplatform.generated.resources.title_version
+import org.jetbrains.compose.resources.stringResource
+import org.koin.core.context.GlobalContext.get
+import rs.xor.rencfs.krencfs.ui.design.customcomponents.ClickableText
+import rs.xor.rencfs.krencfs.utils.UrlLauncher
 
 @Composable
 fun AboutScreen() {
+    val urlLauncher: UrlLauncher = get().get()
+    val repositoryUrl = "https://${stringResource(Res.string.app_repository)}"
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -23,20 +38,22 @@ fun AboutScreen() {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 InfoItem(
-                    title = "Version",
-                    content = "1.0.0",
+                    title = stringResource(Res.string.title_version),
+                    content = stringResource(Res.string.app_version)
                 )
                 InfoItem(
-                    title = "Description",
-                    content = "Rencfs is an encrypted filesystem implementation in Kotlin",
+                    title = stringResource(Res.string.title_description),
+                    content = stringResource(Res.string.app_description)
                 )
                 InfoItem(
-                    title = "License",
-                    content = "MIT License",
+                    title = stringResource(Res.string.title_license),
+                    content = stringResource(Res.string.app_license)
                 )
                 InfoItem(
-                    title = "Repository",
-                    content = "github.com/radumarias/rencfs-kotlin",
+                    title = stringResource(Res.string.title_repository),
+                    content = stringResource(Res.string.app_repository),
+                    isClickable = true,
+                    onClick = { urlLauncher.openUrl(repositoryUrl) }
                 )
             }
         }
@@ -47,6 +64,8 @@ fun AboutScreen() {
 private fun InfoItem(
     title: String,
     content: String,
+    isClickable: Boolean = false,
+    onClick: (() -> Unit)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -57,9 +76,10 @@ private fun InfoItem(
             text = title,
             style = MaterialTheme.typography.titleMedium,
         )
-        Text(
+        ClickableText(
             text = content,
-            style = MaterialTheme.typography.bodyMedium,
+            onClick = onClick,
+            isClickable = isClickable
         )
     }
 }

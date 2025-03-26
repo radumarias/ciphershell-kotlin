@@ -15,4 +15,13 @@
     <string name="settings_title">Settings</string>
     <string name="about_title">About</string>
 
+    // About Screen
+    <string name="app_version">1.0.0</string>
+    <string name="app_description">Rencfs is an encrypted filesystem implementation in Kotlin</string>
+    <string name="app_license">MIT License</string>
+    <string name="app_repository">github.com/radumarias/rencfs-kotlin</string>
+    <string name="title_version">Version</string>
+    <string name="title_description">Description</string>
+    <string name="title_license">License</string>
+    <string name="title_repository">Repository</string>
 </resources>

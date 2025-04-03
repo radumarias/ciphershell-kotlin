@@ -14,7 +14,9 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_bold
 import krencfs.rencfsmultiplatform.generated.resources.jetbrainsmono_bold_italic
@@ -155,6 +157,14 @@ object DesignSystem {
                 FontStyle.Italic,
             ),
         )
+    }
+
+    object Dimensions {
+        val paddingExtraSmall: Dp = 4.dp
+        val paddingSmall: Dp = 8.dp
+        val paddingNormal: Dp = 16.dp
+        val paddingLarge: Dp = 24.dp
+        val paddingExtraLarge: Dp = 32.dp
     }
 }
 

@@ -14,7 +14,9 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import org.koin.core.context.GlobalContext.startKoin
+import rs.xor.rencfs.krencfs.di.desktopModule
 import rs.xor.rencfs.krencfs.di.sqlDelightModule
+import rs.xor.rencfs.krencfs.di.uiModule
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.ui.design.RencfsMaterialDarkTheme
 
@@ -31,7 +33,7 @@ fun main() =
 
         if (isOpen) {
             startKoin {
-                modules(sqlDelightModule)
+                modules(sqlDelightModule, uiModule, desktopModule)
             }
             Window(
                 undecorated = false,

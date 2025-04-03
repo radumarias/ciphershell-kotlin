@@ -36,9 +36,15 @@ import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.application_icon
 import krencfs.rencfsmultiplatform.generated.resources.application_name
 import krencfs.rencfsmultiplatform.generated.resources.button_label_add_folder
+import krencfs.rencfsmultiplatform.generated.resources.vault_list_add_vault_button
+import krencfs.rencfsmultiplatform.generated.resources.vault_list_item_name_unnamed
+import krencfs.rencfsmultiplatform.generated.resources.vault_list_item_no_mount_point
 import krencfs.rencfsmultiplatform.generated.resources.welcome_screen_welcome_text
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.display.DisplayType
 import rs.xor.rencfs.krencfs.screen.usecase.OnCreateVaultUseCase
@@ -46,22 +52,25 @@ import rs.xor.rencfs.krencfs.screen.usecase.OnVaultSelectedUseCase
 import rs.xor.rencfs.krencfs.screen.usecase.SelectVaultUseCaseParams
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenState
 import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCase
+import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 
 @Composable
-fun VaultListScreen(
-    viewState: VaultListScreenState,
-    interactor: VaultListScreenUseCase,
-) {
-    val vaults by viewState.vaults.collectAsState(initial = emptyMap())
+fun VaultListScreen(firstTime: Boolean) {
+    object : KoinComponent {
+        val viewState: VaultListScreenState by inject { parametersOf(firstTime) }
+        val useCase: VaultListScreenUseCase by inject()
+    }.apply {
+        val vaults by viewState.vaults.collectAsState(initial = emptyMap())
 
-    if (viewState.firstStart && vaults.isEmpty()) {
-        VaultsEmptyStateScreen(onAddFolderClick = interactor.onCreateVault)
-    } else {
-        VaultListContent(
-            vaults = vaults,
-            onVaultSelected = interactor.onVaultSelected,
-            onCreateVault = interactor.onCreateVault,
-        )
+        if (viewState.firstStart && vaults.isEmpty()) {
+            VaultsEmptyStateScreen(onAddFolderClick = useCase.onCreateVault)
+        } else {
+            VaultListContent(
+                vaults = vaults,
+                onVaultSelected = useCase.onVaultSelected,
+                onCreateVault = useCase.onCreateVault,
+            )
+        }
     }
 }
 
@@ -69,7 +78,7 @@ fun VaultListScreen(
 fun VaultListContent(
     vaults: Map<String, VaultModel>,
     onVaultSelected: OnVaultSelectedUseCase,
-    onCreateVault: OnCreateVaultUseCase?,
+    onCreateVault: OnCreateVaultUseCase,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -78,12 +87,12 @@ fun VaultListContent(
                 onVaultClick = { onVaultSelected(SelectVaultUseCaseParams(it)) },
             )
         }
-        onCreateVault?.apply {
+        onCreateVault.apply {
             FloatingActionButton(
-                modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(paddingNormal),
                 onClick = { onCreateVault() },
             ) {
-                Icon(Icons.Filled.Add, "Add Vault")
+                Icon(Icons.Filled.Add, stringResource(Res.string.vault_list_add_vault_button))
             }
         }
     }
@@ -112,13 +121,17 @@ private fun VaultListItem(
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(paddingNormal)) {
             Text(
-                text = vault.name.let { if (it.isEmpty()) "Unnamed" else it },
+                text = vault.name.let {
+                    it.ifEmpty {
+                        stringResource(Res.string.vault_list_item_name_unnamed)
+                    }
+                },
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
-                text = vault.mountPoint.let { if (it.isEmpty()) "No mount point" else it },
+                text = vault.mountPoint.let { it.ifEmpty { stringResource(Res.string.vault_list_item_no_mount_point) } },
                 style = MaterialTheme.typography.bodySmall,
             )
         }
@@ -131,7 +144,7 @@ fun VaultsEmptyStateScreen(
 ) {
     Surface {
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(paddingNormal),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -153,7 +166,7 @@ fun VaultsEmptyStateScreen(
                                 DisplayType.Phone -> 0.5f
                                 else -> 1f
                             },
-                        ).padding(vertical = 16.dp),
+                        ).padding(vertical = paddingNormal),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     text = stringResource(Res.string.welcome_screen_welcome_text),

@@ -34,8 +34,6 @@ import rs.xor.rencfs.krencfs.screen.AboutScreen
 import rs.xor.rencfs.krencfs.screen.SettingsScreen
 import rs.xor.rencfs.krencfs.screen.VaultListScreen
 import rs.xor.rencfs.krencfs.screen.VaultViewer
-import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenState
-import rs.xor.rencfs.krencfs.screen.usecase.VaultListScreenUseCase
 import rs.xor.rencfs.krencfs.ui.components.VaultEditor
 
 actual object PlatformNavigation {
@@ -44,8 +42,7 @@ actual object PlatformNavigation {
     actual fun RencfsNavigation(
         navigationController: NavHostController,
         deviceType: DisplayType,
-        vaultListState: VaultListScreenState,
-        vaultListUseCase: VaultListScreenUseCase,
+        firstTime: Boolean,
     ) {
         val currentRoute =
             navigationController.currentBackStack.collectAsState(null).value?.lastOrNull()
@@ -133,10 +130,7 @@ actual object PlatformNavigation {
                     }
 
                     composable(VaultList.route) {
-                        VaultListScreen(
-                            viewState = vaultListState,
-                            interactor = vaultListUseCase,
-                        )
+                        VaultListScreen(firstTime)
                     }
                     composable(VaultCreate.route) {
                         VaultEditor(

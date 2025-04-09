@@ -15,4 +15,24 @@
     <string name="settings_title">Settings</string>
     <string name="about_title">About</string>
 
+    <!-- About Screen -->
+    <string name="app_version">1.0.0</string>
+    <string name="app_description">Rencfs is an encrypted filesystem implementation in Kotlin</string>
+    <string name="app_license">MIT License</string>
+    <string name="app_repository">github.com/radumarias/rencfs-kotlin</string>
+    <string name="title_version">Version</string>
+    <string name="title_description">Description</string>
+    <string name="title_license">License</string>
+    <string name="title_repository">Repository</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_auto_mount_vaults_title">Auto-mount Vaults</string>
+    <string name="settings_auto_mount_vaults_subtitle">Automatically mount vaults on startup</string>
+    <string name="settings_show_notifications_title">Show Notifications</string>
+    <string name="settings_show_notifications_subtitle">Display notifications for mount/unmount events</string>
+
+    <!-- Vault List Screen -->
+    <string name="vault_list_add_vault_button">Add Vault</string>"
+    <string name="vault_list_item_name_unnamed">Unnamed</string>"
+    <string name="vault_list_item_no_mount_point">No mount point</string>"
 </resources>

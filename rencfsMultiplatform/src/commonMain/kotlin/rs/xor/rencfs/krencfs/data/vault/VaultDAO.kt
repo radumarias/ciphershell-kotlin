@@ -16,6 +16,10 @@ interface VaultDAO {
         name: String,
         mountPoint: String,
         dataDir: String,
+        configureAdvancedSettings: Long,
+        encryptionAlgorithm: String?,
+        keySize: String?,
+        recoveryCode: String?
     ): Long
 
     suspend fun updateVault(

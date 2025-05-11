@@ -149,6 +149,8 @@ sqldelight {
         create("KrenkfsDB") {
             packageName.set(applicationPackageName)
             generateAsync.set(true)
+            version = 2
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/com/example/krenkfs/database"))
             // todo: choose src folders
         }
     }

@@ -42,7 +42,6 @@ appcompat = [
 compose = [
     "compose-foundation",
     "compose-foundation-layout",
-    "compose-material-iconsExtended",
     "compose-material3",
     "compose-runtime",
     "compose-ui",

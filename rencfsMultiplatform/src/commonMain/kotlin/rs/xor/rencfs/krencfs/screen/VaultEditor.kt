@@ -66,9 +66,9 @@ fun VaultEditor(
         try {
             if (createVault) {
                 // Create a new vault and store its ID
-                currentVaultId = vaultRepository.addVault().toString()
-                val newVault = vaultRepository.getVault(currentVaultId!!.toLong())!!
-                uiState = UiState.Success(newVault)
+//                currentVaultId = vaultRepository.addVault().toString()
+//                val newVault = vaultRepository.getVault(currentVaultId!!.toLong())!!
+//                uiState = UiState.Success(newVault)
             } else if (vaultId != null) {
                 val vault = vaultRepository.getVault(vaultId.toLong())
                 uiState = if (vault != null) {

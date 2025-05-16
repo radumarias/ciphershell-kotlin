@@ -16,6 +16,10 @@ interface VaultRepository {
         name: String = "",
         mountPoint: String = "",
         dataDir: String = "",
+        configureAdvancedSettings: Long,
+        encryptionAlgorithm: String?,
+        keySize: String?,
+        recoveryCode: String?
     ): String
 
     suspend fun updateVault(

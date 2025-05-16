@@ -163,6 +163,7 @@ actual object PlatformNavigation {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
+//                        TODO cleanup Vault editor
                                 VaultEditor(
                                     vaultId = vaultId,
                                     onSave = { navigationController.navigateUp() },

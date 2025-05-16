@@ -10,7 +10,7 @@ import java.util.Properties
 actual suspend fun provideSQLDriver(
     schema: SqlSchema<QueryResult.AsyncValue<Unit>>,
     databaseName: String,
-    databaseFileName: String
+    databaseFileName: String,
 ): SqlDriver {
     val homeDir = System.getProperty("user.home")
     val dbDir = File(homeDir, ".krenkfs")
@@ -30,7 +30,7 @@ actual suspend fun provideSQLDriver(
         identifier = null,
         sql = "PRAGMA user_version;",
         mapper = { cursor -> QueryResult.Value(cursor.getLong(0)?.toInt() ?: 0) },
-        parameters = 0
+        parameters = 0,
     ).value
     println("Current database version: $currentVersion")
 
@@ -48,7 +48,7 @@ actual suspend fun provideSQLDriver(
                 identifier = null,
                 sql = "SELECT 1 FROM Vault LIMIT 1",
                 mapper = { _ -> QueryResult.Value(true) },
-                parameters = 0
+                parameters = 0,
             ).value
         } catch (e: Exception) {
             false
@@ -57,20 +57,22 @@ actual suspend fun provideSQLDriver(
         if (!vaultTableExists && currentVersion == 1) {
             println("Vault table missing at version 1; creating minimal table")
             driver.execute(
-                null, """
+                null,
+                """
                 CREATE TABLE Vault (
                     `id` INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     path TEXT NOT NULL,
                     mount TEXT NOT NULL
                 )
-            """, 0
+            """,
+                0,
             ).await()
         }
         schema.migrate(
             driver,
             oldVersion = currentVersion.toLong(),
-            newVersion = targetVersion.toLong()
+            newVersion = targetVersion.toLong(),
         ).await()
     }
 

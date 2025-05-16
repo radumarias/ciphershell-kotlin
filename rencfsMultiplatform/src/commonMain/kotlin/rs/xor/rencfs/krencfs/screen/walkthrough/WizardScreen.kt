@@ -24,7 +24,10 @@ import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_navigation_btn_back_content_description
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.TOTAL_STEPS
+import rs.xor.rencfs.krencfs.screen.walkthrough.components.NextButton
+import rs.xor.rencfs.krencfs.screen.walkthrough.components.StepIndicator
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.TOTAL_STEPS
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.provideBackNavigationHandler
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 
 @Composable
@@ -41,7 +44,7 @@ fun WizardScreen(
     hideNextButton: Boolean = false,
     isDesktop: Boolean,
     modifier: Modifier = Modifier,
-    content: @Composable (Modifier) -> Unit
+    content: @Composable (Modifier) -> Unit,
 ) {
     val backNavigationHandler = provideBackNavigationHandler()
     val backAction: () -> Unit = if (currentStep == totalSteps) {
@@ -65,7 +68,7 @@ fun WizardScreen(
             isNextEnabled = isNextEnabled,
             hideNextButton = hideNextButton,
             modifier = modifier,
-            content = content
+            content = content,
         )
     } else {
         AndroidLayout(
@@ -77,7 +80,7 @@ fun WizardScreen(
             isNextEnabled = isNextEnabled,
             hideNextButton = hideNextButton,
             modifier = modifier,
-            content = content
+            content = content,
         )
     }
 }
@@ -89,16 +92,15 @@ fun NavigationButtonsAndroid(
     isNextEnabled: Boolean,
     hideNextButton: Boolean,
     isSaving: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = paddingNormal, vertical = paddingNormal),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-
         if (hideNextButton) {
             Spacer(Modifier.size(48.dp))
         } else {
@@ -106,7 +108,7 @@ fun NavigationButtonsAndroid(
                 onClick = { onNext(vault) },
                 isSaving = isSaving,
                 isEnabled = isNextEnabled,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
         }
     }
@@ -124,7 +126,7 @@ fun DesktopLayout(
     isNextEnabled: Boolean,
     hideNextButton: Boolean,
     modifier: Modifier,
-    content: @Composable (Modifier) -> Unit
+    content: @Composable (Modifier) -> Unit,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         if (showBackButton) {
@@ -136,14 +138,14 @@ fun DesktopLayout(
                     .size(24.dp)
                     .background(
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-                        shape = CircleShape
-                    )
+                        shape = CircleShape,
+                    ),
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription =
-                        stringResource(Res.string.wizzard_navigation_btn_back_content_description),
-                    tint = MaterialTheme.colorScheme.onSurface
+                    stringResource(Res.string.wizzard_navigation_btn_back_content_description),
+                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
         } else {
@@ -155,7 +157,7 @@ fun DesktopLayout(
                 .fillMaxWidth(0.5f)
                 .align(Alignment.Center)
                 .padding(horizontal = paddingNormal),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             content(Modifier)
         }
@@ -167,7 +169,7 @@ fun DesktopLayout(
                 isEnabled = isNextEnabled,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(end = paddingNormal)
+                    .padding(end = paddingNormal),
             )
         }
 
@@ -176,7 +178,7 @@ fun DesktopLayout(
             totalSteps = totalSteps,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = paddingNormal)
+                .padding(bottom = paddingNormal),
         )
     }
 }
@@ -191,18 +193,18 @@ fun AndroidLayout(
     isNextEnabled: Boolean,
     hideNextButton: Boolean,
     modifier: Modifier,
-    content: @Composable (Modifier) -> Unit
+    content: @Composable (Modifier) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             content(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = paddingNormal)
+                    .padding(horizontal = paddingNormal),
             )
         }
 
@@ -211,14 +213,14 @@ fun AndroidLayout(
             onNext = onNext,
             isNextEnabled = isNextEnabled,
             hideNextButton = hideNextButton,
-            isSaving = isSaving
+            isSaving = isSaving,
         )
 
         StepIndicator(
             currentStep = currentStep,
             totalSteps = totalSteps,
             modifier = Modifier.align(Alignment.CenterHorizontally)
-                .padding(vertical = paddingNormal)
+                .padding(vertical = paddingNormal),
         )
     }
 }

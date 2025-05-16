@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
@@ -10,6 +10,4 @@ actual class BackNavigationHandler {
     }
 }
 
-actual fun provideBackNavigationHandler(): BackNavigationHandler {
-    return BackNavigationHandler()
-}
+actual fun provideBackNavigationHandler(): BackNavigationHandler = BackNavigationHandler()

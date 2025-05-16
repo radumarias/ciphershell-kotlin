@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.navigation
 
 import androidx.compose.runtime.Composable
 

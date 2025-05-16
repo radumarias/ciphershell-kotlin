@@ -84,6 +84,8 @@ kotlin {
             dependencies {
                 api(compose.desktop.currentOs)
                 api(deps.sqldelight.driver.jvm)
+                implementation(deps.pdfbox)
+                implementation(deps.fontbox)
             }
         }
         // Define jvmMain source set

@@ -19,7 +19,7 @@ import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_name_
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_name_title
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_FOLDER_NAME
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_FOLDER_NAME
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 
 @Composable
@@ -28,7 +28,7 @@ fun FolderNameScreen(
     onNext: (VaultModel) -> Unit,
     isSaving: Boolean,
     isDesktop: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
 
@@ -42,11 +42,11 @@ fun FolderNameScreen(
         showBackButton = false,
         hideNextButton = false,
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             OutlinedTextField(
                 value = editedVault.name,
@@ -56,14 +56,14 @@ fun FolderNameScreen(
                 label = { Text(stringResource(Res.string.wizzard_step_folder_name_title)) },
                 enabled = !isSaving,
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(Modifier.height(paddingNormal))
 
             Text(
                 text = stringResource(Res.string.wizzard_step_folder_name_description),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }

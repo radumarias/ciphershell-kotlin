@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.utils
 
 expect class RecoveryCodeSaver {
     suspend fun saveRecoveryCode(recoveryCode: String, fileName: String): Result<Unit>

@@ -44,7 +44,9 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.data.vault.VaultRepository
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_RECOVERY_CODE
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_RECOVERY_CODE
+import rs.xor.rencfs.krencfs.screen.walkthrough.utils.printRecoveryCode
+import rs.xor.rencfs.krencfs.screen.walkthrough.utils.provideRecoveryCodeSaver
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
 
@@ -80,27 +82,27 @@ fun RecoveryCodeScreen(
                 editedVault = editedVault,
                 onNext = onNext,
                 setIsSaving = { isSaving = it },
-                setErrorMessage = { errorMessage = it }
+                setErrorMessage = { errorMessage = it },
             )
         },
         onBack = onBack,
         showBackButton = isDesktop,
         isNextEnabled = true,
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier
                 .fillMaxWidth()
                 .padding(horizontal = paddingNormal),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(Res.string.wizzard_step_recovery_code_description) + "${editedVault.name}”.",
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = paddingNormal)
+                modifier = Modifier.padding(bottom = paddingNormal),
             )
 
             OutlinedTextField(
@@ -114,11 +116,11 @@ fun RecoveryCodeScreen(
                     }) {
                         Icon(
                             imageVector = Icons.Default.ContentCopy,
-                            contentDescription = stringResource(Res.string.wizzard_step_recovery_code_copy)
+                            contentDescription = stringResource(Res.string.wizzard_step_recovery_code_copy),
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(Modifier.height(paddingNormal))
@@ -128,7 +130,7 @@ fun RecoveryCodeScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = paddingNormal)
+                modifier = Modifier.padding(bottom = paddingNormal),
             )
 
             errorMessage?.let { message ->
@@ -138,20 +140,20 @@ fun RecoveryCodeScreen(
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = paddingNormal)
+                    modifier = Modifier.padding(bottom = paddingNormal),
                 )
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 OutlinedButton(
                     onClick = {
                         try {
                             printRecoveryCode(
                                 recoveryCode = editedVault.recoveryCode ?: "",
-                                folderName = editedVault.name
+                                folderName = editedVault.name,
                             )
                         } catch (e: Exception) {
                             print("Failed to print: ${e.message}")
@@ -159,7 +161,7 @@ fun RecoveryCodeScreen(
                     },
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = paddingSmall)
+                        .padding(start = paddingSmall),
                 ) {
                     Text(stringResource(Res.string.wizzard_step_recovery_print))
                 }
@@ -174,7 +176,7 @@ fun RecoveryCodeScreen(
                                 editedVault.recoveryCode?.let { code ->
                                     val result = recoveryCodeSaver.saveRecoveryCode(
                                         recoveryCode = code,
-                                        fileName = "recovery_code_${editedVault.name}.txt"
+                                        fileName = "recovery_code_${editedVault.name}.txt",
                                     )
                                     if (!result.isSuccess) {
                                         errorMessage =
@@ -189,7 +191,7 @@ fun RecoveryCodeScreen(
                                     editedVault = editedVault,
                                     onNext = onNext,
                                     setIsSaving = { isSaving = it },
-                                    setErrorMessage = { errorMessage = it }
+                                    setErrorMessage = { errorMessage = it },
                                 )
                             } catch (e: Exception) {
                                 errorMessage = "Failed to save vault: ${e.message}"
@@ -201,12 +203,12 @@ fun RecoveryCodeScreen(
                     enabled = !isSaving,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = paddingSmall)
+                        .padding(end = paddingSmall),
                 ) {
                     if (isSaving) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(paddingNormal),
-                            color = MaterialTheme.colorScheme.onPrimary
+                            color = MaterialTheme.colorScheme.onPrimary,
                         )
                         Spacer(Modifier.width(paddingSmall))
                         Text(stringResource(Res.string.wizzard_step_recovery_saving))
@@ -225,7 +227,7 @@ fun saveVaultAndProceed(
     editedVault: VaultModel,
     onNext: (VaultModel) -> Unit,
     setIsSaving: (Boolean) -> Unit,
-    setErrorMessage: (String?) -> Unit
+    setErrorMessage: (String?) -> Unit,
 ) {
     scope.launch {
         try {
@@ -238,7 +240,7 @@ fun saveVaultAndProceed(
                 if (editedVault.configureAdvancedSettings) 1L else 0L,
                 editedVault.encryptionAlgorithm,
                 editedVault.keySize,
-                editedVault.recoveryCode
+                editedVault.recoveryCode,
             )
             onNext(editedVault)
         } catch (e: Exception) {

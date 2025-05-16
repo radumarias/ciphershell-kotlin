@@ -25,9 +25,16 @@ class VaultRepositoryImpl(
         configureAdvancedSettings: Long,
         encryptionAlgorithm: String?,
         keySize: String?,
-        recoveryCode: String?
-    ) = dao.insertVaultAndGetId(name, mountPoint, dataDir,
-        configureAdvancedSettings, encryptionAlgorithm, keySize, recoveryCode).toString()
+        recoveryCode: String?,
+    ) = dao.insertVaultAndGetId(
+        name,
+        mountPoint,
+        dataDir,
+        configureAdvancedSettings,
+        encryptionAlgorithm,
+        keySize,
+        recoveryCode,
+    ).toString()
 
     override suspend fun updateVault(
         id: String,

@@ -25,7 +25,7 @@ import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_confirmation
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_confirmation_view_dashboard
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_CONFIRMATION
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_CONFIRMATION
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
 
@@ -37,7 +37,7 @@ fun ConfirmationScreen(
     onUnlockFolder: () -> Unit,
     onBack: (VaultModel) -> Unit,
     isDesktop: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     WizardScreen(
         currentStep = STEP_CONFIRMATION,
@@ -50,26 +50,26 @@ fun ConfirmationScreen(
         isNextEnabled = false,
         hideNextButton = true,
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier
                 .fillMaxWidth()
                 .padding(horizontal = paddingNormal),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
                 modifier = Modifier
                     .size(120.dp)
                     .padding(bottom = 24.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Default.Folder,
                     contentDescription = stringResource(Res.string.wizzard_step_confirmation),
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(100.dp)
+                    modifier = Modifier.size(100.dp),
                 )
                 Icon(
                     imageVector = Icons.Default.Lock,
@@ -77,7 +77,7 @@ fun ConfirmationScreen(
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier
                         .size(40.dp)
-                        .align(Alignment.Center)
+                        .align(Alignment.Center),
                 )
             }
 
@@ -85,21 +85,21 @@ fun ConfirmationScreen(
                 text = stringResource(Res.string.wizzard_step_confirmation_text),
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = paddingSmall)
+                modifier = Modifier.padding(bottom = paddingSmall),
             )
-//TODO handle unlock folder
+// TODO handle unlock folder
 //            Row(
 //                modifier = Modifier.fillMaxWidth(),
 //                horizontalArrangement = Arrangement.SpaceEvenly
 //            ) {
-                OutlinedButton(
-                    onClick = onViewDashboard,
-                    modifier = Modifier
-                        .padding(start = paddingSmall)
-                        .align(Alignment.CenterHorizontally)
-                ) {
-                    Text(stringResource(Res.string.wizzard_step_confirmation_view_dashboard))
-                }
+            OutlinedButton(
+                onClick = onViewDashboard,
+                modifier = Modifier
+                    .padding(start = paddingSmall)
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(stringResource(Res.string.wizzard_step_confirmation_view_dashboard))
+            }
 
 //                TooltipBox(
 //                    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),

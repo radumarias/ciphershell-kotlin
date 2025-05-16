@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,18 +6,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_CONFIRMATION
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_EXPERT_SETTINGS
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_FOLDER_LOCATION
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_FOLDER_NAME
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_PASSWORD
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_RECOVERY_CODE
+import rs.xor.rencfs.krencfs.screen.walkthrough.ConfirmationScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.ExpertSettingsScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.FolderLocationScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.FolderNameScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.PasswordScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.RecoveryCodeScreen
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_CONFIRMATION
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_EXPERT_SETTINGS
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_FOLDER_LOCATION
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_FOLDER_NAME
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_PASSWORD
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_RECOVERY_CODE
 
 @Composable
 fun VaultSetupFlow(
     isDesktop: Boolean,
     onViewDashboard: () -> Unit,
-    onUnlockFolder: () -> Unit
+    onUnlockFolder: () -> Unit,
 ) {
     var currentStep by remember { mutableStateOf(STEP_FOLDER_NAME) }
     var vault by remember {
@@ -27,8 +33,8 @@ fun VaultSetupFlow(
                 name = "",
                 mountPoint = "",
                 dataDir = "",
-                password = null
-            )
+                password = null,
+            ),
         )
     }
 
@@ -54,7 +60,7 @@ fun VaultSetupFlow(
                 currentStep = STEP_FOLDER_NAME
             },
             isSaving = false,
-            isDesktop = isDesktop
+            isDesktop = isDesktop,
         )
 
         STEP_EXPERT_SETTINGS -> ExpertSettingsScreen(
@@ -68,7 +74,7 @@ fun VaultSetupFlow(
                 currentStep = STEP_FOLDER_LOCATION
             },
             isSaving = false,
-            isDesktop = isDesktop
+            isDesktop = isDesktop,
         )
 
         STEP_PASSWORD -> PasswordScreen(
@@ -82,7 +88,7 @@ fun VaultSetupFlow(
                 currentStep = STEP_EXPERT_SETTINGS
             },
             isSaving = false,
-            isDesktop = isDesktop
+            isDesktop = isDesktop,
         )
 
         STEP_RECOVERY_CODE -> RecoveryCodeScreen(
@@ -95,7 +101,7 @@ fun VaultSetupFlow(
                 vault = updatedVault
                 currentStep = STEP_PASSWORD
             },
-            isDesktop = isDesktop
+            isDesktop = isDesktop,
         )
 
         STEP_CONFIRMATION -> ConfirmationScreen(
@@ -106,7 +112,7 @@ fun VaultSetupFlow(
             },
             onViewDashboard = onViewDashboard,
             onUnlockFolder = onUnlockFolder,
-            isDesktop = isDesktop
+            isDesktop = isDesktop,
         )
     }
 }

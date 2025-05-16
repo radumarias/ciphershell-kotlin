@@ -21,12 +21,12 @@ import androidx.compose.ui.Modifier
 import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_chose_data
-import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_title
-import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_select_folder
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_description
+import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_select_folder
+import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_title
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_FOLDER_LOCATION
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_FOLDER_LOCATION
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 
 @Composable
@@ -36,7 +36,7 @@ fun FolderLocationScreen(
     onBack: (VaultModel) -> Unit,
     isSaving: Boolean,
     isDesktop: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
 
@@ -58,11 +58,11 @@ fun FolderLocationScreen(
         showBackButton = isDesktop,
         isNextEnabled = editedVault.dataDir.isNotBlank(),
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             OutlinedTextField(
                 value = editedVault.dataDir,
@@ -85,14 +85,14 @@ fun FolderLocationScreen(
                             },
                         )
                     }
-                }
+                },
             )
 
             Spacer(Modifier.height(paddingNormal))
 
             Text(
                 text = stringResource(Res.string.wizzard_step_folder_location_description),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }

@@ -34,7 +34,7 @@ import rs.xor.rencfs.krencfs.screen.AboutScreen
 import rs.xor.rencfs.krencfs.screen.SettingsScreen
 import rs.xor.rencfs.krencfs.screen.VaultListScreen
 import rs.xor.rencfs.krencfs.screen.VaultViewer
-import rs.xor.rencfs.krencfs.screen.walkthrough.VaultSetupFlow
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.VaultSetupFlow
 import rs.xor.rencfs.krencfs.ui.components.VaultEditor
 
 actual object PlatformNavigation {
@@ -137,7 +137,7 @@ actual object PlatformNavigation {
                         VaultSetupFlow(
                             isDesktop = deviceType == DisplayType.Desktop,
                             onViewDashboard = { navigationController.navigateUp() },
-                            onUnlockFolder = {}
+                            onUnlockFolder = {},
                         )
 //                        TODO cleanup Vault editor
 //                        VaultEditor(
@@ -163,6 +163,7 @@ actual object PlatformNavigation {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
+//                        TODO cleanup Vault editor
                                 VaultEditor(
                                     vaultId = vaultId,
                                     onSave = { navigationController.navigateUp() },

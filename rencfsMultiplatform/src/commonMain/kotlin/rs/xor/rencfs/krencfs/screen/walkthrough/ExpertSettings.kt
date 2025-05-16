@@ -43,7 +43,7 @@ import rs.xor.rencfs.krencfs.screen.walkthrough.EncryptionConstants.ALGORITHM_CH
 import rs.xor.rencfs.krencfs.screen.walkthrough.EncryptionConstants.KEY_SIZE_128_BIT
 import rs.xor.rencfs.krencfs.screen.walkthrough.EncryptionConstants.KEY_SIZE_192_BIT
 import rs.xor.rencfs.krencfs.screen.walkthrough.EncryptionConstants.KEY_SIZE_256_BIT
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_EXPERT_SETTINGS
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_EXPERT_SETTINGS
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingExtraSmall
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
@@ -63,7 +63,7 @@ fun ExpertSettingsScreen(
     onBack: (VaultModel) -> Unit,
     isSaving: Boolean,
     isDesktop: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
     var selectedAlgorithm by remember {
@@ -76,7 +76,7 @@ fun ExpertSettingsScreen(
                     KEY_SIZE_256_BIT
                 } else {
                     KEY_SIZE_128_BIT
-                }
+                },
         )
     }
 
@@ -87,7 +87,7 @@ fun ExpertSettingsScreen(
         onNext = {
             editedVault = editedVault.copy(
                 encryptionAlgorithm = if (editedVault.configureAdvancedSettings) selectedAlgorithm else null,
-                keySize = if (editedVault.configureAdvancedSettings) selectedKeySize else null
+                keySize = if (editedVault.configureAdvancedSettings) selectedKeySize else null,
             )
             onNext(editedVault)
         },
@@ -95,31 +95,31 @@ fun ExpertSettingsScreen(
         showBackButton = isDesktop,
         isNextEnabled = true,
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier
                 .fillMaxWidth()
                 .padding(horizontal = paddingNormal),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(Res.string.wizzard_step_expert_settings_description),
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(bottom = paddingNormal)
+                modifier = Modifier.padding(bottom = paddingNormal),
             )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 RadioButtonWithLabel(
                     label = stringResource(Res.string.wizzard_step_expert_settings_radio_sel_no),
                     selected = !editedVault.configureAdvancedSettings,
                     onClick = {
                         editedVault = editedVault.copy(configureAdvancedSettings = false)
-                    }
+                    },
                 )
 
                 RadioButtonWithLabel(
@@ -127,7 +127,7 @@ fun ExpertSettingsScreen(
                     selected = editedVault.configureAdvancedSettings,
                     onClick = {
                         editedVault = editedVault.copy(configureAdvancedSettings = true)
-                    }
+                    },
                 )
             }
 
@@ -138,7 +138,7 @@ fun ExpertSettingsScreen(
                     label = stringResource(Res.string.wizzard_step_expert_settings_encryption_al),
                     options = listOf(
                         ALGORITHM_CHACHA20_POLY1305,
-                        ALGORITHM_AES_GCM
+                        ALGORITHM_AES_GCM,
                     ),
                     selectedOption = selectedAlgorithm,
                     onOptionSelected = { algorithm ->
@@ -148,7 +148,7 @@ fun ExpertSettingsScreen(
                         } else {
                             KEY_SIZE_128_BIT
                         }
-                    }
+                    },
                 )
 
                 Spacer(Modifier.height(paddingNormal))
@@ -161,13 +161,13 @@ fun ExpertSettingsScreen(
                         listOf(
                             KEY_SIZE_128_BIT,
                             KEY_SIZE_192_BIT,
-                            KEY_SIZE_256_BIT
+                            KEY_SIZE_256_BIT,
                         )
                     },
                     selectedOption = selectedKeySize,
                     onOptionSelected = { keySize ->
                         selectedKeySize = keySize
-                    }
+                    },
                 )
             }
         }
@@ -178,22 +178,22 @@ fun ExpertSettingsScreen(
 fun RadioButtonWithLabel(
     label: String,
     selected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .clickable(onClick = onClick)
             .padding(paddingSmall),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(
             selected = selected,
-            onClick = onClick
+            onClick = onClick,
         )
         Spacer(Modifier.width(paddingExtraSmall))
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
@@ -203,14 +203,14 @@ fun DropdownMenuField(
     label: String,
     options: List<String>,
     selectedOption: String,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentSize(Alignment.TopEnd)
+            .wrapContentSize(Alignment.TopEnd),
     ) {
         OutlinedTextField(
             value = selectedOption,
@@ -222,16 +222,16 @@ fun DropdownMenuField(
                 IconButton(onClick = { expanded = true }) {
                     Icon(
                         imageVector = if (expanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                        contentDescription = stringResource(Res.string.wizzard_step_expert_settings_dropdown)
+                        contentDescription = stringResource(Res.string.wizzard_step_expert_settings_dropdown),
                     )
                 }
-            }
+            },
         )
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
@@ -239,7 +239,7 @@ fun DropdownMenuField(
                     onClick = {
                         onOptionSelected(option)
                         expanded = false
-                    }
+                    },
                 )
             }
         }

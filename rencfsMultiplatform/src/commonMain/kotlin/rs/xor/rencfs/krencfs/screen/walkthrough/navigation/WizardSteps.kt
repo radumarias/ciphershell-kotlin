@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.navigation
 
 object WizardSteps {
     const val STEP_FOLDER_NAME = 1

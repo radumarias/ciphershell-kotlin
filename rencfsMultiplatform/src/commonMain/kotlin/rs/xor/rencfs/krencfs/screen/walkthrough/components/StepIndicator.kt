@@ -1,4 +1,4 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 fun StepIndicator(
     currentStep: Int,
     totalSteps: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = "Step $currentStep/$totalSteps",
         style = MaterialTheme.typography.headlineSmall,
-        modifier = modifier
+        modifier = modifier,
     )
 }

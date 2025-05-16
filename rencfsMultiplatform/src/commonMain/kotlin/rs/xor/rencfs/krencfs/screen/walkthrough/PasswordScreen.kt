@@ -43,7 +43,7 @@ import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.screen.walkthrough.PasswordStrengthConstants.MINIMUM_LENGTH_STRONG
 import rs.xor.rencfs.krencfs.screen.walkthrough.PasswordStrengthConstants.MINIMUM_LENGTH_WEAK
-import rs.xor.rencfs.krencfs.screen.walkthrough.WizardSteps.STEP_PASSWORD
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_PASSWORD
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
 
@@ -54,7 +54,7 @@ fun PasswordScreen(
     onBack: (VaultModel) -> Unit,
     isSaving: Boolean,
     isDesktop: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
     var confirmPassword by remember { mutableStateOf("") }
@@ -63,8 +63,9 @@ fun PasswordScreen(
 
     val passwordStrength = calculatePasswordStrength(editedVault.password ?: "")
     val passwordsMatch = editedVault.password == confirmPassword
-    val isPasswordValid = passwordStrength != PasswordStrength.WEAK
-            && editedVault.password != null && editedVault.password!!.isNotBlank()
+    val isPasswordValid = passwordStrength != PasswordStrength.WEAK &&
+        editedVault.password != null &&
+        editedVault.password!!.isNotBlank()
 
     WizardScreen(
         currentStep = STEP_PASSWORD,
@@ -75,14 +76,14 @@ fun PasswordScreen(
         showBackButton = isDesktop,
         isNextEnabled = isPasswordValid && passwordsMatch,
         isDesktop = isDesktop,
-        modifier = modifier
+        modifier = modifier,
     ) { contentModifier ->
         Column(
             modifier = contentModifier
                 .fillMaxWidth()
                 .padding(horizontal = paddingNormal),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             OutlinedTextField(
                 value = editedVault.password ?: "",
@@ -98,19 +99,21 @@ fun PasswordScreen(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Next
+                    imeAction = ImeAction.Next,
                 ),
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
                             imageVector = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                            contentDescription = if (passwordVisible)
+                            contentDescription = if (passwordVisible) {
                                 stringResource(Res.string.wizzard_step_password_hide)
-                            else stringResource(Res.string.wizzard_step_password_show)
+                            } else {
+                                stringResource(Res.string.wizzard_step_password_show)
+                            },
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(Modifier.height(paddingSmall))
@@ -131,19 +134,21 @@ fun PasswordScreen(
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Done,
                 ),
                 trailingIcon = {
                     IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                         Icon(
                             imageVector = if (confirmPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                            contentDescription = if (confirmPasswordVisible)
+                            contentDescription = if (confirmPasswordVisible) {
                                 stringResource(Res.string.wizzard_step_password_confirm_hide)
-                            else stringResource(Res.string.wizzard_step_password_confirm_show)
+                            } else {
+                                stringResource(Res.string.wizzard_step_password_confirm_show)
+                            },
                         )
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             if (confirmPassword.isNotBlank() && !passwordsMatch) {
@@ -151,7 +156,7 @@ fun PasswordScreen(
                 Text(
                     text = stringResource(Res.string.wizzard_step_password_not_match),
                     color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
@@ -159,7 +164,9 @@ fun PasswordScreen(
 }
 
 enum class PasswordStrength {
-    WEAK, MEDIUM, STRONG
+    WEAK,
+    MEDIUM,
+    STRONG,
 }
 
 object PasswordStrengthConstants {
@@ -184,7 +191,9 @@ fun calculatePasswordStrength(password: String): PasswordStrength {
 
     return when {
         password.length >= MINIMUM_LENGTH_STRONG &&
-                hasLetters && hasDigits && hasSpecialChars -> PasswordStrength.STRONG
+            hasLetters &&
+            hasDigits &&
+            hasSpecialChars -> PasswordStrength.STRONG
 
         hasLetters && hasDigits -> PasswordStrength.MEDIUM
         else -> PasswordStrength.WEAK
@@ -204,12 +213,12 @@ fun PasswordStrengthIndicator(strength: PasswordStrength) {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "${stringResource(Res.string.wizzard_step_password_strength)} $text",
             style = MaterialTheme.typography.bodySmall,
-            color = color
+            color = color,
         )
     }
 }

@@ -19,7 +19,7 @@ interface VaultDAO {
         configureAdvancedSettings: Long,
         encryptionAlgorithm: String?,
         keySize: String?,
-        recoveryCode: String?
+        recoveryCode: String?,
     ): Long
 
     suspend fun updateVault(

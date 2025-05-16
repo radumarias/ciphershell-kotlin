@@ -16,7 +16,7 @@ fun FolderNameScreenPreview() {
                 name = "",
                 mountPoint = "",
                 dataDir = "",
-                password = null
+                password = null,
             ),
             onNext = {},
             isSaving = false,

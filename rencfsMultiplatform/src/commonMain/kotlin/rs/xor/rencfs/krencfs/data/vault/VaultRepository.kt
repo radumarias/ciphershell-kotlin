@@ -19,7 +19,7 @@ interface VaultRepository {
         configureAdvancedSettings: Long,
         encryptionAlgorithm: String?,
         keySize: String?,
-        recoveryCode: String?
+        recoveryCode: String?,
     ): String
 
     suspend fun updateVault(

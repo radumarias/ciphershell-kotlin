@@ -1,16 +1,16 @@
-package rs.xor.rencfs.krencfs.screen.walkthrough
+package rs.xor.rencfs.krencfs.screen.walkthrough.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.IconButton
 import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_navigation_btn_next_content_description
 import org.jetbrains.compose.resources.stringResource
@@ -20,7 +20,7 @@ fun NextButton(
     onClick: () -> Unit,
     isSaving: Boolean,
     isEnabled: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     IconButton(
         onClick = onClick,
@@ -33,14 +33,14 @@ fun NextButton(
                 } else {
                     MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
                 },
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription =
-                stringResource(Res.string.wizzard_navigation_btn_next_content_description),
-            tint = MaterialTheme.colorScheme.onPrimary
+            stringResource(Res.string.wizzard_navigation_btn_next_content_description),
+            tint = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }

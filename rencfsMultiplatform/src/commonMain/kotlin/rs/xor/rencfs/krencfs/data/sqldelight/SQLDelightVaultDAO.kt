@@ -36,11 +36,18 @@ class SQLDelightVaultDAO(
         configureAdvancedSettings: Long,
         encryptionAlgorithm: String?,
         keySize: String?,
-        recoveryCode: String?
+        recoveryCode: String?,
     ) = ioDispatcher.invoke {
         vaultsQueries.transactionWithResult {
-            vaultsQueries.insertVault(name, dataDir, mountPoint,
-                configureAdvancedSettings, encryptionAlgorithm, keySize, recoveryCode)
+            vaultsQueries.insertVault(
+                name,
+                dataDir,
+                mountPoint,
+                configureAdvancedSettings,
+                encryptionAlgorithm,
+                keySize,
+                recoveryCode,
+            )
             vaultsQueries.selectLastInsertId().executeAsOne()
         }
     }

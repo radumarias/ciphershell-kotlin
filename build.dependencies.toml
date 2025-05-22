@@ -24,6 +24,7 @@ ktlint = "1.5.0"
 googlejavaformat = "1.23.0"
 koin = "3.5.3"
 detekt = "1.23.6"
+pdfbox = "2.0.27"
 
 [libraries]
 # Common
@@ -43,6 +44,8 @@ sqldelight-coroutines-extensions = { group = "app.cash.sqldelight", name = "coro
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 google-java-format = { module = "com.google.googlejavaformat:google-java-format", version.ref = "googlejavaformat" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+pdfbox = { module = "org.apache.pdfbox:pdfbox", version.ref = "pdfbox" }
+fontbox = { module = "org.apache.pdfbox:fontbox", version.ref = "pdfbox" }
 
 # Desktop
 sqldelight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }

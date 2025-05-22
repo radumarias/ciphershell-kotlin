@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -29,12 +28,10 @@ import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_CONF
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfirmationScreen(
     vault: VaultModel,
     onViewDashboard: () -> Unit,
-    onUnlockFolder: () -> Unit,
     onBack: (VaultModel) -> Unit,
     isDesktop: Boolean = true,
     modifier: Modifier = Modifier,
@@ -87,11 +84,7 @@ fun ConfirmationScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = paddingSmall),
             )
-// TODO handle unlock folder
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.SpaceEvenly
-//            ) {
+
             OutlinedButton(
                 onClick = onViewDashboard,
                 modifier = Modifier
@@ -100,39 +93,6 @@ fun ConfirmationScreen(
             ) {
                 Text(stringResource(Res.string.wizzard_step_confirmation_view_dashboard))
             }
-
-//                TooltipBox(
-//                    positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-//                    tooltip = {
-//                        Surface(
-//                            color = MaterialTheme.colorScheme.surfaceVariant,
-//                            shape = MaterialTheme.shapes.small,
-//                            modifier = Modifier.padding(4.dp)
-//                        ) {
-//                            Text(
-//                                text = "Click here to unlock access to folder",
-//                                style = MaterialTheme.typography.bodySmall,
-//                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-//                                modifier = Modifier.padding(paddingSmall)
-//                            )
-//                        }
-//                    },
-//                    state = rememberTooltipState(isPersistent = false)
-//                ) {
-//                    Button(
-//                        onClick = onUnlockFolder,
-//                        modifier = Modifier
-//                            .weight(1f)
-//                            .padding(start = paddingSmall)
-//                    ) {
-//                        Text(
-//                            text = stringResource(Res.string.wizzard_step_confirmation_unlock_folder),
-//                            maxLines = 1,
-//                            style = MaterialTheme.typography.labelLarge
-//                        )
-//                    }
-//                }
-//            }
         }
     }
 }

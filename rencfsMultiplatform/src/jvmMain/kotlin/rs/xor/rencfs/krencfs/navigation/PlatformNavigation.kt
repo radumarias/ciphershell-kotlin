@@ -137,13 +137,7 @@ actual object PlatformNavigation {
                         VaultSetupFlow(
                             isDesktop = deviceType == DisplayType.Desktop,
                             onViewDashboard = { navigationController.navigateUp() },
-                            onUnlockFolder = {},
                         )
-//                        TODO cleanup Vault editor
-//                        VaultEditor(
-//                            createVault = true,
-//                            onSave = { navigationController.navigateUp() },
-//                        )
                     }
                     composable(
                         RencfsRoute.VaultView.BASE_ROUTE,
@@ -163,7 +157,6 @@ actual object PlatformNavigation {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
-//                        TODO cleanup Vault editor
                                 VaultEditor(
                                     vaultId = vaultId,
                                     onSave = { navigationController.navigateUp() },

@@ -23,7 +23,6 @@ import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_RECO
 fun VaultSetupFlow(
     isDesktop: Boolean,
     onViewDashboard: () -> Unit,
-    onUnlockFolder: () -> Unit,
 ) {
     var currentStep by remember { mutableStateOf(STEP_FOLDER_NAME) }
     var vault by remember {
@@ -111,7 +110,6 @@ fun VaultSetupFlow(
                 currentStep = STEP_RECOVERY_CODE
             },
             onViewDashboard = onViewDashboard,
-            onUnlockFolder = onUnlockFolder,
             isDesktop = isDesktop,
         )
     }

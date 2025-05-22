@@ -20,7 +20,6 @@ fun ConfirmationScreenPreview() {
             ),
             onBack = {},
             onViewDashboard = {},
-            onUnlockFolder = {},
             isDesktop = false,
         )
     }

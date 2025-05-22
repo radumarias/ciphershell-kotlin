@@ -41,8 +41,8 @@ import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_password_str
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_password_title
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
-import rs.xor.rencfs.krencfs.screen.walkthrough.PasswordStrengthConstants.MINIMUM_LENGTH_STRONG
-import rs.xor.rencfs.krencfs.screen.walkthrough.PasswordStrengthConstants.MINIMUM_LENGTH_WEAK
+import rs.xor.rencfs.krencfs.domain.walkthrough.PasswordStrength
+import rs.xor.rencfs.krencfs.domain.walkthrough.calculatePasswordStrength
 import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_PASSWORD
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingSmall
@@ -160,43 +160,6 @@ fun PasswordScreen(
                 )
             }
         }
-    }
-}
-
-enum class PasswordStrength {
-    WEAK,
-    MEDIUM,
-    STRONG,
-}
-
-object PasswordStrengthConstants {
-    const val MINIMUM_LENGTH_WEAK = 8
-    const val MINIMUM_LENGTH_STRONG = 12
-}
-
-object PasswordStrengthRegex {
-    val LETTERS = Regex("[a-zA-Z]")
-    val DIGITS = Regex("[0-9]")
-    val SPECIAL_CHARS = Regex("[^a-zA-Z0-9]")
-}
-
-fun calculatePasswordStrength(password: String): PasswordStrength {
-    if (password.length < MINIMUM_LENGTH_WEAK) {
-        return PasswordStrength.WEAK
-    }
-
-    val hasLetters = password.contains(PasswordStrengthRegex.LETTERS)
-    val hasDigits = password.contains(PasswordStrengthRegex.DIGITS)
-    val hasSpecialChars = password.contains(PasswordStrengthRegex.SPECIAL_CHARS)
-
-    return when {
-        password.length >= MINIMUM_LENGTH_STRONG &&
-            hasLetters &&
-            hasDigits &&
-            hasSpecialChars -> PasswordStrength.STRONG
-
-        hasLetters && hasDigits -> PasswordStrength.MEDIUM
-        else -> PasswordStrength.WEAK
     }
 }
 

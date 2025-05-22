@@ -152,7 +152,7 @@ sqldelight {
             packageName.set(applicationPackageName)
             generateAsync.set(true)
             version = 2
-            schemaOutputDirectory.set(file("src/commonMain/sqldelight/com/example/krenkfs/database"))
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/rs/xor/rencfs/krencfs/database"))
             // todo: choose src folders
         }
     }

@@ -42,38 +42,12 @@ actual suspend fun provideSQLDriver(
         driver.execute(null, "PRAGMA user_version = $targetVersion", 0).await()
     } else if (currentVersion < targetVersion) {
         println("Migrating database from version $currentVersion to $targetVersion")
-
-        val vaultTableExists = try {
-            driver.executeQuery(
-                identifier = null,
-                sql = "SELECT 1 FROM Vault LIMIT 1",
-                mapper = { _ -> QueryResult.Value(true) },
-                parameters = 0,
-            ).value
-        } catch (e: Exception) {
-            false
-        }
-
-        if (!vaultTableExists && currentVersion == 1) {
-            println("Vault table missing at version 1; creating minimal table")
-            driver.execute(
-                null,
-                """
-                CREATE TABLE Vault (
-                    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    path TEXT NOT NULL,
-                    mount TEXT NOT NULL
-                )
-            """,
-                0,
-            ).await()
-        }
         schema.migrate(
             driver,
             oldVersion = currentVersion.toLong(),
             newVersion = targetVersion.toLong(),
         ).await()
+        driver.execute(null, "PRAGMA user_version = $targetVersion", 0).await()
     }
 
     return driver

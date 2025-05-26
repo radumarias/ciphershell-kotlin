@@ -1,10 +1,15 @@
-CREATE TABLE `Vault` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `name` TEXT NOT NULL,
-    `path` TEXT NOT NULL,
-    `mount` TEXT NOT NULL
+CREATE TABLE Vault (
+   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    uri TEXT,
+    mount TEXT NOT NULL,
+    configureAdvancedSettings INTEGER NOT NULL DEFAULT 0,
+    encryptionAlgorithm TEXT,
+    keySize TEXT,
+    recoveryCode TEXT,
+    isLocked INTEGER NOT NULL DEFAULT 1
 );
-
 count:
 SELECT COUNT(*) FROM `Vault`;
 
@@ -19,16 +24,24 @@ selectById:
 SELECT * FROM `Vault` WHERE `id` = ?;
 
 insertVault:
-INSERT INTO `Vault` (`name`, `path`, `mount`)
-VALUES (?, ?, ?);
+INSERT INTO Vault (name, path, uri, mount, configureAdvancedSettings, encryptionAlgorithm, keySize, recoveryCode, isLocked)
+VALUES ( ?,  ?, ?, ?, ?, ?, ?, ?, ?);
 
 selectLastInsertId:
 SELECT last_insert_rowid() AS `id`;
 
 updateVault:
-UPDATE `Vault`
-SET `name` = ?, `path` = ?, `mount` = ?
-WHERE `id` = ?;
+UPDATE Vault SET
+    name = ?,
+    path = ?,
+    uri = ?,
+    mount = ?,
+    configureAdvancedSettings = ?,
+    encryptionAlgorithm = ?,
+    keySize = ?,
+    recoveryCode = ?,
+    isLocked = ?
+WHERE id = ?;
 
 deleteVault:
 DELETE FROM `Vault`

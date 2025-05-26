@@ -16,6 +16,12 @@ interface VaultDAO {
         name: String,
         mountPoint: String,
         dataDir: String,
+        uri: String?,
+        configureAdvancedSettings: Long,
+        encryptionAlgorithm: String?,
+        keySize: String?,
+        recoveryCode: String?,
+        isLocked: Long,
     ): Long
 
     suspend fun updateVault(
@@ -23,6 +29,12 @@ interface VaultDAO {
         name: String,
         mountPoint: String,
         dataDir: String,
+        uri: String?,
+        configureAdvancedSettings: Long,
+        encryptionAlgorithm: String?,
+        keySize: String?,
+        recoveryCode: String?,
+        isLocked: Long,
     )
 
     suspend fun deleteVault(id: Long)

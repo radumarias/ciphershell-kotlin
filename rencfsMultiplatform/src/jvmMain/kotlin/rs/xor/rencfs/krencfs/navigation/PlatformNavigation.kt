@@ -34,7 +34,7 @@ import rs.xor.rencfs.krencfs.screen.AboutScreen
 import rs.xor.rencfs.krencfs.screen.SettingsScreen
 import rs.xor.rencfs.krencfs.screen.VaultListScreen
 import rs.xor.rencfs.krencfs.screen.VaultViewer
-import rs.xor.rencfs.krencfs.ui.components.VaultEditor
+import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.VaultSetupFlow
 
 actual object PlatformNavigation {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -133,9 +133,11 @@ actual object PlatformNavigation {
                         VaultListScreen(firstTime)
                     }
                     composable(VaultCreate.route) {
-                        VaultEditor(
-                            createVault = true,
-                            onSave = { navigationController.navigateUp() },
+                        VaultSetupFlow(
+                            vaultId = null,
+                            isEditMode = false,
+                            isDesktop = deviceType == DisplayType.Desktop,
+                            onViewDashboard = { navigationController.navigateUp() },
                         )
                     }
                     composable(
@@ -156,9 +158,11 @@ actual object PlatformNavigation {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(RencfsRoute.VAULT_PARAM_ID)
                             ?.let { vaultId ->
-                                VaultEditor(
+                                VaultSetupFlow(
                                     vaultId = vaultId,
-                                    onSave = { navigationController.navigateUp() },
+                                    isEditMode = true,
+                                    isDesktop = deviceType == DisplayType.Desktop,
+                                    onViewDashboard = { navigationController.navigateUp() },
                                 )
                             } ?: run {
                             println("Vault ID not found: vaultId")

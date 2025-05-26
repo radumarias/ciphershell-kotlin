@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import rs.xor.rencfs.krencfs.data.sqldelight.di.androidModule
+import rs.xor.rencfs.krencfs.di.androidModule
 import rs.xor.rencfs.krencfs.di.sqlDelightModule
 
 open class KrencfsAndroidApplication : Application() {

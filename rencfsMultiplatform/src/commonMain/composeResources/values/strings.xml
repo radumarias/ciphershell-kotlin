@@ -32,7 +32,46 @@
     <string name="settings_show_notifications_subtitle">Display notifications for mount/unmount events</string>
 
     <!-- Vault List Screen -->
-    <string name="vault_list_add_vault_button">Add Vault</string>"
-    <string name="vault_list_item_name_unnamed">Unnamed</string>"
-    <string name="vault_list_item_no_mount_point">No mount point</string>"
+    <string name="vault_list_add_vault_button">Add Vault</string>
+    <string name="vault_list_item_name_unnamed">Unnamed</string>
+    <string name="vault_list_item_no_mount_point">No mount point</string>
+
+    <!-- Wizard screen-->
+    <string name="wizzard_navigation_btn_back_content_description">Back</string>
+    <string name="wizzard_navigation_btn_next_content_description">Next</string>
+    <string name="wizzard_step_folder_name_title">Folder Name</string>
+    <string name="wizzard_step_folder_name_description">The folder name can contain the following characters:\n- Letters\n- Numbers\n- Others: -_+=/[]</string>
+    <string name="wizzard_step_folder_location_title">Folder Location</string>
+    <string name="wizzard_step_folder_location_description">Choose the location where you would like to save your new encrypted folder.</string>
+    <string name="wizzard_step_folder_location_chose_data">Choose data folder</string>
+    <string name="wizzard_step_folder_location_select_folder">Select folder</string>
+    <string name="wizzard_step_expert_settings_title">Expert Settings</string>
+    <string name="wizzard_step_expert_settings_description">Would you like to configure advanced settings?</string>
+    <string name="wizzard_step_expert_settings_radio_sel_yes">Yes</string>
+    <string name="wizzard_step_expert_settings_radio_sel_no">No, thank you</string>
+    <string name="wizzard_step_expert_settings_encryption_al">Encryption Algorithm</string>
+    <string name="wizzard_step_expert_settings_dropdown">Expand/Collapse</string>
+    <string name="wizzard_step_password_title">Password</string>
+    <string name="wizzard_step_password_hide">Hide password</string>
+    <string name="wizzard_step_password_show">Show password</string>
+    <string name="wizzard_step_password_confirm">Confirm Password</string>
+    <string name="wizzard_step_password_confirm_hide">Hide confirm password</string>
+    <string name="wizzard_step_password_confirm_show">Show confirm password</string>
+    <string name="wizzard_step_password_not_match">Passwords do not match</string>
+    <string name="wizzard_step_password_strength">Password Strength</string>
+    <string name="wizzard_step_password_strength_week">Weak</string>
+    <string name="wizzard_step_password_strength_medium">Medium</string>
+    <string name="wizzard_step_password_strength_strong">Strong</string>
+    <string name="wizzard_step_recovery_code_title">Recovery Code</string>
+    <string name="wizzard_step_recovery_code_copy">Copy recovery code</string>
+    <string name="wizzard_step_recovery_code_description">In case you forget your password, use this recovery code to regain access to folder </string>
+    <string name="wizzard_step_recovery_warning">⚠ Ensure you store this recovery code in a secure location, such as a password manager or a physical safe. Do not share it with anyone.</string>
+    <string name="wizzard_step_recovery_save_failed">Failed to save vault</string>
+    <string name="wizzard_step_recovery_saving">Saving...</string>
+    <string name="wizzard_step_recovery_save">Save</string>
+    <string name="wizzard_step_recovery_print">Print</string>
+    <string name="wizzard_step_confirmation">Locked Folder</string>
+    <string name="wizzard_step_confirmation_view_dashboard">View Dashboard</string>
+    <string name="wizzard_step_confirmation_unlock_folder">Unlock Folder</string>
+    <string name="wizzard_step_confirmation_text">Your encrypted folder was successfully added.\nUnlock access to edit folder or view location.</string>
 </resources>

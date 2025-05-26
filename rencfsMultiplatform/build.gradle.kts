@@ -84,6 +84,8 @@ kotlin {
             dependencies {
                 api(compose.desktop.currentOs)
                 api(deps.sqldelight.driver.jvm)
+                implementation(deps.pdfbox)
+                implementation(deps.fontbox)
             }
         }
         // Define jvmMain source set
@@ -149,6 +151,8 @@ sqldelight {
         create("KrenkfsDB") {
             packageName.set(applicationPackageName)
             generateAsync.set(true)
+            version = 2
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/rs/xor/rencfs/krencfs/database"))
             // todo: choose src folders
         }
     }

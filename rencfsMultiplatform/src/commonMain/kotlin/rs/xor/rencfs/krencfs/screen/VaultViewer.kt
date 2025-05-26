@@ -2,11 +2,12 @@ package rs.xor.rencfs.krencfs.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -14,11 +15,11 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -29,20 +30,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import org.koin.core.context.GlobalContext.get
+import rs.xor.rencfs.krencfs.data.sqldelight.toVault
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.ui.state.ErrorState
 import rs.xor.rencfs.krencfs.ui.state.LoadingState
 import rs.xor.rencfs.krencfs.ui.state.UiState
+import rs.xor.rencfs.krencfs.utils.FileOpener
 
 @Composable
 fun VaultViewer(
@@ -72,93 +78,90 @@ fun VaultViewer(
 
     when (val state = uiState) {
         is UiState.Loading -> LoadingState()
-        is UiState.Success -> VaultContent(state.data, modifier)
+        is UiState.Success -> VaultContent(state.data, vaultRepository, modifier)
         is UiState.Error -> ErrorState(state.message)
-    }
-}
-
-@Composable
-private fun VaultLockSwitch(
-    isLocked: Boolean,
-    onLockStateChanged: (Boolean) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Switch(
-            checked = isLocked,
-            onCheckedChange = onLockStateChanged,
-        )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = if (isLocked) Icons.Default.Lock else Icons.Default.LockOpen,
-                contentDescription = if (isLocked) "Locked" else "Unlocked",
-                tint = if (isLocked) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.outline
-                },
-            )
-            Text(
-                text = if (isLocked) "Locked" else "Unlocked",
-                style = MaterialTheme.typography.bodyLarge,
-            )
-        }
     }
 }
 
 @Composable
 private fun VaultContent(
     vault: VaultModel,
+    vaultRepository: VaultRepository,
     modifier: Modifier = Modifier,
 ) {
-    var isLocked by remember { mutableStateOf(true) }
+    var isLocked by remember { mutableStateOf(vault.isLocked) }
     var showPasswordDialog by remember { mutableStateOf(false) }
     var pendingLockState by remember { mutableStateOf(false) }
-    val error by remember { mutableStateOf<String?>(null) }
+    var error by remember { mutableStateOf<String?>(null) }
+    val fileOpener = remember { get().get<FileOpener>() }
+    val scope = rememberCoroutineScope()
 
-    println(vault)
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Card(
+        Text(
+            text = "Folder Status",
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.fillMaxWidth(),
+        )
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                ListItem(
-                    headlineContent = { Text(vault.name) },
-                    supportingContent = { Text("Name") },
-                )
-                HorizontalDivider()
-                ListItem(
-                    headlineContent = { Text(vault.mountPoint) },
-                    supportingContent = { Text("Mount Point") },
-                )
-                HorizontalDivider()
-                ListItem(
-                    headlineContent = { Text(vault.dataDir) },
-                    supportingContent = { Text("Data Directory") },
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = if (isLocked) Icons.Default.Lock else Icons.Default.LockOpen,
+                        contentDescription = if (isLocked) "Locked" else "Unlocked",
+                        tint = if (isLocked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                    )
+                    Text(
+                        text = if (isLocked) "Locked" else "Unlocked",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+                Switch(
+                    checked = isLocked,
+                    onCheckedChange = { newState ->
+                        pendingLockState = newState
+                        showPasswordDialog = true
+                    },
+                    modifier = Modifier.scale(1.2f),
                 )
             }
         }
 
-        VaultLockSwitch(
-            isLocked = isLocked,
-            onLockStateChanged = { newState ->
-                pendingLockState = newState
-                showPasswordDialog = true
-            },
+        OutlinedTextField(
+            value = vault.name,
+            onValueChange = {},
+            label = { Text("Folder Name") },
+            readOnly = true,
+            enabled = false,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        OutlinedTextField(
+            value = vault.dataDir,
+            onValueChange = {},
+            label = { Text("Folder Location") },
+            readOnly = true,
+            enabled = false,
+            modifier = Modifier.fillMaxWidth(),
         )
 
         error?.let {
@@ -166,17 +169,51 @@ private fun VaultContent(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp),
             )
+        }
+
+        Spacer(Modifier.weight(1f))
+
+        Button(
+            onClick = {
+                try {
+                    if (vault.uri.isNullOrEmpty()) {
+                        error = "No folder URI set"
+                        println("No URI set for vault: ${vault.id}")
+                    } else {
+                        fileOpener.openDirectory(vault.uri)
+                        error = null
+                    }
+                } catch (e: Exception) {
+                    error = "Failed to open folder: ${e.message}"
+                    println("Error opening directory: ${e.message}")
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(16.dp),
+        ) {
+            Text("View Folder")
         }
     }
 
     if (showPasswordDialog) {
         PasswordDialog(
             onConfirm = { password ->
-                isLocked = pendingLockState
-                showPasswordDialog = false
-                println("Lock state changed to: $pendingLockState with password: $password")
+                scope.launch {
+                    try {
+                        if (password == vault.password) {
+                            isLocked = pendingLockState
+                            vaultRepository.updateVault(vault.copy(isLocked = isLocked).toVault())
+                            error = null
+                        } else {
+                            error = "Incorrect password"
+                        }
+                    } catch (e: Exception) {
+                        error = "Failed to update lock state: ${e.message}"
+                    } finally {
+                        showPasswordDialog = false
+                    }
+                }
             },
             onDismiss = {
                 showPasswordDialog = false

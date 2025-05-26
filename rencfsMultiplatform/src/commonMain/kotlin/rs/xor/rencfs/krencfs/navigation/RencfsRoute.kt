@@ -12,10 +12,10 @@ import androidx.core.bundle.Bundle
 import kotlinx.serialization.Serializable
 import krencfs.rencfsmultiplatform.generated.resources.Res
 import krencfs.rencfsmultiplatform.generated.resources.about_title
+import krencfs.rencfsmultiplatform.generated.resources.add_new_folder_title
+import krencfs.rencfsmultiplatform.generated.resources.encrypted_folders_title
 import krencfs.rencfsmultiplatform.generated.resources.settings_title
-import krencfs.rencfsmultiplatform.generated.resources.vault_create_title
 import krencfs.rencfsmultiplatform.generated.resources.vault_edit_title
-import krencfs.rencfsmultiplatform.generated.resources.vault_list_title
 import krencfs.rencfsmultiplatform.generated.resources.vault_view_title
 import org.jetbrains.compose.resources.stringResource
 
@@ -92,13 +92,12 @@ fun Bundle?.requireParam(key: String) = this?.getString(key) ?: throw IllegalArg
 @Composable
 fun RencfsRoute.mapToTitle() = stringResource(
     when (this) {
-        RencfsRoute.VaultList -> Res.string.vault_list_title
-        RencfsRoute.VaultCreate -> Res.string.vault_create_title
+        RencfsRoute.VaultList -> Res.string.encrypted_folders_title
+        RencfsRoute.VaultCreate -> Res.string.add_new_folder_title
         is RencfsRoute.VaultView -> Res.string.vault_view_title
         is RencfsRoute.VaultEdit -> Res.string.vault_edit_title
         RencfsRoute.Settings -> Res.string.settings_title
         RencfsRoute.About -> Res.string.about_title
-        else -> throw IllegalArgumentException("Route $this is not supported")
     },
 )
 
@@ -110,5 +109,4 @@ fun RencfsRoute.mapToIcon() = when (this) {
     is RencfsRoute.VaultEdit -> Icons.Filled.Edit
     RencfsRoute.Settings -> Icons.Filled.Settings
     RencfsRoute.About -> Icons.Filled.Info
-    else -> throw IllegalArgumentException("Route $this is not supported")
 }

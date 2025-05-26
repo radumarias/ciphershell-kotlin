@@ -33,20 +33,24 @@ class SQLDelightVaultDAO(
         name: String,
         mountPoint: String,
         dataDir: String,
+        uri: String?,
         configureAdvancedSettings: Long,
         encryptionAlgorithm: String?,
         keySize: String?,
         recoveryCode: String?,
+        isLocked: Long,
     ) = ioDispatcher.invoke {
         vaultsQueries.transactionWithResult {
             vaultsQueries.insertVault(
                 name,
                 dataDir,
+                uri,
                 mountPoint,
                 configureAdvancedSettings,
                 encryptionAlgorithm,
                 keySize,
                 recoveryCode,
+                isLocked,
             )
             vaultsQueries.selectLastInsertId().executeAsOne()
         }
@@ -57,7 +61,26 @@ class SQLDelightVaultDAO(
         name: String,
         mountPoint: String,
         dataDir: String,
-    ) = ioDispatcher.invoke { vaultsQueries.updateVault(name, dataDir, mountPoint, id) }
+        uri: String?,
+        configureAdvancedSettings: Long,
+        encryptionAlgorithm: String?,
+        keySize: String?,
+        recoveryCode: String?,
+        isLocked: Long,
+    ) = ioDispatcher.invoke {
+        vaultsQueries.updateVault(
+            name = name,
+            path = dataDir,
+            uri = uri,
+            mount = mountPoint,
+            configureAdvancedSettings = configureAdvancedSettings,
+            encryptionAlgorithm = encryptionAlgorithm,
+            keySize = keySize,
+            recoveryCode = recoveryCode,
+            isLocked = isLocked,
+            id = id
+        )
+    }
 
     override suspend fun deleteVault(id: Long) = ioDispatcher.invoke { vaultsQueries.deleteVault(id) }
 

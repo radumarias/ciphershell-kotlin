@@ -8,9 +8,9 @@
     <string name="button_label_add_folder">+ Add folder</string>
     <string name="button_label_mount_lock">Lock</string>
     <string name="button_label_mount_unlock">Unlock</string>
-    <string name="vault_list_title">Vault List</string>
-    <string name="vault_create_title">Create Vault</string>
-    <string name="vault_view_title">View Vault</string>
+    <string name="encrypted_folders_title">Secrets</string>
+    <string name="add_new_folder_title">Add new folder</string>
+    <string name="vault_view_title">Folder details</string>
     <string name="vault_edit_title">Edit Vault</string>
     <string name="settings_title">Settings</string>
     <string name="about_title">About</string>

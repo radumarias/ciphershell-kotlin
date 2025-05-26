@@ -34,7 +34,7 @@ actual suspend fun provideSQLDriver(
     ).value
     println("Current database version: $currentVersion")
 
-    val targetVersion = 2
+    val targetVersion = 3
 
     if (currentVersion == 0) {
         println("Creating new database schema (version $targetVersion)")

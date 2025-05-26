@@ -78,6 +78,7 @@ kotlin {
             dependencies {
                 api(deps.sqldelight.driver.android)
                 implementation(deps.koin.android)
+                implementation(deps.documentfile.android)
             }
         }
         val desktopMain by getting {
@@ -151,7 +152,7 @@ sqldelight {
         create("KrenkfsDB") {
             packageName.set(applicationPackageName)
             generateAsync.set(true)
-            version = 2
+            version = 3
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/rs/xor/rencfs/krencfs/database"))
             // todo: choose src folders
         }

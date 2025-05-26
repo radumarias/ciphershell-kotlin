@@ -42,6 +42,7 @@ import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_recovery_sav
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_recovery_warning
 import org.jetbrains.compose.resources.stringResource
 import org.koin.core.context.GlobalContext.get
+import rs.xor.rencfs.krencfs.data.sqldelight.toVault
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.data.vault.VaultRepository
 import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_RECOVERY_CODE
@@ -233,15 +234,7 @@ fun saveVaultAndProceed(
         try {
             setIsSaving(true)
             setErrorMessage(null)
-            vaultRepository.addVault(
-                editedVault.name,
-                editedVault.mountPoint,
-                editedVault.dataDir,
-                if (editedVault.configureAdvancedSettings) 1L else 0L,
-                editedVault.encryptionAlgorithm,
-                editedVault.keySize,
-                editedVault.recoveryCode,
-            )
+            vaultRepository.updateVault(editedVault.toVault())
             onNext(editedVault)
         } catch (e: Exception) {
             setErrorMessage("Failed to save vault: ${e.message}")

@@ -20,6 +20,12 @@ actual suspend fun provideSQLDriver(
     val dbPath = File(dbDir, databaseFileName).absolutePath
     println("provideSQLDriver: Database path: $dbPath")
 
+    // Delete existing database to enforce version 1
+    if (File(dbPath).exists()) {
+        println("Deleting existing database at $dbPath")
+        File(dbPath).delete()
+    }
+
     val driver: SqlDriver = try {
         JdbcSqliteDriver("jdbc:sqlite:$dbPath", Properties())
     } catch (e: Exception) {
@@ -30,25 +36,18 @@ actual suspend fun provideSQLDriver(
         identifier = null,
         sql = "PRAGMA user_version;",
         mapper = { cursor -> QueryResult.Value(cursor.getLong(0)?.toInt() ?: 0) },
-        parameters = 0,
+        parameters = 0
     ).value
     println("Current database version: $currentVersion")
 
-    val targetVersion = 3
+    val targetVersion = 1
 
     if (currentVersion == 0) {
         println("Creating new database schema (version $targetVersion)")
         schema.create(driver).await()
         driver.execute(null, "PRAGMA user_version = $targetVersion", 0).await()
-    } else if (currentVersion < targetVersion) {
-        println("Migrating database from version $currentVersion to $targetVersion")
-        schema.migrate(
-            driver,
-            oldVersion = currentVersion.toLong(),
-            newVersion = targetVersion.toLong(),
-        ).await()
-        driver.execute(null, "PRAGMA user_version = $targetVersion", 0).await()
     }
 
     return driver
 }
+

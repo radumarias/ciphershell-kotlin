@@ -16,7 +16,8 @@ val sqlDelightModule = module {
     single<SqlDriver> {
         runBlocking { provideSQLDriver(KrenkfsDB.Schema, "Vaults") }
     }
-    single<VaultsQueries> { VaultsQueries(get()) }
+    single { KrenkfsDB(get()) }
+    single<VaultsQueries> { get<KrenkfsDB>().vaultsQueries }
     single<VaultDAO> { SQLDelightVaultDAO(get(), Dispatchers.IO) }
     single<VaultRepository> { VaultRepositoryImpl(get()) }
 }

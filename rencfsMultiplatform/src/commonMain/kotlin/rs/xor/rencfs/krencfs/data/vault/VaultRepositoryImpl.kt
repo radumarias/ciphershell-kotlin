@@ -53,7 +53,7 @@ class VaultRepositoryImpl(
             encryptionAlgorithm = vault.encryptionAlgorithm,
             keySize = vault.keySize,
             recoveryCode = vault.recoveryCode,
-            isLocked = vault.isLocked
+            isLocked = vault.isLocked,
         )
     }
 

@@ -18,9 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import krencfs.rencfsmultiplatform.generated.resources.Res
-import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_chose_data
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_description
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_select_folder
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_title

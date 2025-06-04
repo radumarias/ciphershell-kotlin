@@ -78,7 +78,7 @@ class SQLDelightVaultDAO(
             keySize = keySize,
             recoveryCode = recoveryCode,
             isLocked = isLocked,
-            id = id
+            id = id,
         )
     }
 

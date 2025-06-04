@@ -36,7 +36,7 @@ actual suspend fun provideSQLDriver(
         identifier = null,
         sql = "PRAGMA user_version;",
         mapper = { cursor -> QueryResult.Value(cursor.getLong(0)?.toInt() ?: 0) },
-        parameters = 0
+        parameters = 0,
     ).value
     println("Current database version: $currentVersion")
 
@@ -50,4 +50,3 @@ actual suspend fun provideSQLDriver(
 
     return driver
 }
-

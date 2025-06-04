@@ -28,7 +28,7 @@ fun VaultModel.toVault(): Vault = Vault(
     encryptionAlgorithm = encryptionAlgorithm,
     keySize = keySize,
     recoveryCode = recoveryCode,
-    isLocked = if (isLocked) 1L else 0L
+    isLocked = if (isLocked) 1L else 0L,
 )
 
 fun List<Vault>.toVaultDataModelList(): List<VaultModel> = this.map { it.toVaultDataModel() }

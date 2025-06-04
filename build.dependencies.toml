@@ -25,6 +25,7 @@ googlejavaformat = "1.23.0"
 koin = "3.5.3"
 detekt = "1.23.6"
 pdfbox = "2.0.27"
+documentfile = "1.0.1"
 
 [libraries]
 # Common
@@ -53,6 +54,7 @@ sqldelight-driver-jvm = { group = "app.cash.sqldelight", name = "sqlite-driver",
 # Android
 sqldelight-driver-android  = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+documentfile-android = { module = "androidx.documentfile:documentfile", version.ref = "documentfile" }
 
 [plugins]
 # KMP

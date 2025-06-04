@@ -18,15 +18,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import io.github.vinceglb.filekit.compose.rememberDirectoryPickerLauncher
 import krencfs.rencfsmultiplatform.generated.resources.Res
-import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_chose_data
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_description
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_select_folder
 import krencfs.rencfsmultiplatform.generated.resources.wizzard_step_folder_location_title
 import org.jetbrains.compose.resources.stringResource
 import rs.xor.rencfs.krencfs.data.vault.VaultModel
 import rs.xor.rencfs.krencfs.screen.walkthrough.navigation.WizardSteps.STEP_FOLDER_LOCATION
+import rs.xor.rencfs.krencfs.screen.walkthrough.utils.provideFolderPicker
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 
 @Composable
@@ -39,13 +38,15 @@ fun FolderLocationScreen(
     modifier: Modifier = Modifier,
 ) {
     var editedVault by remember { mutableStateOf(vault) }
+    val folderPicker = remember { provideFolderPicker() }
+    var launchFolderPicker by remember { mutableStateOf(false) }
 
-    val folderPickerLauncher = rememberDirectoryPickerLauncher(
-        title = stringResource(Res.string.wizzard_step_folder_location_chose_data),
-        initialDirectory = editedVault.dataDir,
-    ) { directory ->
-        directory?.path?.let {
-            editedVault = editedVault.copy(dataDir = it)
+    if (launchFolderPicker) {
+        folderPicker.LaunchFolderPicker { uri, displayName ->
+            if (!uri.isNullOrEmpty() && !displayName.isNullOrEmpty()) {
+                editedVault = editedVault.copy(dataDir = displayName, uri = uri)
+            }
+            launchFolderPicker = false
         }
     }
 
@@ -74,7 +75,9 @@ fun FolderLocationScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 trailingIcon = {
-                    IconButton(onClick = { folderPickerLauncher.launch() }) {
+                    IconButton(
+                        onClick = { launchFolderPicker = true },
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Folder,
                             contentDescription = stringResource(Res.string.wizzard_step_folder_location_select_folder),

@@ -1,6 +1,0 @@
-CREATE TABLE Vault (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    path TEXT NOT NULL,
-    mount TEXT NOT NULL
-);

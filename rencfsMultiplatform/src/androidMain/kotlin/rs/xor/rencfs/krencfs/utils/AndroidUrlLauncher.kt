@@ -1,10 +1,9 @@
-package rs.xor.rencfs.krencfs.data.sqldelight.utils
+package rs.xor.rencfs.krencfs.utils
 
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.net.toUri
-import rs.xor.rencfs.krencfs.utils.UrlLauncher
 
 class AndroidUrlLauncher(private val context: Context) : UrlLauncher {
     override fun openUrl(url: String) {

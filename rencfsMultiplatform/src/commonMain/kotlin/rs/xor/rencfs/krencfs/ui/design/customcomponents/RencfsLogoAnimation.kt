@@ -41,13 +41,13 @@ fun RencfsLogoAnimation(
     iconSize: Dp = 180.dp,
     shimmerColor: Color = Color.White.copy(alpha = 0.12f),
     shimmerWidthFraction: Float = 0.1f,
-    shimmerDuration: Int = 3200
+    shimmerDuration: Int = 3200,
 ) {
     val shimmerX by rememberBouncingShimmerX(shimmerDuration)
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.size(iconSize)
+        modifier = modifier.size(iconSize),
     ) {
         // 🌒 Outer shadow behind icon using drawBehind for Compose Multiplatform
         Box(
@@ -64,15 +64,15 @@ fun RencfsLogoAnimation(
                                 0.68f to Color.Transparent,
                                 0.82f to Color.Black.copy(alpha = 0.15f),
                                 0.95f to Color.Black.copy(alpha = 0.3f),
-                                1.0f to Color.Transparent
+                                1.0f to Color.Transparent,
                             ),
                             center = center,
-                            radius = radius
+                            radius = radius,
                         ),
                         radius = radius,
-                        center = center
+                        center = center,
                     )
-                }
+                },
         )
 
         // 💫 Foreground shimmer clipped to a circular mask
@@ -92,18 +92,18 @@ fun RencfsLogoAnimation(
                             0.35f to shimmerColor.copy(alpha = 0.05f),
                             0.5f to shimmerColor,
                             0.65f to shimmerColor.copy(alpha = 0.05f),
-                            1.0f to Color.Transparent
+                            1.0f to Color.Transparent,
                         ),
                         start = Offset(shimmerStartX - size.width, 0f),
-                        end = Offset(shimmerEndX + size.width, size.height)
+                        end = Offset(shimmerEndX + size.width, size.height),
                     )
 
                     drawRect(
                         brush = shimmerGradient,
                         size = size,
-                        blendMode = BlendMode.Lighten
+                        blendMode = BlendMode.Lighten,
                     )
-                }
+                },
         ) {
             Image(
                 imageVector = icon,
@@ -111,7 +111,7 @@ fun RencfsLogoAnimation(
                 contentScale = ContentScale.Inside,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp) // avoids cropping inside circular clip
+                    .padding(10.dp), // avoids cropping inside circular clip
             )
         }
     }
@@ -119,7 +119,7 @@ fun RencfsLogoAnimation(
 
 @Composable
 fun rememberBouncingShimmerX(
-    durationMillis: Int = 2500
+    durationMillis: Int = 2500,
 ): State<Float> {
     val shimmerX = remember { Animatable(-1f) }
 
@@ -128,7 +128,7 @@ fun rememberBouncingShimmerX(
         while (true) {
             shimmerX.animateTo(
                 targetValue = if (direction == 1) 2f else -1f,
-                animationSpec = tween(durationMillis, easing = LinearEasing)
+                animationSpec = tween(durationMillis, easing = LinearEasing),
             )
             direction *= -1
         }

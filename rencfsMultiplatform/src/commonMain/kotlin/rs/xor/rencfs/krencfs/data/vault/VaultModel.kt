@@ -1,5 +1,10 @@
 package rs.xor.rencfs.krencfs.data.vault
 
+import androidx.compose.runtime.Immutable
+import kotlinx.serialization.Serializable
+
+@Immutable
+@Serializable
 data class VaultModel(
     val id: String?,
     val name: String,

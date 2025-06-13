@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.core.bundle.Bundle
 import kotlinx.serialization.Serializable
 import krencfs.rencfsmultiplatform.generated.resources.Res
@@ -19,6 +20,7 @@ import krencfs.rencfsmultiplatform.generated.resources.vault_edit_title
 import krencfs.rencfsmultiplatform.generated.resources.vault_view_title
 import org.jetbrains.compose.resources.stringResource
 
+@Immutable
 @Serializable
 sealed class RencfsRoute(
     val route: String,

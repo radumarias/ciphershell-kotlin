@@ -56,9 +56,7 @@ kotlin {
                 api(compose.animationGraphics)
                 api(compose.material3AdaptiveNavigationSuite)
 
-//                todo: not yet supported in kmp
-//                api(compose.preview)
-//                implementation(compose.components.uiToolingPreview)
+                implementation(compose.components.uiToolingPreview)
 
                 implementation(deps.jetbrains.kotlinx.serialization.json)
                 implementation(deps.jetbrains.androidx.navigation.compose)

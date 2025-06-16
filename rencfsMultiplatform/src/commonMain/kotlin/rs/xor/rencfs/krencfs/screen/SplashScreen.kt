@@ -21,7 +21,8 @@ fun SplashScreen() {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            RencfsLogoAnimation()
+//            RencfsLogoAnimation()
+            GravitationalLogoAnimation()
         }
     }
 }

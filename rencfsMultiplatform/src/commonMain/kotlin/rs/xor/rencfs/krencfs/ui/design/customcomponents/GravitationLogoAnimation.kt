@@ -28,23 +28,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import krencfs.rencfsmultiplatform.generated.resources.Res
+import krencfs.rencfsmultiplatform.generated.resources.application_icon
+import krencfs.rencfsmultiplatform.generated.resources.application_name
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
-
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 @Composable
 fun GravitationalLogoAnimation(
-    icon: Painter = painterResource(R.drawable.application_icon),
-    contentDescription: String = stringResource(R.string.app_name),
+    icon: ImageVector = vectorResource(Res.drawable.application_icon),
+    contentDescription: String = stringResource(Res.string.application_name),
     modifier: Modifier = Modifier,
     iconSize: Dp = 160.dp,
     atmosphereColor: Color = Color.Cyan.copy(alpha = 0.3f),
@@ -132,7 +134,7 @@ fun GravitationalLogoAnimation(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = icon,
+                imageVector = icon,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Inside,
                 modifier = Modifier

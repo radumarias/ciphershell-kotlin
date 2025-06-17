@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.animation.GravitationalLogoAnimation
 import rs.xor.rencfs.krencfs.ui.design.DesignSystem.Dimensions.paddingNormal
 import rs.xor.rencfs.krencfs.ui.design.customcomponents.RencfsLogoAnimation
 
@@ -21,8 +22,7 @@ fun SplashScreen() {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-//            RencfsLogoAnimation()
-            GravitationalLogoAnimation()
+            RencfsLogoAnimation()
         }
     }
 }

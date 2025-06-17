@@ -62,8 +62,9 @@ fun GravitationalLogoAnimation(
         targetValue = 0.95f,
         animationSpec = infiniteRepeatable(
             animation = tween(animationDuration, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ), label = "atmosphereRadius"
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "atmosphereRadius",
     ).value
 
     val gravitationalField = infiniteTransition.animateFloat(
@@ -71,8 +72,9 @@ fun GravitationalLogoAnimation(
         targetValue = 10f,
         animationSpec = infiniteRepeatable(
             animation = tween(animationDuration * 2, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ), label = "gravitationalField"
+            repeatMode = RepeatMode.Restart,
+        ),
+        label = "gravitationalField",
     ).value
 
     val pulseIntensity = infiniteTransition.animateFloat(
@@ -80,11 +82,12 @@ fun GravitationalLogoAnimation(
         targetValue = 1.0f,
         animationSpec = infiniteRepeatable(
             animation = tween(animationDuration / 2, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ), label = "pulseIntensity"
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "pulseIntensity",
     ).value
 
-    val totalSize = iconSize * 2  // Add padding for atmospheric effects
+    val totalSize = iconSize * 2 // Add padding for atmospheric effects
 
     Box(
         contentAlignment = Alignment.Center,
@@ -107,7 +110,7 @@ fun GravitationalLogoAnimation(
                     maxSafeRadius = maxSafeRadius,
                     atmosphereRadius = atmosphereRadius,
                     atmosphereColor = atmosphereColor,
-                    pulseIntensity = if (gravitationalPulse) pulseIntensity else 1f
+                    pulseIntensity = if (gravitationalPulse) pulseIntensity else 1f,
                 )
 
                 // Draw the logo content
@@ -120,18 +123,15 @@ fun GravitationalLogoAnimation(
                     maxSafeRadius = maxSafeRadius,
                     fieldRotation = gravitationalField,
                     particleCount = particleCount,
-                    fieldColor = atmosphereColor
+                    fieldColor = atmosphereColor,
                 )
-
-
-
-            }
+            },
     ) {
         Box(
             modifier = Modifier
                 .size(iconSize)
                 .clip(CircleShape),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Image(
                 imageVector = icon,
@@ -139,12 +139,11 @@ fun GravitationalLogoAnimation(
                 contentScale = ContentScale.Inside,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(16.dp),
             )
         }
     }
 }
-
 
 private fun DrawScope.drawAtmosphericLayers(
     center: Offset,
@@ -152,7 +151,7 @@ private fun DrawScope.drawAtmosphericLayers(
     maxSafeRadius: Float,
     atmosphereRadius: Float,
     atmosphereColor: Color,
-    pulseIntensity: Float
+    pulseIntensity: Float,
 ) {
     // Calculate layer radii with bounds checking
     val outerRadius = min(baseRadius * atmosphereRadius * 1.4f, maxSafeRadius)
@@ -170,10 +169,10 @@ private fun DrawScope.drawAtmosphericLayers(
                     1.0f to Color.Transparent,
                 ),
                 center = center,
-                radius = outerRadius
+                radius = outerRadius,
             ),
             radius = outerRadius,
-            center = center
+            center = center,
         )
     }
 
@@ -189,10 +188,10 @@ private fun DrawScope.drawAtmosphericLayers(
                     1.0f to Color.Transparent,
                 ),
                 center = center,
-                radius = middleRadius
+                radius = middleRadius,
             ),
             radius = middleRadius,
-            center = center
+            center = center,
         )
     }
 
@@ -207,10 +206,10 @@ private fun DrawScope.drawAtmosphericLayers(
                     1.0f to atmosphereColor.copy(alpha = 0.4f * pulseIntensity),
                 ),
                 center = center,
-                radius = innerRadius
+                radius = innerRadius,
             ),
             radius = innerRadius,
-            center = center
+            center = center,
         )
     }
 }
@@ -221,15 +220,14 @@ private fun DrawScope.drawGravitationalField(
     maxSafeRadius: Float,
     fieldRotation: Float,
     particleCount: Int,
-    fieldColor: Color
+    fieldColor: Color,
 ) {
-
     // Draw rotating field particles with bounds checking
     repeat(particleCount) { index ->
         val angle = (fieldRotation + (index * 360f / particleCount)) * (PI / 180f)
         val distance = min(
             baseRadius * (0.9f + 0.4f * sin((fieldRotation * PI / 180f + index).toFloat()).toFloat()),
-            maxSafeRadius * 0.7f
+            maxSafeRadius * 0.7f,
         )
 
         // Calculate particle position
@@ -239,8 +237,10 @@ private fun DrawScope.drawGravitationalField(
 
         // Only draw if particle is within safe bounds
         val distanceFromCenter = sqrt(
-            ((particleX - center.x) * (particleX - center.x) +
-                    (particleY - center.y) * (particleY - center.y)).toDouble()
+            (
+                (particleX - center.x) * (particleX - center.x) +
+                    (particleY - center.y) * (particleY - center.y)
+                ).toDouble(),
         ).toFloat()
 
         if (distanceFromCenter + 2.dp.toPx() <= maxSafeRadius) {
@@ -253,10 +253,10 @@ private fun DrawScope.drawGravitationalField(
                         1.0f to Color.Transparent,
                     ),
                     center = particleCenter,
-                    radius = 0.3.dp.toPx()
+                    radius = 0.3.dp.toPx(),
                 ),
                 radius = 1.dp.toPx(),
-                center = particleCenter
+                center = particleCenter,
             )
         }
     }
@@ -267,7 +267,7 @@ private fun DrawScope.drawEnergyGlow(
     baseRadius: Float,
     maxSafeRadius: Float,
     intensity: Float,
-    glowColor: Color
+    glowColor: Color,
 ) {
     val glowRadius = min(baseRadius * 0.9f, maxSafeRadius * 0.5f)
 
@@ -282,11 +282,11 @@ private fun DrawScope.drawEnergyGlow(
                     1.0f to glowColor.copy(alpha = 0.05f * intensity),
                 ),
                 center = center,
-                radius = glowRadius
+                radius = glowRadius,
             ),
             radius = glowRadius,
             center = center,
-            blendMode = BlendMode.Screen
+            blendMode = BlendMode.Screen,
         )
     }
 }
@@ -296,14 +296,13 @@ fun ExampleUsage() {
     Column(
         modifier = Modifier.fillMaxSize().background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         // Full gravitational effect with complete circle
         GravitationalLogoAnimation(
             iconSize = 160.dp,
             atmosphereColor = Color(0xFF1E90FF).copy(alpha = 0.3f),
-            gravitationalPulse = true
+            gravitationalPulse = true,
         )
     }
 }
-

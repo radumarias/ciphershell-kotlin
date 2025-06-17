@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import com.example.animation.GravitationalLogoAnimation
 
 @Composable
-fun RencfsLogoAnimation(
-) {
+fun RencfsLogoAnimation() {
     GravitationalLogoAnimation()
 }

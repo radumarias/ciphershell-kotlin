@@ -30,7 +30,7 @@ subprojects {
     afterEvaluate {
         configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
             toolVersion = deps.versions.detekt.get()
-            source = files("src")
+            source.setFrom("src")
             parallel = true
         }
     }

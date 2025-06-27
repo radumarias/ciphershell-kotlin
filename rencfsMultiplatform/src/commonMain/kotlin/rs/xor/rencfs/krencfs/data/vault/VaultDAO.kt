@@ -35,9 +35,9 @@ interface VaultDAO {
         keySize: String?,
         recoveryCode: String?,
         isLocked: Long,
-    )
+    ): Long
 
-    suspend fun deleteVault(id: Long)
+    suspend fun deleteVault(id: Long): Long
 
     fun count(): Long
 }

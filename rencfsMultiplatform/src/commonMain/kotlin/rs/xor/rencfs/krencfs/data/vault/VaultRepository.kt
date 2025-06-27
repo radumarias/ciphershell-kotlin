@@ -25,9 +25,9 @@ interface VaultRepository {
         isLocked: Long,
     ): String
 
-    suspend fun updateVault(vault: Vault)
+    suspend fun updateVault(vault: Vault): Long
 
-    suspend fun deleteVault(id: String)
+    suspend fun deleteVault(id: String): Long
 
     fun count(): Long
 }

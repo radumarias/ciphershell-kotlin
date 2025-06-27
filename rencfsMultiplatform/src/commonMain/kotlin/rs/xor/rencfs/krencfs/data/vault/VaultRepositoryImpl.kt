@@ -41,9 +41,9 @@ class VaultRepositoryImpl(
         isLocked,
     ).toString()
 
-    override suspend fun updateVault(vault: Vault) {
+    override suspend fun updateVault(vault: Vault): Long {
         println("VaultRepositoryImpl Update vault ID: ${vault.id}, Name: ${vault.name}, URI: ${vault.uri}, Path: ${vault.path}, IsLocked: ${vault.isLocked}")
-        dao.updateVault(
+        return dao.updateVault(
             id = vault.id,
             name = vault.name,
             mountPoint = vault.mount,
@@ -57,7 +57,7 @@ class VaultRepositoryImpl(
         )
     }
 
-    override suspend fun deleteVault(id: String) = id.toLongOrNull()?.let { dao.deleteVault(it) } ?: Unit
+    override suspend fun deleteVault(id: String) = id.toLongOrNull()?.let { dao.deleteVault(it) } ?: 0L
 
     override fun count() = dao.count()
 }

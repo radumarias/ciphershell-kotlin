@@ -1,31 +1,31 @@
 [versions]
-kotlin = "2.1.10"
-compose = "1.8.1"
-coroutines = "1.9.0"
+kotlin = "2.2.0"
+compose = "1.8.2"
+coroutines = "1.10.2"
 
-serialization = "1.6.3"
+serialization = "1.9.0"
 
-sqldelight = "2.0.2"
+sqldelight = "2.1.0"
 
-vinceglb-filekit = "0.7.0"
+vinceglb-filekit = "0.8.8"
 
 #dokka = "1.9.20"
 
 # Android
-androidGradlePlugin = "8.9.0"
+androidGradlePlugin = "8.11.0"
 rustAndroidGradle = "0.9.6"
 
 lifecycle = "2.8.4"
-navigation = "2.8.0-alpha11"
+navigation = "2.8.0-alpha13"
 
-ksp = "2.1.10-1.0.30"
-spotless = "7.0.2"
+ksp = "2.2.0-2.0.2"
+spotless = "7.0.4"
 ktlint = "1.5.0"
-googlejavaformat = "1.23.0"
-koin = "3.5.3"
-detekt = "1.23.6"
-pdfbox = "2.0.27"
-documentfile = "1.0.1"
+googlejavaformat = "1.27.0"
+koin = "4.1.0"
+detekt = "1.23.8"
+pdfbox = "3.0.5"
+documentfile = "1.1.0"
 
 [libraries]
 # Common

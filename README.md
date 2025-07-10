@@ -14,7 +14,6 @@ stable release.
 
 ## Graphical User Interface Application (GUI app)
 
-Video  
 [![Watch the video](https://img.youtube.com/vi/RSA9lR7AxWQ/0.jpg)](https://youtu.be/RSA9lR7AxWQ)
 
 ### Integrated Development Environment (IDE)

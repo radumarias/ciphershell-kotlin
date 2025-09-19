@@ -7,6 +7,6 @@ class OnCreateVaultUseCaseImpl(
     private val navController: NavController,
 ) : OnCreateVaultUseCase {
     override fun invoke() {
-        navController.navigate(RencfsRoute.VaultCreate.route)
+        navController.navigate(RencfsRoute.VaultCreate)
     }
 }

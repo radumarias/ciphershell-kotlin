@@ -8,7 +8,7 @@ class OnVaultSelectedUseCaseImpl(
 ) : OnVaultSelectedUseCase {
     override fun invoke(params: SelectVaultUseCaseParams?) {
         params?.vaultId?.let { vaultId ->
-            navController.navigate(RencfsRoute.VaultView.routeWithArgs(vaultId))
+            navController.navigate(RencfsRoute.VaultView(vaultId))
         }
     }
 }

@@ -52,7 +52,6 @@ sealed class RencfsRoute(
     }
 }
 
-
 @Composable
 fun RencfsRoute.mapToTitle() = stringResource(
     when (this) {

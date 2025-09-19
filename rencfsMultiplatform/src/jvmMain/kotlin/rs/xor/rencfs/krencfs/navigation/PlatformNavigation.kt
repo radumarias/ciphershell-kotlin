@@ -139,7 +139,6 @@ actual object PlatformNavigation {
                     },
                     exitTransition = { ExitTransition.None },
                 ) {
-
                     composable<RencfsRoute.VaultList> {
                         VaultListScreen(firstTime)
                     }
